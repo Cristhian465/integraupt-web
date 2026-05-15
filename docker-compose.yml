@@ -1,0 +1,212 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: db
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+      MARIADB_DATABASE: sisintupt
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./sisintupt.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  # === MICROSERVICIOS BACKEND ===
+
+  backend-sanciones:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendSanciones
+    container_name: backend-sanciones
+    ports:
+      - "8087:8087"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-usuarios:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendUsuarios
+    container_name: backend-usuarios
+    ports:
+      - "8092:8092"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/sisintupt
+    depends_on:
+      - db
+
+  backend-reportes:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendReportes
+    container_name: backend-reportes
+    ports:
+      - "8089:8089"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-qr:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendQR
+    container_name: backend-qr
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-reserva:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendReserva
+    container_name: backend-reserva
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-login:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendLogin
+    container_name: backend-login
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/sisintupt
+    depends_on:
+      - db
+
+  backend-horarios-curso:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendHorariosCurso
+    container_name: backend-horarios-curso
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-inicidencia:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendInicidencia
+    container_name: backend-inicidencia
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-horarios:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendHorarios
+    container_name: backend-horarios
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-adreserva:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendAdReserva
+    container_name: backend-adreserva
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-espacios:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendEspacios
+    container_name: backend-espacios
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-auditoria:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendAuditoria
+    container_name: backend-auditoria
+    ports:
+      - "8091:8091"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    depends_on:
+      - db
+
+  backend-google:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        SERVICE_DIR: Integraupt-Backend/BackendGoogle
+    container_name: backend-google
+    ports:
+      - "8080:8080"
+
+  # === FRONTEND ===
+
+  frontend:
+    build:
+      context: ./integraupt-frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./integraupt-frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend-login
+      - backend-usuarios
