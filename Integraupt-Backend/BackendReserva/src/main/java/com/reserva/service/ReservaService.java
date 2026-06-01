@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.reserva.exception.ReservaValidationException;
 import org.springframework.transaction.annotation.Transactional;
 import com.reserva.dto.ReservaDetalleResponse;
+import com.reserva.dto.SancionVerificacionResponse;
+import com.reserva.dto.SolicitanteInfo;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,15 +48,21 @@ public class ReservaService {
     private final EspacioRepository espacioRepository;
     private final BloqueHorarioRepository bloqueHorarioRepository;
     private final ReservaQrClient reservaQrClient;
+    private final UsuarioInfoService usuarioInfoService;
+    private final SancionVerificationClient sancionVerificationClient;
 
     public ReservaService(ReservaRepository reservaRepository,
                           EspacioRepository espacioRepository,
                           BloqueHorarioRepository bloqueHorarioRepository,
-                          ReservaQrClient reservaQrClient) {
+                          ReservaQrClient reservaQrClient,
+                          UsuarioInfoService usuarioInfoService,
+                          SancionVerificationClient sancionVerificationClient) {
         this.reservaRepository = reservaRepository;
         this.espacioRepository = espacioRepository;
         this.bloqueHorarioRepository = bloqueHorarioRepository;
         this.reservaQrClient = reservaQrClient;
+        this.usuarioInfoService = usuarioInfoService;
+        this.sancionVerificationClient = sancionVerificationClient;
     }
 
     public List<Reserva> listarTodas() {
@@ -163,6 +171,7 @@ public class ReservaService {
     }
 
     public ReservaCreacionResponse crearReserva(Reserva reserva) {
+        validarSancionActiva(reserva.getUsuarioId());
         validarDuplicidadReserva(
                 reserva.getUsuarioId(),
                 reserva.getEspacioId(),
@@ -185,9 +194,61 @@ public class ReservaService {
         return new ReservaCreacionResponse(reservaGuardada, qrResponse);
     }
 
+    private void validarSancionActiva(Integer usuarioId) {
+        if (usuarioId == null) {
+            return;
+        }
+
+        Optional<SolicitanteInfo> solicitante = usuarioInfoService.obtenerSolicitante(usuarioId);
+        if (solicitante.isEmpty()) {
+            return;
+        }
+
+        String tipoUsuario = mapearTipoUsuario(solicitante.get().rol());
+        if (tipoUsuario == null) {
+            return;
+        }
+
+        SancionVerificacionResponse respuesta = sancionVerificationClient
+                .verificarSancionActiva(usuarioId.longValue(), tipoUsuario)
+                .orElse(null);
+
+        if (respuesta != null && respuesta.sancionado()) {
+            String fechaInicio = Optional.ofNullable(respuesta.fechaInicio())
+                    .map(LocalDate::toString)
+                    .orElse("desconocida");
+            String fechaFin = Optional.ofNullable(respuesta.fechaFin())
+                    .map(LocalDate::toString)
+                    .orElse("desconocida");
+            String motivo = Optional.ofNullable(respuesta.motivo()).orElse("No especificado");
+            throw new ReservaValidationException(String.format(
+                    "No puedes registrar reservas porque tienes una sanción activa del %s al %s. Motivo: %s.",
+                    fechaInicio,
+                    fechaFin,
+                    motivo));
+        }
+    }
+
+    private String mapearTipoUsuario(String rol) {
+        if (rol == null || rol.isBlank()) {
+            return null;
+        }
+
+        String rolNormalizado = rol.trim().toUpperCase(Locale.ROOT);
+        if (rolNormalizado.contains("DOCENTE")) {
+            return "DOCENTE";
+        }
+        if (rolNormalizado.contains("ESTUDIANT")) {
+            return "ESTUDIANTE";
+        }
+        return null;
+    }
+
     public Reserva actualizarReserva(Integer id, ReservaActualizacionRequest datosReserva) {
         return reservaRepository.findById(id)
                 .map(reservaExistente -> {
+                    validarSancionActiva(datosReserva.getUsuarioId());
+
                     if (reservaExistente.getEstado() != null
                             && !reservaExistente.getEstado().trim().equalsIgnoreCase("Pendiente")) {
                         if (puedeCancelarReserva(reservaExistente, datosReserva)) {
