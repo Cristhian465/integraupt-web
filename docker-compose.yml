@@ -32,14 +32,15 @@ services:
   backend-usuarios:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: Dockerfile.laravel
       args:
         SERVICE_DIR: Integraupt-Backend/BackendUsuarios
     container_name: backend-usuarios
     ports:
       - "8092:8092"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/sisintupt
+      - DB_HOST=db
+    command: php artisan serve --host=0.0.0.0 --port=8092
     depends_on:
       - db
 
@@ -88,14 +89,15 @@ services:
   backend-login:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: Dockerfile.laravel
       args:
         SERVICE_DIR: Integraupt-Backend/BackendLogin
     container_name: backend-login
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/sisintupt
+      - DB_HOST=db
+    command: php artisan serve --host=0.0.0.0 --port=8081
     depends_on:
       - db
 

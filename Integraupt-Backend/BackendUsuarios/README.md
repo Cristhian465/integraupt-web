@@ -1,144 +1,59 @@
-# SAD – API REST en PHP
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Conversión del proyecto Spring Boot (Java) a PHP puro con PDO + MariaDB.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Requisitos
-- PHP 8.1+
-- MySQL / MariaDB (`sisintupt`)
-- Apache con `mod_rewrite` (o usar el servidor embebido de PHP)
+## About Laravel
 
-## Configurar base de datos
-Editar `config/Database.php`:
-```php
-private string $host     = 'localhost';
-private string $dbname   = 'sisintupt';
-private string $username = 'root';
-private string $password = '';
-```
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Iniciar (dev)
-```bash
-php -S localhost:8092 index.php
-```
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
----
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Estructura del proyecto
-```
-sad-php/
-├── index.php                         ← Entrada, autoload, CORS
-├── .htaccess                         ← Rewrite para Apache
-│
-├── config/
-│   ├── Database.php                  ← Singleton PDO
-│   └── App.php                       ← CORS, json(), error(), getBody()
-│
-├── models/
-│   ├── Usuario.php
-│   ├── Estudiante.php
-│   ├── Docente.php
-│   └── Administrativo.php
-│
-├── services/
-│   ├── common/
-│   │   └── UsuarioServiceHelper.php  ← Lógica base compartida (abstract)
-│   ├── estudiante/
-│   │   └── EstudianteService.php
-│   ├── docente/
-│   │   └── DocenteService.php
-│   ├── administrativo/
-│   │   └── AdministrativoService.php
-│   └── CatalogoService.php
-│
-├── controllers/
-│   ├── EstudianteController.php
-│   ├── DocenteController.php
-│   ├── AdministrativoController.php
-│   └── CatalogoController.php
-│
-└── routes/
-    └── Router.php                    ← Despacha método+URI → controlador
-```
+## Learning Laravel
 
----
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-## Endpoints
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-### Estudiantes
-| Método | URI | Acción |
-|--------|-----|--------|
-| GET    | /api/estudiantes         | Listar todos |
-| GET    | /api/estudiantes/{id}    | Obtener uno  |
-| POST   | /api/estudiantes         | Crear        |
-| PUT    | /api/estudiantes/{id}    | Actualizar   |
-| PATCH  | /api/estudiantes/{id}/estado | Activar/desactivar |
-| DELETE | /api/estudiantes/{id}    | Desactivar (soft-delete) |
+## Laravel Sponsors
 
-### Docentes
-| Método | URI | Acción |
-|--------|-----|--------|
-| GET    | /api/docentes         | Listar todos |
-| GET    | /api/docentes/{id}    | Obtener uno  |
-| POST   | /api/docentes         | Crear        |
-| PUT    | /api/docentes/{id}    | Actualizar   |
-| PATCH  | /api/docentes/{id}/estado | Activar/desactivar |
-| DELETE | /api/docentes/{id}    | Desactivar (soft-delete) |
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Administrativos
-| Método | URI | Acción |
-|--------|-----|--------|
-| GET    | /api/administrativos         | Listar todos |
-| GET    | /api/administrativos/{id}    | Obtener uno  |
-| POST   | /api/administrativos         | Crear        |
-| PUT    | /api/administrativos/{id}    | Actualizar   |
-| PATCH  | /api/administrativos/{id}/estado | Activar/desactivar |
-| DELETE | /api/administrativos/{id}    | Desactivar (soft-delete) |
+### Premium Partners
 
-### Catálogos (solo GET)
-| URI | Retorna |
-|-----|---------|
-| /api/catalogos/tipos-documento | Lista de tipos de documento |
-| /api/catalogos/roles           | Lista de roles |
-| /api/catalogos/escuelas        | Lista de escuelas con facultad |
+- **[Vehikl](https://vehikl.com)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development)**
+- **[Active Logic](https://activelogic.com)**
 
----
+## Contributing
 
-## Body de ejemplo – Crear estudiante (POST /api/estudiantes)
-```json
-{
-  "nombre": "Juan",
-  "apellido": "Pérez",
-  "idTipoDoc": 1,
-  "numDoc": "12345678",
-  "celular": "987654321",
-  "genero": true,
-  "correo": "juan@example.com",
-  "password": "segura123",
-  "idEscuela": 2,
-  "codigo": "2024001"
-}
-```
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Body de ejemplo – Crear docente (POST /api/docentes)
-```json
-{
-  "nombre": "María",
-  "apellido": "López",
-  "idTipoDoc": 1,
-  "numDoc": "87654321",
-  "celular": "912345678",
-  "genero": false,
-  "correo": "maria@example.com",
-  "password": "segura456",
-  "idEscuela": 1,
-  "codigoDocente": "DOC-2024-001",
-  "tipoContrato": "Tiempo Completo",
-  "especialidad": "Matemáticas",
-  "fechaIncorporacion": "2024-03-01"
-}
-```
+## Code of Conduct
 
-## Body de ejemplo – Actualizar estado (PATCH /{recurso}/{id}/estado)
-```json
-{ "activo": false }
-```
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

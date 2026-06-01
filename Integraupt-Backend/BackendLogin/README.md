@@ -1,120 +1,59 @@
-# login-sad-php
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-API de autenticación traducida de Spring Boot a PHP puro.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## Estructura del proyecto
+## About Laravel
 
-```
-login-sad-php/
-├── autoload.php              # PSR-style autoloader manual
-├── config/
-│   ├── database.php          # Conexión PDO a MariaDB
-│   ├── cors.php              # Headers CORS
-│   └── router.php            # Tabla de rutas
-├── src/
-│   ├── Controller/
-│   │   └── AuthController.php
-│   ├── Dto/
-│   │   ├── LoginRequest.php
-│   │   ├── LoginResponse.php
-│   │   ├── LogoutRequest.php
-│   │   ├── PerfilResponse.php
-│   │   └── SessionValidationRequest.php
-│   ├── Repository/
-│   │   ├── AdministrativoRepository.php
-│   │   ├── EstudianteRepository.php
-│   │   └── UsuarioAuthRepository.php
-│   └── Service/
-│       └── AuthService.php
-├── public/
-│   ├── index.php             # Front controller (única entrada pública)
-│   └── .htaccess             # Rewrite rules para Apache
-└── nginx.conf.example        # Configuración de referencia para Nginx
-```
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## Configuración
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-### 1. Base de datos
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-Edita `config/database.php` y ajusta:
+## Learning Laravel
 
-```php
-private static string $host     = 'localhost';
-private static string $dbname   = 'sisintupt';
-private static string $username = 'root';
-private static string $password = '';
-```
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
 
-### 2. Servidor web
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-**Apache** — apunta el DocumentRoot a la carpeta `public/`. El `.htaccess` ya está listo.
+## Laravel Sponsors
 
-**Nginx** — usa el archivo `nginx.conf.example` como plantilla.
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-**PHP built-in** (desarrollo):
-```bash
-php -S localhost:8081 -t public
-```
+### Premium Partners
 
-### 3. CORS
+- **[Vehikl](https://vehikl.com)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Redberry](https://redberry.international/laravel-development)**
+- **[Active Logic](https://activelogic.com)**
 
-Edita `config/cors.php` para agregar o quitar orígenes permitidos:
+## Contributing
 
-```php
-private static array $allowedOrigins = [
-    'http://localhost:5173',
-    'http://127.0.0.1:5173',
-];
-```
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
----
+## Code of Conduct
 
-## Endpoints
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-| Método | Ruta                  | Descripción                        |
-|--------|-----------------------|------------------------------------|
-| POST   | /api/auth/login       | Iniciar sesión                     |
-| POST   | /api/auth/validate    | Validar token de sesión            |
-| POST   | /api/auth/logout      | Cerrar sesión                      |
-| GET    | /api/auth/health      | Estado del servicio                |
+## Security Vulnerabilities
 
----
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## Ejemplos de petición
+## License
 
-### Login
-```json
-POST /api/auth/login
-{
-  "codigoOEmail": "2021001@upt.pe",
-  "password": "mi_contraseña",
-  "tipoLogin": "academic"
-}
-```
-
-### Validate
-```json
-POST /api/auth/validate
-{
-  "token": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-}
-```
-
-### Logout
-```json
-POST /api/auth/logout
-{
-  "usuarioId": 5,
-  "token": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-}
-```
-
----
-
-## Notas de lógica
-
-- La contraseña se almacena en la BD en **Base64** (igual que en el proyecto Java original).
-- La sesión expira por **inactividad de 20 minutos** (SESSION_INACTIVITY_MINUTES).
-- Roles académicos: `1` (Docente), `2` (Estudiante).
-- Roles administrativos: `3`, `4`.
-- Un usuario no puede tener dos sesiones simultáneas (devuelve HTTP 409).
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
