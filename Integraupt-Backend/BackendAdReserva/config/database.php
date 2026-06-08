@@ -2,7 +2,7 @@
 
 return [
     'host' => 'localhost',
-    'port' => '3306',
+    'port' => '3307',
     'dbname' => 'sisintupt',
     'username' => 'root',
     'password' => '',
