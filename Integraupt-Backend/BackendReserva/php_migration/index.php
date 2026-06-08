@@ -18,7 +18,11 @@ if (in_array('api', $uri)) {
     $resource = isset($uri[$apiIndex + 1]) ? $uri[$apiIndex + 1] : null;
     $id = isset($uri[$apiIndex + 2]) ? $uri[$apiIndex + 2] : null;
 
-    if ($resource === 'reservas') {
+    if ($resource === 'reservas' && isset($uri[$apiIndex + 2]) && $uri[$apiIndex + 2] === 'formulario') {
+        require_once 'controllers/FormularioReservaController.php';
+        $controller = new FormularioReservaController();
+        $controller->processRequest($_SERVER['REQUEST_METHOD'], $uri, $apiIndex);
+    } elseif ($resource === 'reservas') {
         require_once 'controllers/ReservaController.php';
         $controller = new ReservaController();
         $controller->processRequest($_SERVER['REQUEST_METHOD'], $id, $uri, $apiIndex);
