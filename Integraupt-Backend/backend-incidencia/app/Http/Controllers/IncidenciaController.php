@@ -1,8 +1,11 @@
+<?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\IncidenciaRequest;
 use App\Services\IncidenciaService;
-use Illuminate\Http\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class IncidenciaController extends Controller
 {
@@ -13,16 +16,19 @@ class IncidenciaController extends Controller
         $this->service = $service;
     }
 
-    public function registrarIncidencia(Request $request)
+    public function registrarIncidencia(IncidenciaRequest $request)
     {
         try {
-            $incidencia = $this->service->registrarIncidencia($request->all());
-
+            $incidencia = $this->service->registrarIncidencia($request->validated());
             return response()->json($incidencia, 201);
 
-        } catch (\InvalidArgumentException $e) {
-            return response()->json($e->getMessage(), 404);
+        } catch (\InvalidArgumentException | ModelNotFoundException $e) {
+            $message = $e instanceof ModelNotFoundException ? "No se encontró la reserva indicada." : $e->getMessage();
+            return response()->json($message, 404);
 
+        } catch (\LogicException $e) {
+            return response()->json($e->getMessage(), 409);
+            
         } catch (\Exception $e) {
             return response()->json($e->getMessage(), 500);
         }

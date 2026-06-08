@@ -11,11 +11,20 @@ class Reserva extends Model
 
     protected $table = 'reserva';
 
+    protected $primaryKey = 'IdReserva';
+
+    public $timestamps = false;
+
     protected $fillable = [
-        'usuario_id',
-        'espacio_id',
-        'bloque_id',
-        'fecha_reserva'
+        'usuario',
+        'espacio',
+        'bloque',
+        'curso',
+        'fechaReserva',
+        'fechaSolicitud',
+        'DescripcionUso',
+        'CantidadEstudiantes',
+        'Estado'
     ];
 
     public function incidencias()
@@ -23,13 +32,20 @@ class Reserva extends Model
         return $this->hasMany(Incidencia::class, 'reserva_id');
     }
 
-    public function espacio()
+    public function espacioRelacion()
     {
-        return $this->belongsTo(Espacio::class, 'espacio_id');
+        return $this->belongsTo(
+            Espacio::class,
+            'espacio'
+        );
     }
 
-    public function bloque()
+    public function bloqueRelacion()
     {
-        return $this->belongsTo(BloqueHorario::class, 'bloque_id');
+        return $this->belongsTo(
+            BloqueHorario::class,
+            'bloque',
+            'IdBloque'
+        );
     }
 }

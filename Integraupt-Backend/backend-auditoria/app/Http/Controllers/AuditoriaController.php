@@ -1,3 +1,5 @@
+<?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -5,6 +7,7 @@ use App\Services\AuditoriaService;
 use App\Services\AuditoriaExportService;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AuditoriaController extends Controller
 {
@@ -22,46 +25,47 @@ class AuditoriaController extends Controller
     public function listar(Request $request)
     {
         $filtro = $this->construirFiltro($request);
-
-        return response()->json(
-            $this->service->buscar($filtro)
-        );
+        return response()->json($this->service->buscar($filtro));
     }
 
     public function detalle($id)
     {
-        return response()->json(
-            $this->service->buscarPorId($id)
-        );
+        $id = (int) $id;
+        if ($id < 1) {
+            return response()->json(['error' => 'Id inválido'], 400);
+        }
+        return response()->json($this->service->buscarPorId($id));
     }
 
     public function porReserva($reservaId)
     {
-        return response()->json(
-            $this->service->listarPorReserva($reservaId)
-        );
+        $reservaId = (int) $reservaId;
+        if ($reservaId < 1) {
+            return response()->json(['error' => 'Id inválido'], 400);
+        }
+        return response()->json($this->service->listarPorReserva($reservaId));
     }
 
     public function exportarPdf(Request $request)
     {
         $filtro = $this->construirFiltro($request);
-
         $data = $this->exportService->generarPdf($filtro);
+        $filename = "reporte_auditoria_" . round(microtime(true) * 1000) . ".pdf";
 
         return response($data)
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="reporte_auditoria.pdf"');
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
     public function exportarExcel(Request $request)
     {
         $filtro = $this->construirFiltro($request);
-
         $data = $this->exportService->generarExcel($filtro);
+        $filename = "reporte_auditoria_" . round(microtime(true) * 1000) . ".xlsx";
 
         return response($data)
             ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            ->header('Content-Disposition', 'attachment; filename="reporte_auditoria.xlsx"');
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
     private function construirFiltro(Request $request)
@@ -77,19 +81,18 @@ class AuditoriaController extends Controller
 
     private function parseFecha($valor, $endOfDay = false)
     {
-        if (!$valor) return null;
+        if (empty($valor)) {
+            return null;
+        }
 
         try {
             if (strlen($valor) == 10) {
-                $fecha = Carbon::createFromFormat('Y-m-d', $valor);
-                return $endOfDay ? $fecha->endOfDay() : $fecha->startOfDay();
+                $fecha = Carbon::parse($valor);
+                return $endOfDay ? $fecha->endOfDay()->format('Y-m-d H:i:s') : $fecha->startOfDay()->format('Y-m-d H:i:s');
             }
-
-            return Carbon::parse($valor);
+            return Carbon::parse($valor)->format('Y-m-d H:i:s');
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Formato de fecha inválido. Usa ISO-8601'
-            ], 400)->throwResponse();
+            throw new HttpException(400, "Formato de fecha no valido. Usa ISO-8601 (ej. 2025-11-11T15:30:00).");
         }
     }
 }

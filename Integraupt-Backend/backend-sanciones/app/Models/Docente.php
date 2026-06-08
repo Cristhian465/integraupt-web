@@ -16,14 +16,13 @@ class Docente extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'codigo_docente',
-        'nombre',
-        'usuario_id'
+        'IdUsuario',
+        'CodigoDocente',
+        'Escuela'
     ];
 
-    // 🔵 relación con usuario
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id', 'IdUsuario');
+        return $this->belongsTo(Usuario::class, 'IdUsuario', 'IdUsuario');
     }
 }

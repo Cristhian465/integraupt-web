@@ -1,27 +1,24 @@
+<?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class AuditoriaReserva extends Model
 {
-    protected $table = 'auditoria_reservas';
+    protected $table = 'auditoriareserva';
+    protected $primaryKey = 'IdAudit';
+    public $timestamps = false;
 
     protected $fillable = [
-        'accion',
-        'tabla',
-        'registro_id',
-        'usuario_id',
-        'usuario_nombre',
-        'datos_anteriores',
-        'datos_nuevos',
-        'ip',
-        'user_agent',
-        'fecha_accion'
+        'IdReserva',
+        'EstadoAnterior',
+        'EstadoNuevo',
+        'FechaCambio',
+        'UsuarioCambio'
     ];
 
     protected $casts = [
-        'datos_anteriores' => 'array',
-        'datos_nuevos' => 'array',
-        'fecha_accion' => 'datetime',
+        'FechaCambio' => 'datetime',
     ];
 }

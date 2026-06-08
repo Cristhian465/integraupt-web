@@ -1,8 +1,9 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SancionController;
 
 Route::prefix('sanciones')->group(function () {
-
-    // crear sanción
     Route::post('/', [SancionController::class, 'registrar']);
 
     // listar todas

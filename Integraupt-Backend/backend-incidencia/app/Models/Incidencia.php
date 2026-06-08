@@ -9,7 +9,7 @@ class Incidencia extends Model
 {
     use HasFactory;
 
-    protected $table = 'incidencias';
+    protected $table = 'incidencia';
 
     protected $fillable = [
         'reserva_id',

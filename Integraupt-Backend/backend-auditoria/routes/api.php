@@ -1,3 +1,6 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuditoriaController;
 
 Route::get('/auditorias', [AuditoriaController::class, 'listar']);
