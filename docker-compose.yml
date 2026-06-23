@@ -11,11 +11,11 @@ services:
     ports:
       - "3307:3306"
     healthcheck:
-      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
       interval: 5s
       timeout: 5s
       retries: 20
-    networks: [integraupt]
+    networks: [ integraupt ]
 
   servicio-usuarios:
     build:
@@ -26,8 +26,8 @@ services:
     command: sh -c "php artisan migrate --force --no-interaction; php artisan serve --host=0.0.0.0 --port=8000"
     depends_on:
       db: { condition: service_healthy }
-    ports: ["8092:8000"]
-    networks: [integraupt]
+    ports: [ "8092:8000" ]
+    networks: [ integraupt ]
 
   servicio-login:
     build:
@@ -35,9 +35,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-login/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8081:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8081:8000" ]
+    networks: [ integraupt ]
 
   servicio-espacios:
     build:
@@ -45,9 +45,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-espacios/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8082:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8082:8000" ]
+    networks: [ integraupt ]
 
   servicio-horarios-curso:
     build:
@@ -55,9 +55,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.4" }
     env_file: ./Integraupt-Backend/servicio-horarios-curso/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8083:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8083:8000" ]
+    networks: [ integraupt ]
 
   servicio-reserva:
     build:
@@ -65,9 +65,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-reserva/.env.docker
-    depends_on: [servicio-usuarios, servicio-qr, servicio-sanciones]
-    ports: ["8084:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios, servicio-qr, servicio-sanciones ]
+    ports: [ "8084:8000" ]
+    networks: [ integraupt ]
 
   servicio-horarios:
     build:
@@ -75,9 +75,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-horarios/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8085:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8085:8000" ]
+    networks: [ integraupt ]
 
   servicio-incidencia:
     build:
@@ -85,9 +85,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.4" }
     env_file: ./Integraupt-Backend/servicio-incidencia/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8086:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8086:8000" ]
+    networks: [ integraupt ]
 
   servicio-sanciones:
     build:
@@ -95,18 +95,18 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.4" }
     env_file: ./Integraupt-Backend/servicio-sanciones/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8087:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8087:8000" ]
+    networks: [ integraupt ]
 
   servicio-adreserva:
     build:
       context: ./Integraupt-Backend/servicio-adreserva
       dockerfile: ../docker/adreserva.Dockerfile
     env_file: ./Integraupt-Backend/servicio-adreserva/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8088:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8088:8000" ]
+    networks: [ integraupt ]
 
   servicio-reportes:
     build:
@@ -114,9 +114,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.4" }
     env_file: ./Integraupt-Backend/servicio-reportes/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8089:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8089:8000" ]
+    networks: [ integraupt ]
 
   servicio-qr:
     build:
@@ -124,9 +124,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-qr/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8090:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8090:8000" ]
+    networks: [ integraupt ]
 
   servicio-auditoria:
     build:
@@ -134,9 +134,9 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.4" }
     env_file: ./Integraupt-Backend/servicio-auditoria/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8091:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8091:8000" ]
+    networks: [ integraupt ]
 
   servicio-psicologia:
     build:
@@ -144,14 +144,24 @@ services:
       dockerfile: ../docker/laravel.Dockerfile
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-psicologia/.env.docker
-    depends_on: [servicio-usuarios]
-    ports: ["8093:8000"]
-    networks: [integraupt]
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8093:8000" ]
+    networks: [ integraupt ]
+
+  servicio-olimpiadas:
+    build:
+      context: ./Integraupt-Backend/servicio-olimpiadas
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-olimpiadas/.env.docker
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8094:8000" ]
+    networks: [ integraupt ]
 
   frontend:
     build:
       context: ./integraupt-frontend
-    ports: ["5173:5173"]
+    ports: [ "5173:5173" ]
     depends_on:
       - servicio-login
       - servicio-espacios
@@ -166,7 +176,8 @@ services:
       - servicio-qr
       - servicio-auditoria
       - servicio-usuarios
-    networks: [integraupt]
+      - servicio-olimpiadas
+    networks: [ integraupt ]
 
 networks:
   integraupt:

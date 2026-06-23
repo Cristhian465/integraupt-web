@@ -15,7 +15,7 @@ const parseErrorMessage = async (response: Response): Promise<string> => {
     if (typeof data?.message === 'string') {
       return data.message;
     }
-  } catch {
+  } catch (error) {
     // Ignorado, se usa el mensaje por defecto
   }
 
