@@ -3,6 +3,7 @@ import { AdminDashboard } from './AdminDashboard';
 import { IntegraUPTApp } from './pages/Usuario/Inicio/InicioPage';
 import { ReservasPage } from './pages/Usuario/Reservas/ReservasPage';
 import { IncidenciasPage } from "./pages/Usuario/Incidencia/IncidenciasPage";
+import { PsicologiaPage } from './pages/Usuario/Psicologia/PsicologiaPage';
 import { ServiciosPage } from './pages/Usuario/Servicios/ServiciosPage';
 import { requestBackendLogout } from '../utils/logout';
 import { isBackendLoginType } from '../utils/apiConfig';
@@ -34,7 +35,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const isAdministrative = user.user_metadata.login_type === 'administrative';
 
   const [activeView, setActiveView] = useState<
-     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'perfil'
+     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'perfil'
    >(() => {
      if (typeof window === 'undefined') {
        return 'inicio';
@@ -48,6 +49,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
          storedView === 'servicios' ||
          storedView === 'reservas' ||
          storedView === 'incidencias' ||
+         storedView === 'psicologia' ||
          storedView === 'perfil'
        ) {
          return storedView;
@@ -99,6 +101,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     setActiveView('incidencias');
   }, []);
 
+  const handleNavigateToPsicologia = useCallback(() => {
+    setActiveView('psicologia');
+  }, []);
+
   const handleNavigateToPerfil = useCallback(() => {
     setActiveView('perfil');
   }, []);
@@ -129,6 +135,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         onNavigateToPerfil={handleNavigateToPerfil}
         onNavigateToReservas={handleNavigateToReservas}
         onNavigateToIncidencias={handleNavigateToIncidencias}
+        onNavigateToPsicologia={handleNavigateToPsicologia}
         onLogout={handleLogout}
         isLoggingOut={isLoggingOut}
       />
@@ -152,6 +159,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     return (
       <IncidenciasPage 
         user={user} 
+        onNavigateToInicio={handleNavigateToInicio}
+        onNavigateToServicios={handleNavigateToServicios}
+        onNavigateToPerfil={handleNavigateToPerfil}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+      />
+    );
+  }
+
+  if (activeView === 'psicologia') {
+    return (
+      <PsicologiaPage
+        user={user}
         onNavigateToInicio={handleNavigateToInicio}
         onNavigateToServicios={handleNavigateToServicios}
         onNavigateToPerfil={handleNavigateToPerfil}

@@ -1,14 +1,15 @@
 import { type KeyboardEvent, useCallback, useMemo } from 'react';
-import { 
-  AlertTriangle, 
-  ArrowLeft, 
+import {
+  AlertTriangle,
+  ArrowLeft,
   MonitorSmartphone,
   Home,
   LayoutGrid,
   NotebookPen,
   UserRound,
   LogOut,
-  LibraryBig
+  LibraryBig,
+  Brain
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -32,6 +33,7 @@ interface ServiciosPageProps {
   onNavigateToPerfil: () => void;
   onNavigateToReservas: () => void;
   onNavigateToIncidencias: () => void;
+  onNavigateToPsicologia: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -57,6 +59,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToPerfil,
   onNavigateToReservas,
   onNavigateToIncidencias,
+  onNavigateToPsicologia,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -167,6 +170,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Gestionar incidencias
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-psicologia"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-psicologia">
+                <Brain className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Citas de Psicología</h2>
+            <p className="servicios-menu-card-description">
+              Agenda y da seguimiento a tus citas con el área de psicología.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-psicologia">
+              Bienestar estudiantil
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-psicologia"
+                onClick={(event) => {
+                  onNavigateToPsicologia();
+                }}
+              >
+                Agendar cita
               </button>
             </div>
           </article>

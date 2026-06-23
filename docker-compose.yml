@@ -138,6 +138,16 @@ services:
     ports: ["8091:8000"]
     networks: [integraupt]
 
+  servicio-psicologia:
+    build:
+      context: ./Integraupt-Backend/servicio-psicologia
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-psicologia/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8093:8000"]
+    networks: [integraupt]
+
   frontend:
     build:
       context: ./integraupt-frontend
@@ -150,6 +160,7 @@ services:
       - servicio-horarios
       - servicio-incidencia
       - servicio-sanciones
+      - servicio-psicologia
       - servicio-adreserva
       - servicio-reportes
       - servicio-qr
