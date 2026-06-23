@@ -1,0 +1,25 @@
+FROM php:8.2-cli
+
+# Instalar dependencias del sistema y extensiones de PHP necesarias
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    libonig-dev \
+    && docker-php-ext-install pdo pdo_mysql zip mbstring
+
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Argumento para saber qué carpeta de backend copiar
+ARG SERVICE_DIR
+WORKDIR /app
+
+# Copiar el proyecto
+COPY ${SERVICE_DIR} .
+
+# Dar permisos necesarios e instalar dependencias de Laravel
+RUN composer install --no-interaction --optimize-autoloader
+
+# El comando por defecto, pero será sobrescrito en el docker-compose.yml
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

@@ -1,0 +1,3582 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.reserva:BackendReserva >---------------------
+[INFO] Building BackendReserva 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.7:run (default-cli) > test-compile @ BackendReserva >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ BackendReserva ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ BackendReserva ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 38 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ BackendReserva ---
+[INFO] skip non existing resourceDirectory C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendReserva\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ BackendReserva ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.5.7:run (default-cli) < test-compile @ BackendReserva <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.7:run (default-cli) @ BackendReserva ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2025-11-26T18:46:33.821-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] com.reserva.BackendReservaApplication    : Starting BackendReservaApplication using Java 21.0.8 with PID 23712 (C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendReserva\target\classes started by Razse in C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendReserva)
+2025-11-26T18:46:33.824-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] com.reserva.BackendReservaApplication    : No active profile set, falling back to 1 default profile: "default"
+2025-11-26T18:46:33.890-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-26T18:46:33.890-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-26T18:46:35.012-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-26T18:46:35.155-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 129 ms. Found 6 JPA repository interfaces.
+2025-11-26T18:46:35.971-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2025-11-26T18:46:35.989-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-26T18:46:35.989-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-26T18:46:36.049-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-26T18:46:36.051-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2157 ms
+2025-11-26T18:46:36.299-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-26T18:46:36.377-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-26T18:46:36.428-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-26T18:46:36.849-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-26T18:46:36.891-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-26T18:46:37.133-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f7d20d7
+2025-11-26T18:46:37.137-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-26T18:46:37.187-05:00  WARN 23712 --- [BackendReserva] [  restartedMain] org.hibernate.dialect.Dialect            : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2025-11-26T18:46:37.193-05:00  WARN 23712 --- [BackendReserva] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26T18:46:37.214-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 5.5.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-26T18:46:38.803-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-26T18:46:38.806-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T18:46:39.342-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-26T18:46:39.789-05:00  WARN 23712 --- [BackendReserva] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-26T18:46:40.125-05:00  WARN 23712 --- [BackendReserva] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-11-26T18:46:40.157-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path '/'
+2025-11-26T18:46:40.172-05:00  INFO 23712 --- [BackendReserva] [  restartedMain] com.reserva.BackendReservaApplication    : Started BackendReservaApplication in 7.188 seconds (process running for 8.299)
+2025-11-26T18:47:36.893-05:00  INFO 23712 --- [BackendReserva] [nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-26T18:47:36.893-05:00  INFO 23712 --- [BackendReserva] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-26T18:47:36.894-05:00  INFO 23712 --- [BackendReserva] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+2025-11-26T19:17:23.218-05:00  WARN 23712 --- [BackendReserva] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m45s564ms428µs400ns).
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.espacio=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    insert 
+    into
+        reserva
+        (bloque, CantidadEstudiantes, curso, DescripcionUso, espacio, Estado, fechaReserva, fechaSolicitud, usuario) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque=?
+2025-11-26T19:21:14.486-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-5] com.reserva.service.ReservaQrClient      : No se pudo generar el QR para la reserva 51: I/O error on POST request for "http://localhost:8090/api/v1/qr/reservas": null
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    where
+        e1_0.IdFacultad=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    where
+        e1_0.IdFacultad=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.espacio=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    insert 
+    into
+        reserva
+        (bloque, CantidadEstudiantes, curso, DescripcionUso, espacio, Estado, fechaReserva, fechaSolicitud, usuario) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-26T19:33:22.755-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-3] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 1644, SQLState: 45000
+2025-11-26T19:33:22.756-05:00 ERROR 23712 --- [BackendReserva] [nio-8084-exec-3] o.h.engine.jdbc.spi.SqlExceptionHelper   : El usuario tiene una sanción activa y no puede realizar reservas
+2025-11-26T19:33:22.771-05:00 ERROR 23712 --- [BackendReserva] [nio-8084-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [El usuario tiene una sanción activa y no puede realizar reservas] [insert into reserva (bloque,CantidadEstudiantes,curso,DescripcionUso,espacio,Estado,fechaReserva,fechaSolicitud,usuario) values (?,?,?,?,?,?,?,?,?)]] with root cause
+
+java.sql.SQLException: El usuario tiene una sanción activa y no puede realizar reservas
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1084) ~[mysql-connector-j-9.4.0.jar:9.4.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-6.3.3.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-6.3.3.jar:na]
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.id.insert.GetGeneratedKeysDelegate.performMutation(GetGeneratedKeysDelegate.java:116) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:47) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:55) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.doStaticInserts(InsertCoordinatorStandard.java:194) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.coordinateInsert(InsertCoordinatorStandard.java:132) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.insert(InsertCoordinatorStandard.java:95) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.action.internal.EntityIdentityInsertAction.execute(EntityIdentityInsertAction.java:85) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.engine.spi.ActionQueue.execute(ActionQueue.java:682) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:293) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:274) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:324) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:394) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:308) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:224) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:136) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:177) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.persist(DefaultPersistEventListener.java:95) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:79) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:55) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:761) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:745) ~[hibernate-core-6.6.33.Final.jar:6.6.33.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.orm.jpa.ExtendedEntityManagerCreator$ExtendedEntityManagerInvocationHandler.invoke(ExtendedEntityManagerCreator.java:364) ~[spring-orm-6.2.12.jar:6.2.12]
+	at jdk.proxy4/jdk.proxy4.$Proxy128.persist(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.12.jar:6.2.12]
+	at jdk.proxy4/jdk.proxy4.$Proxy128.persist(Unknown Source) ~[na:na]
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.save(SimpleJpaRepository.java:654) ~[spring-data-jpa-3.5.5.jar:3.5.5]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:734) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69) ~[spring-data-commons-3.5.5.jar:3.5.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.12.jar:6.2.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138) ~[spring-tx-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:165) ~[spring-data-jpa-3.5.5.jar:3.5.5]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223) ~[spring-aop-6.2.12.jar:6.2.12]
+	at jdk.proxy4/jdk.proxy4.$Proxy142.save(Unknown Source) ~[na:na]
+	at com.reserva.service.ReservaService.crearReserva(ReservaService.java:178) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.12.jar:6.2.12]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.12.jar:6.2.12]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.12.jar:6.2.12]
+	at com.reserva.service.ReservaService$$SpringCGLIB$$0.crearReserva(<generated>) ~[classes/:na]
+	at com.reserva.controller.ReservaController.crearReserva(ReservaController.java:66) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.48.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.12.jar:6.2.12]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.48.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.12.jar:6.2.12]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1774) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.48.jar:10.1.48]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.espacio=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    insert 
+    into
+        reserva
+        (bloque, CantidadEstudiantes, curso, DescripcionUso, espacio, Estado, fechaReserva, fechaSolicitud, usuario) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque=?
+2025-11-26T19:34:12.769-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-7] com.reserva.service.ReservaQrClient      : No se pudo generar el QR para la reserva 52: I/O error on POST request for "http://localhost:8090/api/v1/qr/reservas": null
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.IdReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque=?
+2025-11-26T19:34:55.343-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-6] com.reserva.service.ReservaQrClient      : No se pudo recuperar el QR existente para la reserva 52: I/O error on GET request for "http://localhost:8090/api/v1/qr/reservas/reserva/52": null
+2025-11-26T19:34:55.347-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-6] com.reserva.service.ReservaQrClient      : No se pudo generar el QR para la reserva 52: I/O error on POST request for "http://localhost:8090/api/v1/qr/reservas": null
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.espacio=? 
+        and r1_0.bloque=? 
+        and r1_0.fechaReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    insert 
+    into
+        reserva
+        (bloque, CantidadEstudiantes, curso, DescripcionUso, espacio, Estado, fechaReserva, fechaSolicitud, usuario) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque=?
+2025-11-26T19:35:18.194-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-2] com.reserva.service.ReservaQrClient      : No se pudo generar el QR para la reserva 53: I/O error on POST request for "http://localhost:8090/api/v1/qr/reservas": null
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.IdReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque=?
+2025-11-26T19:35:40.628-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-7] com.reserva.service.ReservaQrClient      : No se pudo recuperar el QR existente para la reserva 53: I/O error on GET request for "http://localhost:8090/api/v1/qr/reservas/reserva/53": null
+2025-11-26T19:35:40.633-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-7] com.reserva.service.ReservaQrClient      : No se pudo generar el QR para la reserva 53: I/O error on POST request for "http://localhost:8090/api/v1/qr/reservas": null
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    order by
+        f1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        e1_0.IdEscuela,
+        e1_0.IdFacultad,
+        e1_0.Nombre 
+    from
+        escuela e1_0 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        f1_0.IdFacultad,
+        f1_0.Abreviatura,
+        f1_0.Nombre 
+    from
+        facultad f1_0 
+    where
+        f1_0.IdFacultad=?
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+        and r1_0.Estado in (?)
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.IdReserva=?
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque=?
+2025-11-26T19:36:38.882-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-5] com.reserva.service.ReservaQrClient      : No se pudo recuperar el QR existente para la reserva 53: I/O error on GET request for "http://localhost:8090/api/v1/qr/reservas/reserva/53": null
+2025-11-26T19:36:38.887-05:00  WARN 23712 --- [BackendReserva] [nio-8084-exec-5] com.reserva.service.ReservaQrClient      : No se pudo generar el QR para la reserva 53: I/O error on POST request for "http://localhost:8090/api/v1/qr/reservas": null
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        r1_0.IdReserva,
+        r1_0.bloque,
+        r1_0.CantidadEstudiantes,
+        r1_0.curso,
+        r1_0.DescripcionUso,
+        r1_0.espacio,
+        r1_0.Estado,
+        r1_0.fechaReserva,
+        r1_0.fechaSolicitud,
+        r1_0.usuario 
+    from
+        reserva r1_0 
+    where
+        r1_0.usuario=? 
+    order by
+        r1_0.fechaReserva desc 
+    limit
+        ?
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    where
+        bh1_0.IdBloque in (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio in (?)
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.Estado=? 
+        and e1_0.Escuela=? 
+    order by
+        e1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+Hibernate: 
+    select
+        e1_0.IdEspacio,
+        e1_0.Capacidad,
+        e1_0.Codigo,
+        e1_0.Equipamiento,
+        e1_0.Escuela,
+        e1_0.Estado,
+        e1_0.Nombre,
+        e1_0.Tipo 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    select
+        count(*) 
+    from
+        espacio e1_0 
+    where
+        e1_0.IdEspacio=?
+Hibernate: 
+    SELECT
+        DISTINCT b.* 
+    FROM
+        bloqueshorarios b 
+    INNER JOIN
+        horarios h 
+            ON h.bloque = b.IdBloque 
+    WHERE
+        h.espacio = ? 
+    ORDER BY
+        b.Orden ASC,
+        b.Nombre ASC 
+Hibernate: 
+    select
+        c1_0.IdCurso,
+        c1_0.Ciclo,
+        c1_0.Escuela,
+        c1_0.Estado,
+        c1_0.Facultad,
+        c1_0.Nombre 
+    from
+        cursos c1_0 
+    where
+        c1_0.Escuela=? 
+        and c1_0.Estado=? 
+    order by
+        c1_0.Nombre
+2025-11-26T19:42:32.205-05:00  INFO 23712 --- [BackendReserva] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-26T19:42:32.218-05:00  INFO 23712 --- [BackendReserva] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-26T19:42:32.226-05:00  INFO 23712 --- [BackendReserva] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T19:42:32.232-05:00  INFO 23712 --- [BackendReserva] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-26T19:42:32.243-05:00  INFO 23712 --- [BackendReserva] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  56:24 min
+[INFO] Finished at: 2025-11-26T19:42:32-05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.5.7:run (default-cli) on project BackendReserva: Process terminated with exit code: 143 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
