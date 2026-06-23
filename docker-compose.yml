@@ -1,214 +1,165 @@
-version: '3.8'
-
 services:
   db:
     image: mariadb:10.11
-    container_name: db
+    container_name: integraupt-db
     environment:
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
       MARIADB_DATABASE: sisintupt
-    ports:
-      - "3306:3306"
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
     volumes:
-      - ./sisintupt.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: always
-
-  # === MICROSERVICIOS BACKEND ===
-
-  backend-sanciones:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendSanciones
-    container_name: backend-sanciones
+      - db_data:/var/lib/mysql
+      - ./Integraupt-Backend/docker/db-init:/docker-entrypoint-initdb.d:ro
     ports:
-      - "8087:8087"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [integraupt]
+
+  servicio-usuarios:
+    build:
+      context: ./Integraupt-Backend/servicio-usuarios
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-usuarios/.env.docker
+    command: sh -c "php artisan migrate --force --no-interaction; php artisan serve --host=0.0.0.0 --port=8000"
     depends_on:
-      - db
+      db: { condition: service_healthy }
+    ports: ["8092:8000"]
+    networks: [integraupt]
 
-  backend-usuarios:
+  servicio-login:
     build:
-      context: .
-      dockerfile: Dockerfile.laravel
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendUsuarios
-    container_name: backend-usuarios
-    ports:
-      - "8092:8092"
-    environment:
-      - DB_HOST=db
-    command: php artisan serve --host=0.0.0.0 --port=8092
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-login
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-login/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8081:8000"]
+    networks: [integraupt]
 
-  backend-reportes:
+  servicio-espacios:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendReportes
-    container_name: backend-reportes
-    ports:
-      - "8089:8089"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-espacios
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-espacios/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8082:8000"]
+    networks: [integraupt]
 
-  backend-qr:
+  servicio-horarios-curso:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendQR
-    container_name: backend-qr
-    ports:
-      - "8090:8090"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-horarios-curso
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-horarios-curso/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8083:8000"]
+    networks: [integraupt]
 
-  backend-reserva:
+  servicio-reserva:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendReserva
-    container_name: backend-reserva
-    ports:
-      - "8084:8084"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-reserva
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-reserva/.env.docker
+    depends_on: [servicio-usuarios, servicio-qr, servicio-sanciones]
+    ports: ["8084:8000"]
+    networks: [integraupt]
 
-  backend-login:
+  servicio-horarios:
     build:
-      context: .
-      dockerfile: Dockerfile.laravel
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendLogin
-    container_name: backend-login
-    ports:
-      - "8081:8081"
-    environment:
-      - DB_HOST=db
-    command: php artisan serve --host=0.0.0.0 --port=8081
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-horarios
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-horarios/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8085:8000"]
+    networks: [integraupt]
 
-  backend-horarios-curso:
+  servicio-incidencia:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendHorariosCurso
-    container_name: backend-horarios-curso
-    ports:
-      - "8083:8083"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-incidencia
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-incidencia/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8086:8000"]
+    networks: [integraupt]
 
-  backend-inicidencia:
+  servicio-sanciones:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendInicidencia
-    container_name: backend-inicidencia
-    ports:
-      - "8086:8086"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-sanciones
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-sanciones/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8087:8000"]
+    networks: [integraupt]
 
-  backend-horarios:
+  servicio-adreserva:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendHorarios
-    container_name: backend-horarios
-    ports:
-      - "8085:8085"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-adreserva
+      dockerfile: ../docker/adreserva.Dockerfile
+    env_file: ./Integraupt-Backend/servicio-adreserva/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8088:8000"]
+    networks: [integraupt]
 
-  backend-adreserva:
+  servicio-reportes:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendAdReserva
-    container_name: backend-adreserva
-    ports:
-      - "8088:8088"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-reportes
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-reportes/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8089:8000"]
+    networks: [integraupt]
 
-  backend-espacios:
+  servicio-qr:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendEspacios
-    container_name: backend-espacios
-    ports:
-      - "8082:8082"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
+      context: ./Integraupt-Backend/servicio-qr
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-qr/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8090:8000"]
+    networks: [integraupt]
 
-  backend-auditoria:
+  servicio-auditoria:
     build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendAuditoria
-    container_name: backend-auditoria
-    ports:
-      - "8091:8091"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sisintupt?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    depends_on:
-      - db
-
-  backend-google:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-      args:
-        SERVICE_DIR: Integraupt-Backend/BackendGoogle
-    container_name: backend-google
-    ports:
-      - "8080:8080"
-
-  # === FRONTEND ===
+      context: ./Integraupt-Backend/servicio-auditoria
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-auditoria/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8091:8000"]
+    networks: [integraupt]
 
   frontend:
     build:
       context: ./integraupt-frontend
-      dockerfile: Dockerfile
-    container_name: frontend
-    ports:
-      - "5173:5173"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    volumes:
-      - ./integraupt-frontend:/app
-      - /app/node_modules
+    ports: ["5173:5173"]
     depends_on:
-      - backend-login
-      - backend-usuarios
+      - servicio-login
+      - servicio-espacios
+      - servicio-horarios-curso
+      - servicio-reserva
+      - servicio-horarios
+      - servicio-incidencia
+      - servicio-sanciones
+      - servicio-adreserva
+      - servicio-reportes
+      - servicio-qr
+      - servicio-auditoria
+      - servicio-usuarios
+    networks: [integraupt]
+
+networks:
+  integraupt:
+    driver: bridge
+
+volumes:
+  db_data:
