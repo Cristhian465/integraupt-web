@@ -1,0 +1,549 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.horarios:BackendHorarios >--------------------
+[INFO] Building BackendHorarios 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.7:run (default-cli) > test-compile @ BackendHorarios >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ BackendHorarios ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ BackendHorarios ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 27 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ BackendHorarios ---
+[INFO] skip non existing resourceDirectory C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendHorarios\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ BackendHorarios ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.5.7:run (default-cli) < test-compile @ BackendHorarios <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.7:run (default-cli) @ BackendHorarios ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2025-11-26T18:46:32.932-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] c.horarios.BackendHorariosApplication    : Starting BackendHorariosApplication using Java 21.0.8 with PID 16500 (C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendHorarios\target\classes started by Razse in C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendHorarios)
+2025-11-26T18:46:32.939-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] c.horarios.BackendHorariosApplication    : No active profile set, falling back to 1 default profile: "default"
+2025-11-26T18:46:33.038-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-26T18:46:33.039-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-26T18:46:34.412-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-26T18:46:34.528-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 102 ms. Found 6 JPA repository interfaces.
+2025-11-26T18:46:35.405-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2025-11-26T18:46:35.430-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-26T18:46:35.430-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-26T18:46:35.499-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-26T18:46:35.500-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2459 ms
+2025-11-26T18:46:35.721-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-26T18:46:35.786-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-26T18:46:35.828-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-26T18:46:36.188-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-26T18:46:36.233-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-26T18:46:36.509-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4b0268d1
+2025-11-26T18:46:36.512-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-26T18:46:36.577-05:00  WARN 16500 --- [BackendHorarios] [  restartedMain] org.hibernate.dialect.Dialect            : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2025-11-26T18:46:36.583-05:00  WARN 16500 --- [BackendHorarios] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26T18:46:36.611-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 5.5.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-26T18:46:38.179-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-26T18:46:38.184-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T18:46:38.776-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-26T18:46:40.718-05:00  WARN 16500 --- [BackendHorarios] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-26T18:46:41.005-05:00  WARN 16500 --- [BackendHorarios] [  restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-11-26T18:46:41.150-05:00  WARN 16500 --- [BackendHorarios] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-11-26T18:46:41.203-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path '/'
+2025-11-26T18:46:41.213-05:00  INFO 16500 --- [BackendHorarios] [  restartedMain] c.horarios.BackendHorariosApplication    : Started BackendHorariosApplication in 9.13 seconds (process running for 9.957)
+2025-11-26T18:47:44.962-05:00  INFO 16500 --- [BackendHorarios] [nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-26T18:47:44.962-05:00  INFO 16500 --- [BackendHorarios] [nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-26T18:47:44.964-05:00  INFO 16500 --- [BackendHorarios] [nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+2025-11-26T19:17:21.741-05:00  WARN 16500 --- [BackendHorarios] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m44s707ms411µs400ns).
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+Hibernate: 
+    select
+        h1_0.IdHorario,
+        h1_0.bloque,
+        h1_0.diaSemana,
+        h1_0.espacio,
+        h1_0.ocupado 
+    from
+        horarios h1_0 
+    left join
+        espacio e1_0 
+            on e1_0.IdEspacio=h1_0.espacio 
+    left join
+        bloqueshorarios b1_0 
+            on b1_0.IdBloque=h1_0.bloque 
+    where
+        e1_0.IdEspacio=? 
+    order by
+        b1_0.Orden,
+        h1_0.diaSemana
+Hibernate: 
+    select
+        bh1_0.IdBloque,
+        bh1_0.HoraFinal,
+        bh1_0.HoraInicio,
+        bh1_0.Nombre,
+        bh1_0.Orden 
+    from
+        bloqueshorarios bh1_0 
+    order by
+        bh1_0.Orden
+2025-11-26T19:42:32.233-05:00  INFO 16500 --- [BackendHorarios] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-26T19:42:32.265-05:00  INFO 16500 --- [BackendHorarios] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-26T19:42:32.283-05:00  INFO 16500 --- [BackendHorarios] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T19:42:32.307-05:00  INFO 16500 --- [BackendHorarios] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-26T19:42:32.318-05:00  INFO 16500 --- [BackendHorarios] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

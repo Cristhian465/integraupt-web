@@ -1,0 +1,84 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.inicidencia:BackendInicidencia >-----------------
+[INFO] Building BackendInicidencia 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.7:run (default-cli) > test-compile @ BackendInicidencia >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ BackendInicidencia ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ BackendInicidencia ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 21 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ BackendInicidencia ---
+[INFO] skip non existing resourceDirectory C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendInicidencia\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ BackendInicidencia ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] <<< spring-boot:3.5.7:run (default-cli) < test-compile @ BackendInicidencia <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.7:run (default-cli) @ BackendInicidencia ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2025-11-26T18:46:32.402-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] c.i.BackendInicidenciaApplication        : Starting BackendInicidenciaApplication using Java 21.0.8 with PID 20312 (C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendInicidencia\target\classes started by Razse in C:\Users\Razse\Downloads\asda\IntegraUPT\IntegraUPT\Integraupt-Backend\BackendInicidencia)
+2025-11-26T18:46:32.409-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] c.i.BackendInicidenciaApplication        : No active profile set, falling back to 1 default profile: "default"
+2025-11-26T18:46:32.498-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-11-26T18:46:32.499-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-11-26T18:46:33.950-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-26T18:46:34.103-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 136 ms. Found 4 JPA repository interfaces.
+2025-11-26T18:46:34.964-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8086 (http)
+2025-11-26T18:46:34.986-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-26T18:46:34.986-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-11-26T18:46:35.059-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-26T18:46:35.061-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2560 ms
+2025-11-26T18:46:35.339-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-26T18:46:35.423-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-11-26T18:46:35.477-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-26T18:46:35.846-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-26T18:46:35.883-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-26T18:46:36.108-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@40b5b759
+2025-11-26T18:46:36.111-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-26T18:46:36.167-05:00  WARN 20312 --- [BackendInicidencia] [  restartedMain] org.hibernate.dialect.Dialect            : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2025-11-26T18:46:36.172-05:00  WARN 20312 --- [BackendInicidencia] [  restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-26T18:46:36.199-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 5.5.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-11-26T18:46:37.736-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-26T18:46:37.740-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T18:46:38.250-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-26T18:46:42.411-05:00  WARN 20312 --- [BackendInicidencia] [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : Unable to start LiveReload server
+2025-11-26T18:46:42.447-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8086 (http) with context path '/'
+2025-11-26T18:46:42.455-05:00  INFO 20312 --- [BackendInicidencia] [  restartedMain] c.i.BackendInicidenciaApplication        : Started BackendInicidenciaApplication in 10.816 seconds (process running for 11.733)
+2025-11-26T18:48:40.316-05:00  INFO 20312 --- [BackendInicidencia] [nio-8086-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-11-26T18:48:40.316-05:00  INFO 20312 --- [BackendInicidencia] [nio-8086-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-11-26T18:48:40.317-05:00  INFO 20312 --- [BackendInicidencia] [nio-8086-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+Hibernate: select i1_0.IdIncidencia,r1_0.IdReserva,u1_0.IdUsuario,u1_0.Nombre,u1_0.Apellido,u1_0.NumDoc,e1_0.IdEspacio,e1_0.Codigo,e1_0.Nombre,e2_0.IdEscuela,e2_0.Nombre,f1_0.IdFacultad,f1_0.Nombre,i1_0.Descripcion,i1_0.FechaReporte from incidencia i1_0 join reserva r1_0 on r1_0.IdReserva=i1_0.Reserva join espacio e1_0 on e1_0.IdEspacio=r1_0.espacio join escuela e2_0 on e2_0.IdEscuela=e1_0.Escuela join facultad f1_0 on f1_0.IdFacultad=e2_0.IdFacultad left join usuario u1_0 on u1_0.IdUsuario=r1_0.usuario where (? is null or e2_0.IdEscuela=?) and (? is null or f1_0.IdFacultad=?) and (? is null or e1_0.IdEspacio=?) and (? is null or ?='' or lower(i1_0.Descripcion) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(e1_0.Nombre) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(e1_0.Codigo) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(coalesce(u1_0.Nombre,'')) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(coalesce(u1_0.Apellido,'')) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(concat(coalesce(u1_0.Nombre,''),' ',coalesce(u1_0.Apellido,''))) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(coalesce(u1_0.NumDoc,'')) like replace(lower(concat('%',?,'%')),'\\','\\\\')) order by i1_0.FechaReporte desc
+Hibernate: select i1_0.IdIncidencia,r1_0.IdReserva,u1_0.IdUsuario,u1_0.Nombre,u1_0.Apellido,u1_0.NumDoc,e1_0.IdEspacio,e1_0.Codigo,e1_0.Nombre,e2_0.IdEscuela,e2_0.Nombre,f1_0.IdFacultad,f1_0.Nombre,i1_0.Descripcion,i1_0.FechaReporte from incidencia i1_0 join reserva r1_0 on r1_0.IdReserva=i1_0.Reserva join espacio e1_0 on e1_0.IdEspacio=r1_0.espacio join escuela e2_0 on e2_0.IdEscuela=e1_0.Escuela join facultad f1_0 on f1_0.IdFacultad=e2_0.IdFacultad left join usuario u1_0 on u1_0.IdUsuario=r1_0.usuario where (? is null or e2_0.IdEscuela=?) and (? is null or f1_0.IdFacultad=?) and (? is null or e1_0.IdEspacio=?) and (? is null or ?='' or lower(i1_0.Descripcion) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(e1_0.Nombre) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(e1_0.Codigo) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(coalesce(u1_0.Nombre,'')) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(coalesce(u1_0.Apellido,'')) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(concat(coalesce(u1_0.Nombre,''),' ',coalesce(u1_0.Apellido,''))) like replace(lower(concat('%',?,'%')),'\\','\\\\') or lower(coalesce(u1_0.NumDoc,'')) like replace(lower(concat('%',?,'%')),'\\','\\\\')) order by i1_0.FechaReporte desc
+2025-11-26T19:17:37.312-05:00  WARN 20312 --- [BackendInicidencia] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m651ms928µs800ns).
+2025-11-26T19:42:32.232-05:00  INFO 20312 --- [BackendInicidencia] [ionShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-11-26T19:42:32.260-05:00  INFO 20312 --- [BackendInicidencia] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-11-26T19:42:32.288-05:00  INFO 20312 --- [BackendInicidencia] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-26T19:42:32.327-05:00  INFO 20312 --- [BackendInicidencia] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-26T19:42:32.354-05:00  INFO 20312 --- [BackendInicidencia] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
