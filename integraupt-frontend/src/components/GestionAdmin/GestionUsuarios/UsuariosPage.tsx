@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Briefcase, GraduationCap, Loader2, Users, UserPlus, ShieldCheck } from "lucide-react";
 import { UsuarioTable } from "./components/UsuarioTable";
 import { UsuarioFilters, type UsuarioStatusFilter } from "./components/UsuarioFilters";
@@ -63,6 +63,8 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
   const [formErrors, setFormErrors] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
 
   const { items, loading, error, catalogs, reload, createItem, updateItem, changeEstado } =
     useUsuarios(activeRole);
@@ -105,6 +107,16 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
     }
     return fechas[0].toLocaleString("es-PE", { dateStyle: "medium", timeStyle: "short" });
   }, [records]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, statusFilter, activeRole]);
+
+  const totalPages = Math.ceil(filteredRecords.length / ITEMS_PER_PAGE) || 1;
+  const paginatedRecords = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredRecords.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredRecords, currentPage]);
 
   const handleTabChange = (role: UsuarioRole) => {
     setActiveRole(role);
@@ -346,12 +358,36 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
         {error && <div className="usuarios-error">{error}</div>}
 
         <UsuarioTable
-          rows={filteredRecords}
+          rows={paginatedRecords}
           loading={loading}
           onEdit={openEditModal}
           onToggleEstado={handleToggleEstado}
           activeRole={activeRole}
         />
+
+        {totalPages > 1 && (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", marginTop: "1rem", padding: "1rem" }}>
+            <button
+              type="button"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              style={{ padding: "0.5rem 1rem", borderRadius: "4px", border: "1px solid #e2e8f0", backgroundColor: currentPage === 1 ? "#f8fafc" : "#fff", cursor: currentPage === 1 ? "not-allowed" : "pointer" }}
+            >
+              Anterior
+            </button>
+            <span style={{ fontSize: "0.875rem", color: "#64748b" }}>
+              Página {currentPage} de {totalPages}
+            </span>
+            <button
+              type="button"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              style={{ padding: "0.5rem 1rem", borderRadius: "4px", border: "1px solid #e2e8f0", backgroundColor: currentPage === totalPages ? "#f8fafc" : "#fff", cursor: currentPage === totalPages ? "not-allowed" : "pointer" }}
+            >
+              Siguiente
+            </button>
+          </div>
+        )}
       </section>
 
       <UsuarioModal

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { AlertCircle, Layers3, Plus, RefreshCw, Search } from "lucide-react";
 import "../../../styles/GestionEspacios.css";
 import { EspacioModal } from "./components/EspacioModal";
@@ -37,6 +37,8 @@ export const GestionEspacios: React.FC<GestionEspaciosProps> = ({ onAuditLog }) 
   const [submitting, setSubmitting] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [statusMessage, setStatusMessage] = useState<StatusMessage | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 5;
 
   const filteredEspacios = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
@@ -52,6 +54,16 @@ export const GestionEspacios: React.FC<GestionEspaciosProps> = ({ onAuditLog }) 
       );
     });
   }, [espacios, searchTerm]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  const totalPages = Math.ceil(filteredEspacios.length / ITEMS_PER_PAGE) || 1;
+  const paginatedEspacios = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredEspacios.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredEspacios, currentPage]);
 
   const totalActivos = useMemo(
     () => espacios.filter((espacio) => espacio.estado === 1).length,
@@ -254,11 +266,35 @@ export const GestionEspacios: React.FC<GestionEspaciosProps> = ({ onAuditLog }) 
       )}
 
       <EspacioTable
-        espacios={filteredEspacios}
+        espacios={paginatedEspacios}
         loading={loading}
         onEdit={openEditModal}
         onDelete={handleDelete}
       />
+
+      {totalPages > 1 && (
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "1rem", marginTop: "1rem", padding: "1rem" }}>
+          <button
+            type="button"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            style={{ padding: "0.5rem 1rem", borderRadius: "4px", border: "1px solid #e2e8f0", backgroundColor: currentPage === 1 ? "#f8fafc" : "#fff", cursor: currentPage === 1 ? "not-allowed" : "pointer" }}
+          >
+            Anterior
+          </button>
+          <span style={{ fontSize: "0.875rem", color: "#64748b" }}>
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            type="button"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            style={{ padding: "0.5rem 1rem", borderRadius: "4px", border: "1px solid #e2e8f0", backgroundColor: currentPage === totalPages ? "#f8fafc" : "#fff", cursor: currentPage === totalPages ? "not-allowed" : "pointer" }}
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
 
       <EspacioModal
         open={modalOpen}
