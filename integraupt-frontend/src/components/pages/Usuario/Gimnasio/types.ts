@@ -2,6 +2,8 @@ export interface AsistenciaGimnasioResponse {
   id_asistencia: number;
   id_usuario: number;
   usuario_nombre?: string | null;
+  codigo_estudiante?: string | null;
+  escuela_facultad?: string | null;
   fecha: string;
   hora_ingreso: string;
   hora_salida?: string | null;

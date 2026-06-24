@@ -61,10 +61,12 @@ export const GestionGimnasio: React.FC = () => {
         const doc = new jsPDF();
         doc.text('Reporte de Asistencias - Gimnasio UPT', 14, 15);
         
-        const tableColumn = ["ID", "Usuario", "Fecha", "Ingreso", "Salida", "Duración (min)"];
+        const tableColumn = ["ID", "Código", "Usuario", "Escuela/Facultad", "Fecha", "Ingreso", "Salida", "Duración (min)"];
         const tableRows = filteredAsistencias.map(a => [
           a.id_asistencia,
+          a.codigo_estudiante || '-',
           a.usuario_nombre || `Usuario #${a.id_usuario}`,
+          a.escuela_facultad || '-',
           a.fecha,
           a.hora_ingreso,
           a.hora_salida || 'En progreso',
@@ -81,7 +83,9 @@ export const GestionGimnasio: React.FC = () => {
       } else {
         const worksheetData = filteredAsistencias.map(a => ({
           ID: a.id_asistencia,
+          'Código': a.codigo_estudiante || '-',
           Usuario: a.usuario_nombre || `Usuario #${a.id_usuario}`,
+          'Escuela/Facultad': a.escuela_facultad || '-',
           Fecha: a.fecha,
           Ingreso: a.hora_ingreso,
           Salida: a.hora_salida || 'En progreso',
@@ -125,6 +129,8 @@ export const GestionGimnasio: React.FC = () => {
       result = result.filter(a => 
         a.id_asistencia.toString().includes(query) ||
         (a.usuario_nombre || "").toLowerCase().includes(query) ||
+        (a.codigo_estudiante || "").toLowerCase().includes(query) ||
+        (a.escuela_facultad || "").toLowerCase().includes(query) ||
         a.fecha.includes(query)
       );
     }
@@ -338,7 +344,9 @@ export const GestionGimnasio: React.FC = () => {
           <thead style={{ backgroundColor: '#f1f5f9', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: '0.05em' }}>
             <tr>
               <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>ID</th>
+              <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Código</th>
               <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Usuario</th>
+              <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Escuela/Facultad</th>
               <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Fecha</th>
               <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Ingreso</th>
               <th style={{ padding: '0.75rem', textAlign: 'left', borderBottom: '1px solid #e2e8f0' }}>Salida</th>
@@ -348,7 +356,7 @@ export const GestionGimnasio: React.FC = () => {
           <tbody>
             {loading && asistencias.length === 0 ? (
               <tr>
-                <td colSpan={6} style={{ textAlign: 'center', padding: '2rem' }}>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '2rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', color: '#475569' }}>
                     <Loader2 className="spin" size={20} /> Cargando registros...
                   </div>
@@ -356,7 +364,7 @@ export const GestionGimnasio: React.FC = () => {
               </tr>
             ) : filteredAsistencias.length === 0 ? (
               <tr>
-                <td colSpan={6} style={{ textAlign: 'center', padding: '2rem', color: '#475569' }}>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '2rem', color: '#475569' }}>
                   No se encontraron registros de asistencia.
                 </td>
               </tr>
@@ -364,7 +372,9 @@ export const GestionGimnasio: React.FC = () => {
               filteredAsistencias.map(a => (
                 <tr key={a.id_asistencia} style={{ borderBottom: '1px solid #e2e8f0' }}>
                   <td style={{ padding: '0.75rem' }}>{a.id_asistencia}</td>
+                  <td style={{ padding: '0.75rem', fontFamily: 'monospace', fontWeight: 600 }}>{a.codigo_estudiante || <span style={{ color: '#94a3b8' }}>-</span>}</td>
                   <td style={{ padding: '0.75rem', fontWeight: 500 }}>{a.usuario_nombre || `Usuario #${a.id_usuario}`}</td>
+                  <td style={{ padding: '0.75rem' }}>{a.escuela_facultad || <span style={{ color: '#94a3b8' }}>-</span>}</td>
                   <td style={{ padding: '0.75rem' }}>{a.fecha}</td>
                   <td style={{ padding: '0.75rem' }}>{a.hora_ingreso}</td>
                   <td style={{ padding: '0.75rem' }}>

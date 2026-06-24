@@ -86,7 +86,7 @@ class GimnasioService
 
     public function listarAsistencias(): array
     {
-        return AsistenciaGimnasio::with('usuario')
+        return AsistenciaGimnasio::with(['usuario.estudiante.escuelaRel.facultad'])
             ->orderByDesc('FechaIngreso')
             ->get()
             ->map(fn (AsistenciaGimnasio $a) => $this->mapearAsistencia($a))
@@ -99,10 +99,22 @@ class GimnasioService
         $fechaSalida = $asistencia->FechaSalida ? Carbon::parse($asistencia->FechaSalida) : null;
         $duracion = $fechaSalida ? (int) round($fechaIngreso->diffInMinutes($fechaSalida, true)) : null;
 
+        $usuario = $asistencia->usuario;
+        $estudiante = $usuario?->estudiante;
+        $escuela = $estudiante?->escuelaRel;
+        $facultad = $escuela?->facultad;
+
+        $escuelaFacultad = null;
+        if ($escuela && $facultad) {
+            $escuelaFacultad = $escuela->Nombre . '/' . ($facultad->Abreviatura ?? $facultad->Nombre);
+        }
+
         return [
             'id_asistencia' => $asistencia->IdAsistencia,
             'id_usuario' => $asistencia->IdUsuario,
-            'usuario_nombre' => $asistencia->usuario?->Nombre . ' ' . $asistencia->usuario?->Apellido,
+            'usuario_nombre' => $usuario ? ($usuario->Nombre . ' ' . $usuario->Apellido) : null,
+            'codigo_estudiante' => $estudiante?->Codigo,
+            'escuela_facultad' => $escuelaFacultad,
             'fecha' => $fechaIngreso->format('Y-m-d'),
             'hora_ingreso' => $fechaIngreso->format('H:i:s'),
             'hora_salida' => $fechaSalida ? $fechaSalida->format('H:i:s') : null,

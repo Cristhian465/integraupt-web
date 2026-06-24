@@ -14,4 +14,9 @@ class Usuario extends Model
         'Nombre',
         'Apellido',
     ];
+
+    public function estudiante()
+    {
+        return $this->hasOne(Estudiante::class, 'IdUsuario', 'IdUsuario');
+    }
 }
