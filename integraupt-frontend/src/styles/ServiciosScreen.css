@@ -198,6 +198,11 @@
   box-shadow: 0 25px 40px -30px rgba(8, 145, 178, 0.3);
 }
 
+.servicios-menu-card-promedio:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+  box-shadow: 0 25px 40px -30px rgba(236, 72, 153, 0.3);
+}
+
 .servicios-menu-icon-container {
   display: flex;
   justify-content: center;
@@ -244,6 +249,10 @@
 
 .servicios-menu-icon-policlinico {
   background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+}
+
+.servicios-menu-icon-promedio {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
 }
 
 .servicios-menu-icon-svg {
@@ -357,6 +366,16 @@
   box-shadow: 0 8px 20px -10px rgba(8, 145, 178, 0.3);
 }
 
+.servicios-menu-card-badge-promedio {
+  background-color: rgba(236, 72, 153, 0.12);
+  color: #be185d;
+  border-color: rgba(236, 72, 153, 0.2);
+}
+
+.servicios-menu-card:hover .servicios-menu-card-badge-promedio {
+  box-shadow: 0 8px 20px -10px rgba(236, 72, 153, 0.3);
+}
+
 .servicios-menu-card-actions {
   display: flex;
   justify-content: center;
@@ -451,6 +470,15 @@
 .servicios-menu-card-button-policlinico:hover {
   background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
   box-shadow: 0 15px 25px -15px rgba(8, 145, 178, 0.5);
+}
+
+.servicios-menu-card-button-promedio {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+}
+
+.servicios-menu-card-button-promedio:hover {
+  background: linear-gradient(135deg, #be185d 0%, #9d174d 100%);
+  box-shadow: 0 15px 25px -15px rgba(236, 72, 153, 0.5);
 }
 
 /* Welcome Card Animations */

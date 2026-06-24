@@ -12,7 +12,8 @@ import {
   Brain,
   Bus,
   Trophy,
-  HeartPulse
+  HeartPulse,
+  Calculator
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -40,6 +41,7 @@ interface ServiciosPageProps {
   onNavigateToBurra: () => void;
   onNavigateToOlimpiadas: () => void;
   onNavigateToPoliclinico: () => void;
+  onNavigateToPromedio: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -69,6 +71,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToBurra,
   onNavigateToOlimpiadas,
   onNavigateToPoliclinico,
+  onNavigateToPromedio,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -297,6 +300,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Agendar cita
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-promedio"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-promedio">
+                <Calculator className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Calcula tu Promedio</h2>
+            <p className="servicios-menu-card-description">
+              Calcula tu promedio actual y lo que necesitas sacar para aprobar.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-promedio">
+              Gestión Académica
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-promedio"
+                onClick={(event) => {
+                  onNavigateToPromedio();
+                }}
+              >
+                Calcular notas
               </button>
             </div>
           </article>

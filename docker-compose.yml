@@ -180,10 +180,23 @@ services:
     ports: [ "8096:8000" ]
     networks: [ integraupt ]
 
+  servicio-promedio:
+    build:
+      context: ./Integraupt-Backend/servicio-promedio
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-promedio/.env.docker
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8067:8000" ]
+    networks: [ integraupt ]
+
   frontend:
     build:
       context: ./integraupt-frontend
     ports: [ "5173:5173" ]
+    volumes:
+      - ./integraupt-frontend:/app
+      - /app/node_modules
     depends_on:
       - servicio-login
       - servicio-espacios
@@ -201,6 +214,7 @@ services:
       - servicio-burra
       - servicio-olimpiadas
       - servicio-policlinico
+      - servicio-promedio
     networks: [ integraupt ]
 
 networks:

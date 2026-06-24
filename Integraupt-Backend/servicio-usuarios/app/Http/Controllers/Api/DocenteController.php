@@ -15,13 +15,13 @@ class DocenteController extends Controller
 {
     public function index(): JsonResponse
     {
-        $docentes = Docente::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela'])->get();
+        $docentes = Docente::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela.facultad'])->get();
         return response()->json($docentes);
     }
 
     public function show(int $id): JsonResponse
     {
-        $docente = Docente::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela'])->find($id);
+        $docente = Docente::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela.facultad'])->find($id);
         if (!$docente) {
             return response()->json(['error' => 'Docente no encontrado'], 404);
         }

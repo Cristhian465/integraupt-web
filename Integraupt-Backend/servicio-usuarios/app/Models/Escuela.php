@@ -10,4 +10,9 @@ class Escuela extends BaseModel
     protected $primaryKey = 'IdEscuela';
     public $timestamps = false;
     protected $guarded = [];
+
+    public function facultad()
+    {
+        return $this->belongsTo(Facultad::class, 'IdFacultad', 'IdFacultad');
+    }
 }

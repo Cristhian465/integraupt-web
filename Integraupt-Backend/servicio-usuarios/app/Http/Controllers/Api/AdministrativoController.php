@@ -15,13 +15,13 @@ class AdministrativoController extends Controller
 {
     public function index(): JsonResponse
     {
-        $administrativos = Administrativo::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela'])->get();
+        $administrativos = Administrativo::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela.facultad'])->get();
         return response()->json($administrativos);
     }
 
     public function show(int $id): JsonResponse
     {
-        $administrativo = Administrativo::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela'])->find($id);
+        $administrativo = Administrativo::with(['usuario.tipoDocumento', 'usuario.auth', 'usuario.rolObj', 'escuela.facultad'])->find($id);
         if (!$administrativo) {
             return response()->json(['error' => 'Administrativo no encontrado'], 404);
         }
