@@ -5,6 +5,8 @@ services:
     environment:
       MARIADB_DATABASE: sisintupt
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+      TZ: America/Lima
+    command: --default-time-zone=America/Lima
     volumes:
       - db_data:/var/lib/mysql
       - ./Integraupt-Backend/docker/db-init:/docker-entrypoint-initdb.d:ro
@@ -168,6 +170,16 @@ services:
     ports: ["8095:8000"]
     networks: [integraupt]
 
+  servicio-policlinico:
+    build:
+      context: ./Integraupt-Backend/servicio-policlinico
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-policlinico/.env.docker
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8096:8000" ]
+    networks: [ integraupt ]
+
   servicio-gimnasio:
     build:
       context: ./Integraupt-Backend/servicio-gimnasio
@@ -175,7 +187,7 @@ services:
       args: { PHP_VERSION: "8.2" }
     env_file: ./Integraupt-Backend/servicio-gimnasio/.env.docker
     depends_on: [servicio-usuarios]
-    ports: ["8096:8000"]
+    ports: ["8098:8000"]
     networks: [integraupt]
 
   frontend:
@@ -198,6 +210,7 @@ services:
       - servicio-usuarios
       - servicio-burra
       - servicio-olimpiadas
+      - servicio-policlinico
       - servicio-gimnasio
     networks: [ integraupt ]
 

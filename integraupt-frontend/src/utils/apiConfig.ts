@@ -34,7 +34,8 @@ const DEFAULT_QR_RESERVAS_BACKEND_URL = "http://localhost:8090";
 const DEFAULT_AUDITORIA_BACKEND_URL = "http://localhost:8091";
 const DEFAULT_PSICOLOGIA_BACKEND_URL = "http://localhost:8093";
 const DEFAULT_OLIMPIADAS_BACKEND_URL = "http://localhost:8094";
-const DEFAULT_GIMNASIO_BACKEND_URL = "http://localhost:8096";
+const DEFAULT_GIMNASIO_BACKEND_URL = "http://localhost:8098";
+const DEFAULT_POLICLINICO_BACKEND_URL = "http://localhost:8096";
 
 // ==========================
 // Resolución final de URLs
@@ -116,6 +117,11 @@ export const GIMNASIO_API_BASE_URL = resolveBaseUrl(
   DEFAULT_GIMNASIO_BACKEND_URL
 );
 
+export const POLICLINICO_API_BASE_URL = resolveBaseUrl(
+  env.VITE_POLICLINICO_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_POLICLINICO_BACKEND_URL
+);
+
 
 // ==========================
 // Helpers para construir URLs
@@ -165,6 +171,9 @@ export const getOlimpiadasApiUrl = (path: string) =>
 
 export const getGimnasioApiUrl = (path: string) =>
   buildServiceUrl(GIMNASIO_API_BASE_URL, path);
+
+export const getPoliclinicoApiUrl = (path: string) =>
+  buildServiceUrl(POLICLINICO_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper

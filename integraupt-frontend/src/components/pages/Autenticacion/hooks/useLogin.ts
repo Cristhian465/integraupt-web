@@ -89,78 +89,43 @@ export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => 
     }
   };
 
-  const handleGoogleSignIn = useCallback(async () => {
-  console.log('Obteniendo URL de Google...');
-  setLoading(true);
-  setError(null);
-
-  try {
-    // Primero obtener la URL del backend
-    const response = await fetch('http://localhost:8080/auth/google/login');
-    
-    if (!response.ok) {
-      throw new Error('Error al obtener URL de Google');
-    }
-
-    const data = await response.json();
-    
-    if (data.success && data.url) {
-      // Ahora redirigir a la URL de Google
-      window.location.href = data.url;
-    } else {
-      throw new Error(data.message || 'Error en la respuesta del servidor');
-    }
-  } catch (err) {
-    const message = err instanceof Error 
-      ? err.message 
-      : 'Error al iniciar autenticación con Google';
-    setError(message);
-    setLoading(false);
-  }
-}, []);
+  const handleGoogleSignIn = useCallback(() => {
+    console.log('Redirigiendo a autenticación con Google...');
+    setLoading(true);
+    setError(null);
+    window.location.href = 'http://localhost:8081/api/auth/google/redirect';
+  }, []);
 
   useEffect(() => {
     const handleGoogleCallback = async () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const googleCode = urlParams.get('code');
+      const token = urlParams.get('token');
+      const authError = urlParams.get('error');
       
-      if (googleCode) {
+      if (authError) {
+        let errorMsg = 'Error en la autenticación con Google.';
+        if (authError === 'unauthorized_google') {
+          errorMsg = 'Tu cuenta de Google no está autorizada o no tienes perfil activo.';
+        }
+        setError(errorMsg);
+        window.history.replaceState({}, '', window.location.pathname);
+        return;
+      }
+
+      if (token) {
         setLoading(true);
         setError(null);
 
         try {
-          // Llamar al endpoint de callback
-          const response = await fetch(`http://localhost:8080/auth/google/callback?code=${googleCode}`);
+          const data = await autenticacionService.validateToken(token);
           
-          if (!response.ok) {
-            throw new Error('Error en la autenticación con Google');
+          if (!data?.success || !data?.perfil) {
+            throw new Error(data?.message || 'Error validando sesión de Google');
           }
-
-          const googleResponse = await response.json();
-          
-          if (!googleResponse.success || !googleResponse.profile) {
-            throw new Error(googleResponse.message || 'Error en autenticación con Google');
-          }
-
-          // Convertir perfil de Google al formato de tu app
-          const googleProfile = googleResponse.profile;
-          const userProfile = {
-            id: `google_${googleProfile.email}`,
-            codigo: googleProfile.email.split('@')[0], // "dj2022075749"
-            email: googleProfile.email,
-            nombres: googleProfile.fullName?.split(' ')[0] || 'DAYAN', // "DAYAN"
-            apellidos: googleProfile.fullName?.split(' ').slice(1).join(' ') || 'ELVIS JAHUIRA PILCO',
-            avatarUrl: googleProfile.picture,
-            estado: 'ACTIVO',
-            tipoLogin: 'academic',
-            rol: 'ESTUDIANTE',
-            escuela: googleProfile.hostedDomain || 'virtual.upt.pe',
-            facultad: 'Por asignar'
-          };
 
           const session: BackendSession = {
-            token: `google_${Date.now()}`,
-            perfil: userProfile
+            token,
+            perfil: data.perfil
           };
 
           setInfoMessage('Autenticación con Google exitosa. Redirigiendo...');
@@ -172,7 +137,7 @@ export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => 
         } catch (err) {
           const message = err instanceof Error 
             ? err.message 
-            : 'Error durante la autenticación con Google';
+            : 'Error durante la validación del inicio de sesión con Google';
           setError(message);
         } finally {
           setLoading(false);

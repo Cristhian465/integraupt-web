@@ -8,3 +8,5 @@ export { GestionIncidencias } from "./GestionIncidencias/IncidenciasGestionPage.
 export { GestionAuditoria } from "./GestionAuditoria/AuditoriaPage.tsx";
 export { GestionOlimpiadas } from "./GestionOlimpiadas/OlimpiadasPage.tsx";
 export { GestionGimnasio } from "./GestionGimnasio/GestionGimnasio.tsx";
+export { GestionPsicologia } from "./GestionPsicologia/PsicologiaAdminPage.tsx";
+export { GestionPoliclinico } from "./GestionPoliclinico/PoliclinicoAdminPage.tsx";

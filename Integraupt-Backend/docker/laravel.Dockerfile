@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libpng-dev \
         libonig-dev \
     && docker-php-ext-install pdo_mysql mbstring zip gd bcmath \
+    && echo "date.timezone=America/Lima" > /usr/local/etc/php/conf.d/timezone.ini \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

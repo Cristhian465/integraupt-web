@@ -18,5 +18,15 @@ export const autenticacionService = {
     });
 
     return await response.json();
+  },
+
+  async validateToken(token: string): Promise<BackendLoginResponse> {
+    const response = await fetch(getLoginApiUrl('/api/auth/validate'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token })
+    });
+
+    return await response.json();
   }
 };

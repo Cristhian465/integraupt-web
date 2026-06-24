@@ -165,7 +165,7 @@ class AuthController extends Controller
             $frontendUrl = env('FRONTEND_URL', 'http://localhost:3000');
             
             if (!$auth || !$auth->usuario || $auth->usuario->Estado != 1) {
-                return redirect()->away($frontendUrl . '/login?error=unauthorized_google');
+                return redirect()->away($frontendUrl . '/?error=unauthorized_google');
             }
 
             $now = now();
@@ -180,11 +180,11 @@ class AuthController extends Controller
                 'UltimoLogin' => $now
             ]);
 
-            return redirect()->away($frontendUrl . '/login?token=' . $token);
+            return redirect()->away($frontendUrl . '/?token=' . $token);
 
         } catch (\Exception $e) {
             $frontendUrl = env('FRONTEND_URL', 'http://localhost:3000');
-            return redirect()->away($frontendUrl . '/login?error=google_auth_failed');
+            return redirect()->away($frontendUrl . '/?error=google_auth_failed');
         }
     }
 }
