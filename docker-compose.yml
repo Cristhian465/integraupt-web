@@ -148,6 +148,16 @@ services:
     ports: ["8093:8000"]
     networks: [integraupt]
 
+  servicio-burra:
+    build:
+      context: ./Integraupt-Backend/servicio-burra
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-burra/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8094:8000"]
+    networks: [integraupt]
+
   frontend:
     build:
       context: ./integraupt-frontend
@@ -166,6 +176,7 @@ services:
       - servicio-qr
       - servicio-auditoria
       - servicio-usuarios
+      - servicio-burra
     networks: [integraupt]
 
 networks:

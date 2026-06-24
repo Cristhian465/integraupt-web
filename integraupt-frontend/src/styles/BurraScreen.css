@@ -1,0 +1,240 @@
+.burra-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.burra-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.burra-header-section {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.back-button:hover {
+  color: #0f172a;
+}
+
+.burra-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.5rem 0;
+}
+
+.burra-subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.burra-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: #e2e8f0;
+  padding: 0.5rem;
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.burra-tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.burra-tab.active {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.burra-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .burra-content {
+    grid-template-columns: 350px 1fr;
+  }
+}
+
+.burra-info-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bus-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  padding: 1.5rem;
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+}
+
+.bus-icon-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bus-details h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.bus-details .placa {
+  background: #fcd34d;
+  color: #000;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 0.9rem;
+  display: inline-block;
+  border: 2px solid #000;
+}
+
+.recorrido-info {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.recorrido-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #0f172a;
+}
+
+.recorrido-info p {
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+}
+.recorrido-info p:last-child {
+  margin-bottom: 0;
+}
+
+.horarios-lista {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.horarios-lista h4 {
+  margin: 0 0 1rem 0;
+  color: #0f172a;
+}
+
+.horario-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+.horario-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.horario-time {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 1.1rem;
+}
+
+.horario-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-inactive {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.status-curso {
+  background: #fef3c7;
+  color: #d97706;
+  animation: pulse-orange 2s infinite;
+}
+
+.status-espera {
+  background: #dcfce7;
+  color: #15803d;
+  animation: pulse-green 1.5s infinite;
+}
+
+.status-ruta {
+  background: #dbeafe;
+  color: #1d4ed8;
+  animation: slide-blue 2s infinite alternate;
+}
+
+.burra-map-panel {
+  min-height: 500px;
+  background: white;
+  border-radius: 16px;
+  padding: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+}
+
+@keyframes pulse-orange {
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes slide-blue {
+  from { transform: translateX(-2px); }
+  to { transform: translateX(2px); }
+}

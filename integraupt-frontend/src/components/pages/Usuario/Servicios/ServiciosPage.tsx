@@ -9,7 +9,8 @@ import {
   UserRound,
   LogOut,
   LibraryBig,
-  Brain
+  Brain,
+  Bus
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -34,6 +35,7 @@ interface ServiciosPageProps {
   onNavigateToReservas: () => void;
   onNavigateToIncidencias: () => void;
   onNavigateToPsicologia: () => void;
+  onNavigateToBurra: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -60,6 +62,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToReservas,
   onNavigateToIncidencias,
   onNavigateToPsicologia,
+  onNavigateToBurra,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -200,6 +203,34 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Agendar cita
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-burra"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-burra">
+                <Bus className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Burra UPT</h2>
+            <p className="servicios-menu-card-description">
+              Revisa los recorridos y horarios de los buses universitarios de la UPT.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-burra">
+              Transporte Estudiantil
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-burra"
+                onClick={() => onNavigateToBurra()}
+              >
+                Ver rutas y horarios
               </button>
             </div>
           </article>

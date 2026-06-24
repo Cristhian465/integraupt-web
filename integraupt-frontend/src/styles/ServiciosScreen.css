@@ -183,6 +183,11 @@
   box-shadow: 0 25px 40px -30px rgba(13, 148, 136, 0.3);
 }
 
+.servicios-menu-card-burra:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 25px 40px -30px rgba(249, 115, 22, 0.3);
+}
+
 .servicios-menu-icon-container {
   display: flex;
   justify-content: center;
@@ -217,6 +222,10 @@
 
 .servicios-menu-icon-psicologia {
   background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+}
+
+.servicios-menu-icon-burra {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
 }
 
 .servicios-menu-icon-svg {
@@ -300,6 +309,16 @@
   box-shadow: 0 8px 20px -10px rgba(13, 148, 136, 0.3);
 }
 
+.servicios-menu-card-badge-burra {
+  background-color: rgba(249, 115, 22, 0.12);
+  color: #ea580c;
+  border-color: rgba(249, 115, 22, 0.2);
+}
+
+.servicios-menu-card:hover .servicios-menu-card-badge-burra {
+  box-shadow: 0 8px 20px -10px rgba(249, 115, 22, 0.3);
+}
+
 .servicios-menu-card-actions {
   display: flex;
   justify-content: center;
@@ -367,6 +386,15 @@
 .servicios-menu-card-button-psicologia:hover {
   background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
   box-shadow: 0 15px 25px -15px rgba(13, 148, 136, 0.5);
+}
+
+.servicios-menu-card-button-burra {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.servicios-menu-card-button-burra:hover {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  box-shadow: 0 15px 25px -15px rgba(249, 115, 22, 0.5);
 }
 
 /* Welcome Card Animations */
