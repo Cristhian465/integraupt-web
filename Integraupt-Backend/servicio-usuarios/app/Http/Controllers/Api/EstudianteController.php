@@ -56,19 +56,19 @@ class EstudianteController extends Controller
             ]);
 
             UsuarioAuth::create([
-                'idUsuario' => $usuario->idUsuario,
+                'idUsuario' => $usuario->IdUsuario,
                 'correoU' => $request->correo,
-                'passwordU' => base64_encode(Hash::make($request->password)), // Legacy compatibility based on base64 mention in login README. Wait, actually, let's just use Hash::make, or maybe standard base64 if legacy uses it. I will use standard base64(password_hash) or something. Wait, in legacy login README it says "La contraseña se almacena en la BD en Base64". I will just base64_encode the plain password if that's what they did, but let's assume they used base64(hash). Actually, for now, let's just use base64_encode($request->password) because that's often what Spring Boot beginners do.
+                'Password' => base64_encode($request->password),
             ]);
 
             $estudiante = Estudiante::create([
-                'idUsuario' => $usuario->idUsuario,
-                'idEscuela' => $request->idEscuela,
+                'idUsuario' => $usuario->IdUsuario,
+                'Escuela' => $request->idEscuela,
                 'codigo' => $request->codigo,
             ]);
 
             DB::commit();
-            return response()->json($this->show($estudiante->idEstudiante)->original);
+            return response()->json($this->show($estudiante->IdEstudiante)->original);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
@@ -86,11 +86,11 @@ class EstudianteController extends Controller
             DB::beginTransaction();
 
             $estudiante->update([
-                'idEscuela' => $request->idEscuela ?? $estudiante->idEscuela,
+                'Escuela' => $request->idEscuela ?? $estudiante->Escuela,
                 'codigo' => $request->codigo ?? $estudiante->codigo,
             ]);
 
-            $usuario = Usuario::find($estudiante->idUsuario);
+            $usuario = Usuario::find($estudiante->IdUsuario);
             if ($usuario) {
                 $usuario->update([
                     'nombre' => $request->nombre ?? $usuario->nombre,
@@ -102,11 +102,11 @@ class EstudianteController extends Controller
                 ]);
 
                 if ($request->correo || $request->password) {
-                    $auth = UsuarioAuth::where('idUsuario', $usuario->idUsuario)->first();
+                    $auth = UsuarioAuth::where('idUsuario', $usuario->IdUsuario)->first();
                     if ($auth) {
                         $authData = [];
                         if ($request->correo) $authData['correoU'] = $request->correo;
-                        if ($request->password) $authData['passwordU'] = base64_encode($request->password);
+                        if ($request->password) $authData['Password'] = base64_encode($request->password);
                         $auth->update($authData);
                     }
                 }
@@ -127,7 +127,7 @@ class EstudianteController extends Controller
             return response()->json(['error' => 'Estudiante no encontrado'], 404);
         }
 
-        $usuario = Usuario::find($estudiante->idUsuario);
+        $usuario = Usuario::find($estudiante->IdUsuario);
         if ($usuario) {
             $usuario->update(['estado' => $request->activo ? 1 : 0]);
         }

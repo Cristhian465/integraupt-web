@@ -45,32 +45,32 @@ class AdministrativoController extends Controller
             DB::beginTransaction();
 
             $usuario = Usuario::create([
-                'nombre' => $request->nombre,
-                'apellido' => $request->apellido,
-                'tipoDoc' => $request->idTipoDoc,
-                'numDoc' => $request->numDoc,
-                'rol' => 3, // Administrativo default
-                'celular' => $request->celular,
-                'genero' => $request->genero,
-                'estado' => 1,
+                'Nombre' => $request->nombre,
+                'Apellido' => $request->apellido,
+                'TipoDoc' => $request->idTipoDoc,
+                'NumDoc' => $request->numDoc,
+                'Rol' => 3, // Administrativo default
+                'Celular' => $request->celular,
+                'Genero' => $request->genero,
+                'Estado' => 1,
             ]);
 
             UsuarioAuth::create([
-                'idUsuario' => $usuario->idUsuario,
+                'idUsuario' => $usuario->IdUsuario,
                 'correoU' => $request->correo,
-                'passwordU' => base64_encode($request->password), 
+                'Password' => base64_encode($request->password), 
             ]);
 
             $administrativo = Administrativo::create([
-                'idUsuario' => $usuario->idUsuario,
-                'idEscuela' => $request->idEscuela,
-                'turno' => $request->turno,
-                'extension' => $request->extension,
-                'fechaIncorporacion' => $request->fechaIncorporacion,
+                'idUsuario' => $usuario->IdUsuario,
+                'Escuela' => $request->idEscuela,
+                'Turno' => $request->turno,
+                'Extension' => $request->extension,
+                'FechaIncorporacion' => $request->fechaIncorporacion,
             ]);
 
             DB::commit();
-            return response()->json($this->show($administrativo->idAdministrativo)->original);
+            return response()->json($this->show($administrativo->IdAdministrativo)->original);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
@@ -88,29 +88,29 @@ class AdministrativoController extends Controller
             DB::beginTransaction();
 
             $administrativo->update([
-                'idEscuela' => $request->idEscuela ?? $administrativo->idEscuela,
-                'turno' => $request->turno ?? $administrativo->turno,
-                'extension' => $request->extension ?? $administrativo->extension,
-                'fechaIncorporacion' => $request->fechaIncorporacion ?? $administrativo->fechaIncorporacion,
+                'Escuela' => $request->idEscuela ?? $administrativo->Escuela,
+                'Turno' => $request->turno ?? $administrativo->Turno,
+                'Extension' => $request->extension ?? $administrativo->Extension,
+                'FechaIncorporacion' => $request->fechaIncorporacion ?? $administrativo->FechaIncorporacion,
             ]);
 
-            $usuario = Usuario::find($administrativo->idUsuario);
+            $usuario = Usuario::find($administrativo->IdUsuario);
             if ($usuario) {
                 $usuario->update([
-                    'nombre' => $request->nombre ?? $usuario->nombre,
-                    'apellido' => $request->apellido ?? $usuario->apellido,
-                    'tipoDoc' => $request->idTipoDoc ?? $usuario->tipoDoc,
-                    'numDoc' => $request->numDoc ?? $usuario->numDoc,
-                    'celular' => $request->celular ?? $usuario->celular,
-                    'genero' => $request->genero ?? $usuario->genero,
+                    'Nombre' => $request->nombre ?? $usuario->Nombre,
+                    'Apellido' => $request->apellido ?? $usuario->Apellido,
+                    'TipoDoc' => $request->idTipoDoc ?? $usuario->TipoDoc,
+                    'NumDoc' => $request->numDoc ?? $usuario->NumDoc,
+                    'Celular' => $request->celular ?? $usuario->Celular,
+                    'Genero' => $request->genero ?? $usuario->Genero,
                 ]);
 
                 if ($request->correo || $request->password) {
-                    $auth = UsuarioAuth::where('idUsuario', $usuario->idUsuario)->first();
+                    $auth = UsuarioAuth::where('idUsuario', $usuario->IdUsuario)->first();
                     if ($auth) {
                         $authData = [];
                         if ($request->correo) $authData['correoU'] = $request->correo;
-                        if ($request->password) $authData['passwordU'] = base64_encode($request->password);
+                        if ($request->password) $authData['Password'] = base64_encode($request->password);
                         $auth->update($authData);
                     }
                 }
@@ -131,9 +131,9 @@ class AdministrativoController extends Controller
             return response()->json(['error' => 'Administrativo no encontrado'], 404);
         }
 
-        $usuario = Usuario::find($administrativo->idUsuario);
+        $usuario = Usuario::find($administrativo->IdUsuario);
         if ($usuario) {
-            $usuario->update(['estado' => $request->activo ? 1 : 0]);
+            $usuario->update(['Estado' => $request->activo ? 1 : 0]);
         }
         
         return response()->json($this->show($id)->original);

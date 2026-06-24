@@ -90,7 +90,7 @@ export const UsuarioTable: React.FC<UsuarioTableProps> = ({
               <td>
                 {activeRole === "administrativo" ? (
                   <div className="usuario-table-info">
-                    <span>{row.escuela ?? "Sin escuela"}</span>
+                    <span>{row.escuela ?? "Sin escuela"} - </span>
                     <small>{row.turno ?? "Sin turno"}</small>
                   </div>
                 ) : (

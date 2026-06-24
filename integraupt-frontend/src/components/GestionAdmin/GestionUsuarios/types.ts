@@ -33,7 +33,8 @@ export interface BackendUsuario {
   idUsuario: number;
   nombre: string;
   apellido: string;
-  tipoDoc?: BackendTipoDocumento | null;
+  tipoDoc?: number | null;
+  tipoDocumento?: BackendTipoDocumento | null;
   numDoc: string;
   celular?: string | null;
   genero?: boolean | null;

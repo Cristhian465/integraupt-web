@@ -58,14 +58,14 @@ class DocenteController extends Controller
             ]);
 
             UsuarioAuth::create([
-                'idUsuario' => $usuario->idUsuario,
+                'idUsuario' => $usuario->IdUsuario,
                 'correoU' => $request->correo,
-                'passwordU' => base64_encode($request->password), 
+                'Password' => base64_encode($request->password), 
             ]);
 
             $docente = Docente::create([
-                'idUsuario' => $usuario->idUsuario,
-                'idEscuela' => $request->idEscuela,
+                'idUsuario' => $usuario->IdUsuario,
+                'Escuela' => $request->idEscuela,
                 'codigoDocente' => $request->codigoDocente,
                 'tipoContrato' => $request->tipoContrato,
                 'especialidad' => $request->especialidad,
@@ -73,7 +73,7 @@ class DocenteController extends Controller
             ]);
 
             DB::commit();
-            return response()->json($this->show($docente->idDocente)->original);
+            return response()->json($this->show($docente->IdDocente)->original);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => $e->getMessage()], 500);
@@ -91,14 +91,14 @@ class DocenteController extends Controller
             DB::beginTransaction();
 
             $docente->update([
-                'idEscuela' => $request->idEscuela ?? $docente->idEscuela,
+                'Escuela' => $request->idEscuela ?? $docente->Escuela,
                 'codigoDocente' => $request->codigoDocente ?? $docente->codigoDocente,
                 'tipoContrato' => $request->tipoContrato ?? $docente->tipoContrato,
                 'especialidad' => $request->especialidad ?? $docente->especialidad,
                 'fechaIncorporacion' => $request->fechaIncorporacion ?? $docente->fechaIncorporacion,
             ]);
 
-            $usuario = Usuario::find($docente->idUsuario);
+            $usuario = Usuario::find($docente->IdUsuario);
             if ($usuario) {
                 $usuario->update([
                     'nombre' => $request->nombre ?? $usuario->nombre,
@@ -110,11 +110,11 @@ class DocenteController extends Controller
                 ]);
 
                 if ($request->correo || $request->password) {
-                    $auth = UsuarioAuth::where('idUsuario', $usuario->idUsuario)->first();
+                    $auth = UsuarioAuth::where('idUsuario', $usuario->IdUsuario)->first();
                     if ($auth) {
                         $authData = [];
                         if ($request->correo) $authData['correoU'] = $request->correo;
-                        if ($request->password) $authData['passwordU'] = base64_encode($request->password);
+                        if ($request->password) $authData['Password'] = base64_encode($request->password);
                         $auth->update($authData);
                     }
                 }
@@ -135,7 +135,7 @@ class DocenteController extends Controller
             return response()->json(['error' => 'Docente no encontrado'], 404);
         }
 
-        $usuario = Usuario::find($docente->idUsuario);
+        $usuario = Usuario::find($docente->IdUsuario);
         if ($usuario) {
             $usuario->update(['estado' => $request->activo ? 1 : 0]);
         }

@@ -100,7 +100,7 @@ export const mapEstudianteToRecord = (estudiante: BackendEstudiante): UsuarioRec
   estadoLabel: estadoLabel(estudiante.usuario.estado),
   generoLabel: generoLabel(estudiante.usuario.genero),
   documento: estudiante.usuario.numDoc,
-  tipoDocumento: estudiante.usuario.tipoDoc?.abreviatura,
+  tipoDocumento: estudiante.usuario.tipoDocumento?.abreviatura,
   telefono: estudiante.usuario.celular,
   fechaRegistro: estudiante.usuario.fechaRegistro ?? undefined
 });
@@ -120,7 +120,7 @@ export const mapDocenteToRecord = (docente: BackendDocente): UsuarioRecord => ({
   estadoLabel: estadoLabel(docente.usuario.estado),
   generoLabel: generoLabel(docente.usuario.genero),
   documento: docente.usuario.numDoc,
-  tipoDocumento: docente.usuario.tipoDoc?.abreviatura,
+  tipoDocumento: docente.usuario.tipoDocumento?.abreviatura,
   telefono: docente.usuario.celular,
   fechaRegistro: docente.usuario.fechaRegistro ?? undefined
 });
@@ -139,7 +139,7 @@ export const mapAdministrativoToRecord = (
   estadoLabel: estadoLabel(administrativo.usuario.estado),
   generoLabel: generoLabel(administrativo.usuario.genero),
   documento: administrativo.usuario.numDoc,
-  tipoDocumento: administrativo.usuario.tipoDoc?.abreviatura,
+  tipoDocumento: administrativo.usuario.tipoDocumento?.abreviatura,
   telefono: administrativo.usuario.celular,
   fechaRegistro: administrativo.usuario.fechaRegistro ?? undefined,
   codigo: administrativo.usuario.rol?.nombre ?? "Sin rol",
@@ -176,7 +176,7 @@ export const mapEntityToFormValues = (
       ...base,
       nombre: estudiante.usuario.nombre ?? "",
       apellido: estudiante.usuario.apellido ?? "",
-      idTipoDoc: estudiante.usuario.tipoDoc?.idTipoDoc?.toString() ?? "",
+      idTipoDoc: estudiante.usuario.tipoDoc?.toString() ?? "",
       numDoc: estudiante.usuario.numDoc ?? "",
       celular: estudiante.usuario.celular ?? "",
       genero: estudiante.usuario.genero === null
@@ -202,7 +202,7 @@ export const mapEntityToFormValues = (
       ...base,
       nombre: docente.usuario.nombre ?? "",
       apellido: docente.usuario.apellido ?? "",
-      idTipoDoc: docente.usuario.tipoDoc?.idTipoDoc?.toString() ?? "",
+      idTipoDoc: docente.usuario.tipoDoc?.toString() ?? "",
       numDoc: docente.usuario.numDoc ?? "",
       celular: docente.usuario.celular ?? "",
       genero: docente.usuario.genero === null ? "" : docente.usuario.genero ? "M" : "F",
@@ -223,7 +223,7 @@ export const mapEntityToFormValues = (
     ...base,
     nombre: administrativo.usuario.nombre ?? "",
     apellido: administrativo.usuario.apellido ?? "",
-    idTipoDoc: administrativo.usuario.tipoDoc?.idTipoDoc?.toString() ?? "",
+    idTipoDoc: administrativo.usuario.tipoDoc?.toString() ?? "",
     numDoc: administrativo.usuario.numDoc ?? "",
     celular: administrativo.usuario.celular ?? "",
     genero:
