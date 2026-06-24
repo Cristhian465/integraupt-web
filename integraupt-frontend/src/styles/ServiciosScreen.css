@@ -193,6 +193,11 @@
   box-shadow: 0 25px 40px -30px rgba(180, 83, 9, 0.3);
 }
 
+.servicios-menu-card-gimnasio:hover {
+  border-color: rgba(127, 29, 29, 0.4);
+  box-shadow: 0 25px 40px -30px rgba(127, 29, 29, 0.3);
+}
+
 .servicios-menu-card-policlinico:hover {
   border-color: rgba(8, 145, 178, 0.4);
   box-shadow: 0 25px 40px -30px rgba(8, 145, 178, 0.3);
@@ -247,12 +252,20 @@
   background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
 }
 
+.servicios-menu-icon-gimnasio {
+  background: linear-gradient(135deg, #171717 0%, #7f1d1d 100%);
+}
+
 .servicios-menu-icon-policlinico {
   background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
 }
 
 .servicios-menu-icon-promedio {
   background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+}
+
+.servicios-menu-icon-aulavirtual {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
 }
 
 .servicios-menu-icon-svg {
@@ -356,6 +369,16 @@
   box-shadow: 0 8px 20px -10px rgba(180, 83, 9, 0.3);
 }
 
+.servicios-menu-card-badge-gimnasio {
+  background-color: rgba(127, 29, 29, 0.12);
+  color: #7f1d1d;
+  border-color: rgba(127, 29, 29, 0.2);
+}
+
+.servicios-menu-card:hover .servicios-menu-card-badge-gimnasio {
+  box-shadow: 0 8px 20px -10px rgba(127, 29, 29, 0.3);
+}
+
 .servicios-menu-card-badge-policlinico {
   background-color: rgba(8, 145, 178, 0.12);
   color: #0e7490;
@@ -374,6 +397,16 @@
 
 .servicios-menu-card:hover .servicios-menu-card-badge-promedio {
   box-shadow: 0 8px 20px -10px rgba(236, 72, 153, 0.3);
+}
+
+.servicios-menu-card-badge-aulavirtual {
+  background-color: rgba(5, 150, 105, 0.12);
+  color: #047857;
+  border-color: rgba(5, 150, 105, 0.2);
+}
+
+.servicios-menu-card:hover .servicios-menu-card-badge-aulavirtual {
+  box-shadow: 0 8px 20px -10px rgba(5, 150, 105, 0.3);
 }
 
 .servicios-menu-card-actions {
@@ -463,6 +496,15 @@
   box-shadow: 0 15px 25px -15px rgba(180, 83, 9, 0.5);
 }
 
+.servicios-menu-card-button-gimnasio {
+  background: linear-gradient(135deg, #171717 0%, #7f1d1d 100%);
+}
+
+.servicios-menu-card-button-gimnasio:hover {
+  background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+  box-shadow: 0 15px 25px -15px rgba(127, 29, 29, 0.5);
+}
+
 .servicios-menu-card-button-policlinico {
   background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
 }
@@ -479,6 +521,15 @@
 .servicios-menu-card-button-promedio:hover {
   background: linear-gradient(135deg, #be185d 0%, #9d174d 100%);
   box-shadow: 0 15px 25px -15px rgba(236, 72, 153, 0.5);
+}
+
+.servicios-menu-card-button-aulavirtual {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.servicios-menu-card-button-aulavirtual:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  box-shadow: 0 15px 25px -15px rgba(5, 150, 105, 0.5);
 }
 
 /* Welcome Card Animations */

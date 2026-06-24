@@ -76,7 +76,7 @@
 .promedio-unit-item {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: flex-start; /* changed from flex-end to keep labels aligned */
   gap: 1.5rem;
   background: #f8fafc;
   padding: 1.25rem;
@@ -96,6 +96,7 @@
   min-width: 200px;
   display: flex;
   flex-direction: column;
+  position: relative; /* added for absolute positioning of messages */
 }
 
 .promedio-label {
@@ -244,6 +245,9 @@
   box-shadow: 0 15px 35px -15px rgba(0,0,0,0.1);
   border: 1px solid #f1f5f9;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-height: 180px; /* added to prevent jumping */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .promedio-result-card:hover {
@@ -272,11 +276,12 @@
 }
 
 .promedio-result-value {
-  font-size: 3.5rem;
+  font-size: 3rem; /* slightly smaller to fit text like '✓' or large numbers better */
   font-weight: 900;
   color: #0f172a;
-  line-height: 1;
+  line-height: 1.2;
   margin-bottom: 0.5rem;
+  word-break: break-word;
 }
 
 .promedio-result-subtext {

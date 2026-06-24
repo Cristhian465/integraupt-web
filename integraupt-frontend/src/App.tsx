@@ -3,6 +3,7 @@ import { LoginScreen} from './components/pages/Autenticacion/LoginScreen';
   import type { BackendPerfil,  BackendSession } from './components/pages/Autenticacion/types';
 import { Dashboard } from './components/Dashboard';
 import { QrReservaVerificationPage } from './components/pages/QR/QrReservaVerificationPage';
+import { MoodleSsoCallbackPage } from './components/pages/Usuario/AulaVirtual/MoodleSsoCallbackPage';
 import { getLoginApiUrl } from './utils/apiConfig';
 import './styles/App.css';
 
@@ -48,14 +49,23 @@ const parseQrRoute = (): QrRouteMatch | null => {
   return null;
 };
 
+const isMoodleSsoCallbackRoute = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.location.pathname.replace(/\/+$/, '').toLowerCase() === '/aulavirtual/sso-callback';
+};
+
 function App() {
   const qrRoute = useMemo(() => parseQrRoute(), []);
+  const isSsoCallback = useMemo(() => isMoodleSsoCallbackRoute(), []);
   const [session, setSession] = useState<BackendSession | null>(null);
-  const [isInitializing, setIsInitializing] = useState(() => (qrRoute ? false : true));
+  const [isInitializing, setIsInitializing] = useState(() => (qrRoute || isSsoCallback ? false : true));
 
-  // Restaurar sesión si no es QR
+  // Restaurar sesión si no es QR ni el callback de SSO de Moodle
   useEffect(() => {
-    if (qrRoute) return;
+    if (qrRoute || isSsoCallback) return;
 
     let isMounted = true;
 
@@ -151,6 +161,10 @@ function App() {
       },
     };
   }, [qrRoute, session]);
+
+  if (isSsoCallback) {
+    return <MoodleSsoCallbackPage callbackUrl={window.location.href} />;
+  }
 
   if (qrRoute) {
     return <QrReservaVerificationPage token={qrRoute.token} />;

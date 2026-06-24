@@ -6,9 +6,11 @@ import { IncidenciasPage } from "./pages/Usuario/Incidencia/IncidenciasPage";
 import { PsicologiaPage } from './pages/Usuario/Psicologia/PsicologiaPage';
 import { OlimpiadasPage } from './pages/Usuario/Olimpiadas/OlimpiadasPage';
 import { PoliclinicoPage } from './pages/Usuario/Policlinico/PoliclinicoPage';
+import { AulaVirtualPage } from './pages/Usuario/AulaVirtual/AulaVirtualPage';
 import { ServiciosPage } from './pages/Usuario/Servicios/ServiciosPage';
 import { BurraPage } from './pages/Usuario/Burra/BurraPage';
 import { PromedioPage } from './pages/Usuario/Promedio/PromedioPage';
+import { GimnasioPage } from './pages/Usuario/Gimnasio/GimnasioPage';
 import { requestBackendLogout } from '../utils/logout';
 import { isBackendLoginType } from '../utils/apiConfig';
 import { PerfilPage } from './pages/Usuario/Perfil/PerfilPage';
@@ -39,7 +41,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const isAdministrative = user.user_metadata.login_type === 'administrative';
 
   const [activeView, setActiveView] = useState<
-     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'promedio' | 'perfil'
+     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'promedio' | 'gimnasio' | 'aulavirtual' | 'perfil'
    >(() => {
      if (typeof window === 'undefined') {
        return 'inicio';
@@ -55,10 +57,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
          storedView === 'incidencias' ||
          storedView === 'psicologia' ||
          storedView === 'olimpiadas' ||
-         storedView === 'policlinico' ||
+         storedView === 'perfil' ||
          storedView === 'burra' ||
          storedView === 'promedio' ||
-         storedView === 'perfil'
+         storedView === 'gimnasio' ||
+         storedView === 'policlinico' ||
+         storedView === 'aulavirtual'
        ) {
          return storedView;
        }
@@ -121,12 +125,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     setActiveView('promedio');
   }, []);
 
+  const handleNavigateToGimnasio = useCallback(() => {
+    setActiveView('gimnasio');
+  }, []);
+
   const handleNavigateToOlimpiadas = useCallback(() => {
     setActiveView('olimpiadas');
   }, []);
 
   const handleNavigateToPoliclinico = useCallback(() => {
     setActiveView('policlinico');
+  }, []);
+
+  const handleNavigateToAulaVirtual = useCallback(() => {
+    setActiveView('aulavirtual');
   }, []);
 
   const handleNavigateToPerfil = useCallback(() => {
@@ -162,8 +174,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         onNavigateToPsicologia={handleNavigateToPsicologia}
         onNavigateToBurra={handleNavigateToBurra}
         onNavigateToOlimpiadas={handleNavigateToOlimpiadas}
+        onNavigateToGimnasio={handleNavigateToGimnasio}
         onNavigateToPoliclinico={handleNavigateToPoliclinico}
         onNavigateToPromedio={handleNavigateToPromedio}
+        onNavigateToAulaVirtual={handleNavigateToAulaVirtual}
         onLogout={handleLogout}
         isLoggingOut={isLoggingOut}
       />
@@ -235,6 +249,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     );
   }
 
+  if (activeView === 'aulavirtual') {
+    return (
+      <AulaVirtualPage
+        user={user}
+        onNavigateToInicio={handleNavigateToInicio}
+        onNavigateToServicios={handleNavigateToServicios}
+        onNavigateToPerfil={handleNavigateToPerfil}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+      />
+    );
+  }
+
   if (activeView === 'perfil') {
     return (
       <PerfilPage 
@@ -265,6 +292,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     return (
       <PromedioPage
         user={user}
+        onNavigateToInicio={handleNavigateToInicio}
+        onNavigateToServicios={handleNavigateToServicios}
+        onNavigateToPerfil={handleNavigateToPerfil}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+      />
+    );
+  }
+
+  if (activeView === 'gimnasio') {
+    return (
+      <GimnasioPage 
+        user={user} 
         onNavigateToInicio={handleNavigateToInicio}
         onNavigateToServicios={handleNavigateToServicios}
         onNavigateToPerfil={handleNavigateToPerfil}

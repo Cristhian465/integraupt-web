@@ -189,6 +189,25 @@ services:
     depends_on: [ servicio-usuarios ]
     ports: [ "8067:8000" ]
     networks: [ integraupt ]
+  servicio-gimnasio:
+    build:
+      context: ./Integraupt-Backend/servicio-gimnasio
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-gimnasio/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8098:8000"]
+    networks: [integraupt]
+
+  servicio-moodle:
+    build:
+      context: ./Integraupt-Backend/servicio-moodle
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-moodle/.env.docker
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8097:8000" ]
+    networks: [ integraupt ]
 
   frontend:
     build:
@@ -215,6 +234,8 @@ services:
       - servicio-olimpiadas
       - servicio-policlinico
       - servicio-promedio
+      - servicio-gimnasio
+      - servicio-moodle
     networks: [ integraupt ]
 
 networks:

@@ -34,8 +34,10 @@ const DEFAULT_QR_RESERVAS_BACKEND_URL = "http://localhost:8090";
 const DEFAULT_AUDITORIA_BACKEND_URL = "http://localhost:8091";
 const DEFAULT_PSICOLOGIA_BACKEND_URL = "http://localhost:8093";
 const DEFAULT_OLIMPIADAS_BACKEND_URL = "http://localhost:8094";
+const DEFAULT_GIMNASIO_BACKEND_URL = "http://localhost:8098";
 const DEFAULT_POLICLINICO_BACKEND_URL = "http://localhost:8096";
 const DEFAULT_PROMEDIO_BACKEND_URL = "http://localhost:8067";
+const DEFAULT_MOODLE_BACKEND_URL = "http://localhost:8097";
 
 // ==========================
 // Resolución final de URLs
@@ -112,6 +114,11 @@ export const OLIMPIADAS_API_BASE_URL = resolveBaseUrl(
   DEFAULT_OLIMPIADAS_BACKEND_URL
 );
 
+export const GIMNASIO_API_BASE_URL = resolveBaseUrl(
+  env.VITE_GIMNASIO_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_GIMNASIO_BACKEND_URL
+);
+
 export const POLICLINICO_API_BASE_URL = resolveBaseUrl(
   env.VITE_POLICLINICO_BACKEND_URL ?? env.VITE_BACKEND_URL,
   DEFAULT_POLICLINICO_BACKEND_URL
@@ -120,6 +127,11 @@ export const POLICLINICO_API_BASE_URL = resolveBaseUrl(
 export const PROMEDIO_API_BASE_URL = resolveBaseUrl(
   env.VITE_PROMEDIO_BACKEND_URL ?? env.VITE_BACKEND_URL,
   DEFAULT_PROMEDIO_BACKEND_URL
+);
+
+export const MOODLE_API_BASE_URL = resolveBaseUrl(
+  env.VITE_MOODLE_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_MOODLE_BACKEND_URL
 );
 
 
@@ -169,11 +181,17 @@ export const getPsicologiaApiUrl = (path: string) =>
 export const getOlimpiadasApiUrl = (path: string) =>
   buildServiceUrl(OLIMPIADAS_API_BASE_URL, path);
 
+export const getGimnasioApiUrl = (path: string) =>
+  buildServiceUrl(GIMNASIO_API_BASE_URL, path);
+
 export const getPoliclinicoApiUrl = (path: string) =>
   buildServiceUrl(POLICLINICO_API_BASE_URL, path);
 
 export const getPromedioApiUrl = (path: string) =>
   buildServiceUrl(PROMEDIO_API_BASE_URL, path);
+
+export const getMoodleApiUrl = (path: string) =>
+  buildServiceUrl(MOODLE_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper

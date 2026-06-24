@@ -1246,6 +1246,18 @@ END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
+CREATE TABLE IF NOT EXISTS `asistencia_gimnasio` (
+  `id_asistencia` int(11) NOT NULL AUTO_INCREMENT,
+  `id_usuario` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `hora_ingreso` time NOT NULL,
+  `hora_salida` time DEFAULT NULL,
+  `duracion_calculada` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_asistencia`),
+  KEY `fk_asistencia_gimnasio_usuario` (`id_usuario`),
+  CONSTRAINT `fk_asistencia_gimnasio_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`IdUsuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

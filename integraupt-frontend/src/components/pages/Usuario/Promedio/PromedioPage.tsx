@@ -198,7 +198,7 @@ export const PromedioPage: React.FC<PromedioPageProps> = ({
                     <span className="promedio-input-suffix">Nota</span>
                   </div>
                   {resultado && unidad.nota === '' && resultado.notaNecesaria > 0 && (
-                    <div className="promedio-nota-requerida" style={{ fontSize: '11px', color: '#d97706', marginTop: '4px', fontWeight: 600 }}>
+                    <div className="promedio-nota-requerida" style={{ position: 'absolute', bottom: '-20px', left: '0', fontSize: '12px', color: '#d97706', fontWeight: 600 }}>
                       Necesitas: {resultado.notaNecesaria}
                     </div>
                   )}

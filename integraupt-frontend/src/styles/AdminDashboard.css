@@ -196,6 +196,10 @@
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
+.admin-module-burgundy {
+  background: linear-gradient(135deg, #171717 0%, #7f1d1d 100%);
+}
+
 .admin-module-icon-svg {
   height: 1.75rem;
   width: 1.75rem;
@@ -470,6 +474,12 @@
   background-color: #f3f4f6;
   color: #374151;
   border-color: #e5e7eb;
+}
+
+.admin-badge-burgundy {
+  background-color: rgba(127, 29, 29, 0.12);
+  color: #7f1d1d;
+  border-color: rgba(127, 29, 29, 0.2);
 }
 
 /* Action Buttons */
@@ -2395,6 +2405,10 @@
 
 .admin-activity-badge-red {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.admin-activity-badge-burgundy {
+  background: linear-gradient(135deg, #171717 0%, #7f1d1d 100%);
 }
 
 @media (max-width: 640px) {
