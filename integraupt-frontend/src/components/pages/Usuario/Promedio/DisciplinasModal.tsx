@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Trash2, Calculator } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import '../../../../styles/PromedioScreen.css';
 
 interface Disciplina {
@@ -109,7 +110,7 @@ export const DisciplinasModal: React.FC<DisciplinasModalProps> = ({
     onApply(notaFinal);
   };
 
-  return (
+  return createPortal(
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="modal-content disciplinas-modal">
         <div className="modal-header">
@@ -203,6 +204,7 @@ export const DisciplinasModal: React.FC<DisciplinasModalProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
