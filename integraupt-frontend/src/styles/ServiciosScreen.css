@@ -188,6 +188,11 @@
   box-shadow: 0 25px 40px -30px rgba(249, 115, 22, 0.3);
 }
 
+.servicios-menu-card-olimpiadas:hover {
+  border-color: rgba(180, 83, 9, 0.4);
+  box-shadow: 0 25px 40px -30px rgba(180, 83, 9, 0.3);
+}
+
 .servicios-menu-icon-container {
   display: flex;
   justify-content: center;
@@ -226,6 +231,10 @@
 
 .servicios-menu-icon-burra {
   background: linear-gradient(135deg, #fb923c 0%, #f97316 100%);
+}
+
+.servicios-menu-icon-olimpiadas {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
 }
 
 .servicios-menu-icon-svg {
@@ -319,6 +328,16 @@
   box-shadow: 0 8px 20px -10px rgba(249, 115, 22, 0.3);
 }
 
+.servicios-menu-card-badge-olimpiadas {
+  background-color: rgba(180, 83, 9, 0.12);
+  color: #b45309;
+  border-color: rgba(180, 83, 9, 0.2);
+}
+
+.servicios-menu-card:hover .servicios-menu-card-badge-olimpiadas {
+  box-shadow: 0 8px 20px -10px rgba(180, 83, 9, 0.3);
+}
+
 .servicios-menu-card-actions {
   display: flex;
   justify-content: center;
@@ -395,6 +414,15 @@
 .servicios-menu-card-button-burra:hover {
   background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
   box-shadow: 0 15px 25px -15px rgba(249, 115, 22, 0.5);
+}
+
+.servicios-menu-card-button-olimpiadas {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+}
+
+.servicios-menu-card-button-olimpiadas:hover {
+  background: linear-gradient(135deg, #b45309 0%, #92400e 100%);
+  box-shadow: 0 15px 25px -15px rgba(180, 83, 9, 0.5);
 }
 
 /* Welcome Card Animations */

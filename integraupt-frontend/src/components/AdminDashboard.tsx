@@ -10,7 +10,8 @@ import {
   ShieldCheck,
   BarChart3,
   Ban,
-  AlertCircle
+  AlertCircle,
+  Trophy
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -21,7 +22,8 @@ import {
   GestionUsuarios,
   GestionReportes,
   GestionIncidencias,
-  GestionAuditoria
+  GestionAuditoria,
+  GestionOlimpiadas
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -34,7 +36,8 @@ type ModuleId =
   | "users"
   | "audit"
   | "reports"
-  | "incidencias";
+  | "incidencias"
+  | "olimpiadas";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -124,6 +127,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Revisa y filtra los reportes registrados en los espacios",
     icon: AlertCircle,
     color: "red"
+  },
+  {
+    id: "olimpiadas",
+    name: "Olimpiadas Interfacultades",
+    description: "Gestiona ediciones, disciplinas, inscripciones y resultados",
+    icon: Trophy,
+    color: "orange"
   }
 ];
 
@@ -322,6 +332,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
           {activeModule === "audit" && (
                   <GestionAuditoria onAuditLog={addAuditLog} />
                 )}
+
+          {activeModule === "olimpiadas" && (
+            <GestionOlimpiadas onAuditLog={addAuditLog} />
+          )}
         </div>
 
         <div className="admin-activity-panel">

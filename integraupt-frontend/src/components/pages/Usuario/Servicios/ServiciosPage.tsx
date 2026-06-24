@@ -10,7 +10,8 @@ import {
   LogOut,
   LibraryBig,
   Brain,
-  Bus
+  Bus,
+  Trophy
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -36,6 +37,7 @@ interface ServiciosPageProps {
   onNavigateToIncidencias: () => void;
   onNavigateToPsicologia: () => void;
   onNavigateToBurra: () => void;
+  onNavigateToOlimpiadas: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -63,6 +65,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToIncidencias,
   onNavigateToPsicologia,
   onNavigateToBurra,
+  onNavigateToOlimpiadas,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -231,6 +234,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 onClick={() => onNavigateToBurra()}
               >
                 Ver rutas y horarios
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-olimpiadas"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-olimpiadas">
+                <Trophy className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Olimpiadas Interfacultades</h2>
+            <p className="servicios-menu-card-description">
+              Consulta disciplinas, resultados, fixture y el estado de inscripción de tu facultad.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-olimpiadas">
+              Competencia interfacultades
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-olimpiadas"
+                onClick={(event) => {
+                  onNavigateToOlimpiadas();
+                }}
+              >
+                Ver Olimpiadas
               </button>
             </div>
           </article>

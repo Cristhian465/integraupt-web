@@ -6,3 +6,4 @@ export { GestionUsuarios } from "./GestionUsuarios/Usuarios.tsx";
 export { GestionReportes } from "./GestionReportes/ReportesPage.tsx";
 export { GestionIncidencias } from "./GestionIncidencias/IncidenciasGestionPage.tsx";
 export { GestionAuditoria } from "./GestionAuditoria/AuditoriaPage.tsx";
+export { GestionOlimpiadas } from "./GestionOlimpiadas/OlimpiadasPage.tsx";
