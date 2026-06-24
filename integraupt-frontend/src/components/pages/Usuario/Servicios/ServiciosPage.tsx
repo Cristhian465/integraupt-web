@@ -11,7 +11,8 @@ import {
   LibraryBig,
   Brain,
   Bus,
-  Trophy
+  Trophy,
+  HeartPulse
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -38,6 +39,7 @@ interface ServiciosPageProps {
   onNavigateToPsicologia: () => void;
   onNavigateToBurra: () => void;
   onNavigateToOlimpiadas: () => void;
+  onNavigateToPoliclinico: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -66,6 +68,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToPsicologia,
   onNavigateToBurra,
   onNavigateToOlimpiadas,
+  onNavigateToPoliclinico,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -264,6 +267,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Ver Olimpiadas
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-policlinico"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-policlinico">
+                <HeartPulse className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Policlínico UPT</h2>
+            <p className="servicios-menu-card-description">
+              Agenda citas médicas, de enfermería o de tópico de emergencia.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-policlinico">
+              Salud estudiantil
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-policlinico"
+                onClick={(event) => {
+                  onNavigateToPoliclinico();
+                }}
+              >
+                Agendar cita
               </button>
             </div>
           </article>

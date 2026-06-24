@@ -11,7 +11,9 @@ import {
   BarChart3,
   Ban,
   AlertCircle,
-  Trophy
+  Trophy,
+  Brain,
+  HeartPulse
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -23,7 +25,9 @@ import {
   GestionReportes,
   GestionIncidencias,
   GestionAuditoria,
-  GestionOlimpiadas
+  GestionOlimpiadas,
+  GestionPsicologia,
+  GestionPoliclinico
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -37,7 +41,9 @@ type ModuleId =
   | "audit"
   | "reports"
   | "incidencias"
-  | "olimpiadas";
+  | "olimpiadas"
+  | "psicologia"
+  | "policlinico";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -134,6 +140,20 @@ const MODULES: ModuleDefinition[] = [
     description: "Gestiona ediciones, disciplinas, inscripciones y resultados",
     icon: Trophy,
     color: "orange"
+  },
+  {
+    id: "psicologia",
+    name: "Citas de Psicología",
+    description: "Revisa, confirma y da seguimiento a las citas de los estudiantes",
+    icon: Brain,
+    color: "indigo"
+  },
+  {
+    id: "policlinico",
+    name: "Policlínico UPT",
+    description: "Gestiona citas médicas, médicos y tipos de atención",
+    icon: HeartPulse,
+    color: "blue"
   }
 ];
 
@@ -335,6 +355,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "olimpiadas" && (
             <GestionOlimpiadas onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "psicologia" && (
+            <GestionPsicologia onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "policlinico" && (
+            <GestionPoliclinico onAuditLog={addAuditLog} />
           )}
         </div>
 

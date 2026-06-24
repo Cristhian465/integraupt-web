@@ -37,8 +37,7 @@ const parseQrRoute = (): QrRouteMatch | null => {
 
     const searchToken =
       currentUrl.searchParams.get('qrToken') ??
-      currentUrl.searchParams.get('qr_token') ??
-      currentUrl.searchParams.get('token');
+      currentUrl.searchParams.get('qr_token');
 
     if (searchToken) {
       const token = searchToken.trim();

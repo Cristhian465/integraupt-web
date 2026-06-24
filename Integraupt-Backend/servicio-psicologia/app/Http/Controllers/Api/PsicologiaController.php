@@ -66,4 +66,48 @@ class PsicologiaController extends Controller
             return response()->json(['error' => $e->getMessage()], 409);
         }
     }
+
+    public function listarCitasAdmin(Request $request)
+    {
+        $filtros = $request->only(['estado', 'fecha', 'psicologoId']);
+
+        return response()->json($this->service->listarCitasAdmin($filtros));
+    }
+
+    public function cambiarEstadoCita(Request $request, int $id)
+    {
+        $estado = (string) $request->input('estado', '');
+
+        try {
+            $cita = $this->service->cambiarEstadoCita($id, $estado);
+            return response()->json($cita);
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function listarPsicologosAdmin()
+    {
+        return response()->json($this->service->listarPsicologosAdmin());
+    }
+
+    public function crearPsicologo(Request $request)
+    {
+        try {
+            $psicologo = $this->service->crearPsicologo($request->all());
+            return response()->json($psicologo, 201);
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function actualizarPsicologo(Request $request, int $id)
+    {
+        try {
+            $psicologo = $this->service->actualizarPsicologo($id, $request->all());
+            return response()->json($psicologo);
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
 }

@@ -11,6 +11,8 @@ use LogicException;
 
 class PsicologiaService
 {
+    private const ESTADOS_VALIDOS = ['Pendiente', 'Confirmada', 'Atendida', 'Cancelada'];
+
     public function listarPsicologos()
     {
         return Psicologo::where('Estado', 1)
@@ -22,6 +24,60 @@ class PsicologiaService
                 'especialidad' => $psicologo->Especialidad,
             ])
             ->all();
+    }
+
+    public function listarPsicologosAdmin(): array
+    {
+        return Psicologo::orderBy('Nombre')
+            ->get()
+            ->map(fn (Psicologo $psicologo) => $this->mapearPsicologo($psicologo))
+            ->all();
+    }
+
+    public function crearPsicologo(array $datos): array
+    {
+        $nombre = trim((string) ($datos['nombre'] ?? ''));
+
+        if ($nombre === '') {
+            throw new InvalidArgumentException('El nombre del psicólogo es obligatorio.');
+        }
+
+        $psicologo = Psicologo::create([
+            'Nombre' => $nombre,
+            'Especialidad' => isset($datos['especialidad']) ? trim((string) $datos['especialidad']) ?: null : null,
+            'Estado' => 1,
+        ]);
+
+        return $this->mapearPsicologo($psicologo);
+    }
+
+    public function actualizarPsicologo(int $psicologoId, array $datos): array
+    {
+        $psicologo = Psicologo::find($psicologoId);
+
+        if (!$psicologo) {
+            throw new InvalidArgumentException('No se encontró el psicólogo indicado.');
+        }
+
+        if (array_key_exists('nombre', $datos)) {
+            $nombre = trim((string) $datos['nombre']);
+            if ($nombre === '') {
+                throw new InvalidArgumentException('El nombre del psicólogo es obligatorio.');
+            }
+            $psicologo->Nombre = $nombre;
+        }
+
+        if (array_key_exists('especialidad', $datos)) {
+            $psicologo->Especialidad = trim((string) $datos['especialidad']) ?: null;
+        }
+
+        if (array_key_exists('estado', $datos)) {
+            $psicologo->Estado = (bool) $datos['estado'];
+        }
+
+        $psicologo->save();
+
+        return $this->mapearPsicologo($psicologo);
     }
 
     public function listarBloquesDisponibles(int $psicologoId, string $fecha): array
@@ -51,6 +107,49 @@ class PsicologiaService
             ->get()
             ->map(fn (CitaPsicologia $cita) => $this->mapearCita($cita))
             ->all();
+    }
+
+    public function listarCitasAdmin(array $filtros): array
+    {
+        $query = CitaPsicologia::with(['psicologo', 'estudiante', 'bloque']);
+
+        if (!empty($filtros['estado'])) {
+            $query->where('Estado', $filtros['estado']);
+        }
+
+        if (!empty($filtros['fecha'])) {
+            $query->where('Fecha', $filtros['fecha']);
+        }
+
+        if (!empty($filtros['psicologoId'])) {
+            $query->where('Psicologo', (int) $filtros['psicologoId']);
+        }
+
+        return $query->orderByDesc('Fecha')
+            ->orderByDesc('IdCita')
+            ->get()
+            ->map(fn (CitaPsicologia $cita) => $this->mapearCita($cita))
+            ->all();
+    }
+
+    public function cambiarEstadoCita(int $citaId, string $estado): array
+    {
+        if (!in_array($estado, self::ESTADOS_VALIDOS, true)) {
+            throw new InvalidArgumentException('El estado indicado no es válido.');
+        }
+
+        $cita = CitaPsicologia::with(['psicologo', 'estudiante', 'bloque'])
+            ->where('IdCita', $citaId)
+            ->first();
+
+        if (!$cita) {
+            throw new InvalidArgumentException('No se encontró la cita indicada.');
+        }
+
+        $cita->Estado = $estado;
+        $cita->save();
+
+        return $this->mapearCita($cita);
     }
 
     public function registrarCita(array $datos): array
@@ -119,9 +218,12 @@ class PsicologiaService
 
     private function mapearCita(CitaPsicologia $cita): array
     {
+        $estudianteNombre = trim(($cita->estudiante?->Nombre ?? '') . ' ' . ($cita->estudiante?->Apellido ?? ''));
+
         return [
             'id' => $cita->IdCita,
             'usuarioId' => $cita->Estudiante,
+            'estudianteNombre' => $estudianteNombre !== '' ? $estudianteNombre : null,
             'psicologoId' => $cita->Psicologo,
             'psicologoNombre' => $cita->psicologo?->Nombre,
             'bloqueId' => $cita->Bloque,
@@ -131,6 +233,16 @@ class PsicologiaService
             'motivo' => $cita->Motivo,
             'estado' => $cita->Estado,
             'fechaSolicitud' => $cita->FechaSolicitud?->format('Y-m-d\TH:i:s'),
+        ];
+    }
+
+    private function mapearPsicologo(Psicologo $psicologo): array
+    {
+        return [
+            'id' => $psicologo->IdPsicologo,
+            'nombre' => $psicologo->Nombre,
+            'especialidad' => $psicologo->Especialidad,
+            'estado' => (bool) $psicologo->Estado,
         ];
     }
 }

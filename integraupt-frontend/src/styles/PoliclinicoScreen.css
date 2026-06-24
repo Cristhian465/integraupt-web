@@ -1,0 +1,626 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 15px 35px -15px rgba(15, 23, 42, 0.35);
+  }
+  50% {
+    box-shadow: 0 15px 35px -15px rgba(8, 145, 178, 0.5);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes policlinico-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.policlinico-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #ecfeff 100%);
+}
+
+.policlinico-main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@media (min-width: 640px) {
+  .policlinico-main {
+    padding: 2.5rem 1.5rem 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .policlinico-main {
+    padding: 3rem 2rem 4rem;
+  }
+}
+
+.policlinico-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+@media (min-width: 1024px) {
+  .policlinico-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.policlinico-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 15px 35px -15px rgba(15, 23, 42, 0.35);
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInRight 0.6s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.policlinico-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s;
+}
+
+.policlinico-card:hover::before {
+  left: 100%;
+}
+
+.policlinico-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 45px -20px rgba(15, 23, 42, 0.4);
+}
+
+@media (min-width: 768px) {
+  .policlinico-card {
+    padding: 2rem;
+  }
+}
+
+.policlinico-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.policlinico-card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.policlinico-card:hover .policlinico-card-header h2 {
+  color: #0891b2;
+}
+
+.policlinico-card-header p {
+  margin: 0.25rem 0 0;
+  color: #475569;
+}
+
+.policlinico-card-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #0891b2;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.policlinico-card:hover .policlinico-card-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.policlinico-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.policlinico-label {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.policlinico-input,
+.policlinico-textarea {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #cbd5f5;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.policlinico-input:focus,
+.policlinico-textarea:focus {
+  outline: none;
+  border-color: #0891b2;
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+  background-color: #ffffff;
+  transform: scale(1.02);
+}
+
+.policlinico-textarea {
+  resize: vertical;
+  min-height: 7rem;
+}
+
+.policlinico-bloques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 0.65rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.policlinico-bloque-button {
+  border: 1px solid rgba(8, 145, 178, 0.25);
+  border-radius: 0.75rem;
+  background-color: #ecfeff;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0e7490;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.policlinico-bloque-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 15px 25px -15px rgba(8, 145, 178, 0.45);
+  border-color: rgba(8, 145, 178, 0.45);
+}
+
+.policlinico-bloque-button-selected {
+  background-color: #0891b2;
+  color: #ffffff;
+  border-color: #0891b2;
+  animation: pulseGlow 2s infinite;
+}
+
+.policlinico-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.policlinico-primary-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.policlinico-primary-button:hover::before {
+  left: 100%;
+}
+
+.policlinico-primary-button:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 30px -15px rgba(8, 145, 178, 0.6);
+}
+
+.policlinico-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.policlinico-button-icon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.policlinico-primary-button:hover .policlinico-button-icon {
+  transform: scale(1.2);
+}
+
+.policlinico-button-spinner {
+  animation: policlinico-spin 1s linear infinite;
+}
+
+.policlinico-feedback {
+  margin-top: 1rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  animation: bounceIn 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.policlinico-feedback:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -15px rgba(0, 0, 0, 0.2);
+}
+
+.policlinico-feedback p {
+  margin: 0;
+}
+
+.policlinico-feedback-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.policlinico-feedback:hover .policlinico-feedback-icon {
+  transform: scale(1.2);
+}
+
+.policlinico-feedback-success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.policlinico-feedback-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.policlinico-feedback-info {
+  background-color: #cffafe;
+  color: #0e7490;
+}
+
+.policlinico-empty {
+  border-radius: 0.75rem;
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  color: #475569;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.policlinico-empty:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -20px rgba(0, 0, 0, 0.15);
+}
+
+.policlinico-loading-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: policlinico-spin 1s linear infinite;
+  color: #0891b2;
+}
+
+.policlinico-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.policlinico-list-item {
+  border: 1px solid rgba(8, 145, 178, 0.18);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  background-color: #f8fafc;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInRight 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.policlinico-list-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s;
+}
+
+.policlinico-list-item:hover::before {
+  left: 100%;
+}
+
+.policlinico-list-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 35px -20px rgba(15, 23, 42, 0.45);
+}
+
+.policlinico-list-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.policlinico-list-title {
+  font-weight: 600;
+  color: #0e7490;
+  transition: color 0.3s ease;
+}
+
+.policlinico-list-item:hover .policlinico-list-title {
+  color: #0891b2;
+}
+
+.policlinico-list-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.policlinico-list-motivo {
+  margin: 0 0 0.75rem;
+  color: #334155;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.policlinico-list-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.policlinico-list-date {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.policlinico-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: rgba(8, 145, 178, 0.12);
+  color: #0e7490;
+  text-transform: capitalize;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.policlinico-list-item:hover .policlinico-status {
+  transform: scale(1.1);
+}
+
+.policlinico-status-pendiente {
+  background-color: #fef9c3;
+  color: #854d0e;
+}
+
+.policlinico-status-confirmada {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.policlinico-status-atendida {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.policlinico-status-cancelada {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.policlinico-cancel-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 0.6rem;
+  background-color: #fff5f5;
+  color: #b91c1c;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.policlinico-cancel-button:hover:not(:disabled) {
+  background-color: #fee2e2;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -12px rgba(185, 28, 28, 0.4);
+}
+
+.policlinico-cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.home-welcome-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(8, 145, 178, 0.95) 0%, rgba(14, 116, 144, 0.9) 100%);
+  color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 1.75rem;
+  box-shadow: 0 25px 45px -30px rgba(8, 145, 178, 0.9);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.home-welcome-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+.home-welcome-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.35), transparent 55%);
+}
+
+.home-welcome-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.home-welcome-date {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  opacity: 0.8;
+  margin-bottom: 0.75rem;
+}
+
+.home-title {
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.home-subtitle {
+  max-width: 540px;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.home-welcome-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.home-welcome-avatar:hover {
+  animation: float 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .home-welcome-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}

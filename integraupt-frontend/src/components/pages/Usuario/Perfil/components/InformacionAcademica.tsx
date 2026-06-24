@@ -29,17 +29,17 @@ export const InformacionAcademica: React.FC<InformacionAcademicaProps> = ({ perf
             <Building className="perfil-info-icon" />
             Escuela
           </label>
-          <p className="perfil-info-value">{perfil.escuela.nombre}</p>
+          <p className="perfil-info-value">{perfil.escuela?.nombre || 'No asignada'}</p>
         </div>
 
         <div className="perfil-info-item">
           <label className="perfil-info-label">Facultad</label>
-          <p className="perfil-info-value">{perfil.escuela.facultad.nombre}</p>
+          <p className="perfil-info-value">{perfil.escuela?.facultad?.nombre || 'No asignada'}</p>
         </div>
 
         <div className="perfil-info-item">
           <label className="perfil-info-label">Abreviatura facultad</label>
-          <p className="perfil-info-value">{perfil.escuela.facultad.abreviatura}</p>
+          <p className="perfil-info-value">{perfil.escuela?.facultad?.abreviatura || 'N/A'}</p>
         </div>
       </div>
     </div>
