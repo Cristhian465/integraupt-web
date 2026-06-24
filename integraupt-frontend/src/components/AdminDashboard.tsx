@@ -11,7 +11,8 @@ import {
   BarChart3,
   Ban,
   AlertCircle,
-  Trophy
+  Trophy,
+  Dumbbell
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -23,7 +24,8 @@ import {
   GestionReportes,
   GestionIncidencias,
   GestionAuditoria,
-  GestionOlimpiadas
+  GestionOlimpiadas,
+  GestionGimnasio
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -37,14 +39,15 @@ type ModuleId =
   | "audit"
   | "reports"
   | "incidencias"
-  | "olimpiadas";
+  | "olimpiadas"
+  | "gimnasio";
 
 interface ModuleDefinition {
   id: ModuleId;
   name: string;
   description: string;
   icon: LucideIcon;
-  color: "blue" | "green" | "indigo" | "purple" | "orange" | "red";
+  color: "blue" | "green" | "indigo" | "purple" | "orange" | "red" | "burgundy";
 }
 
 interface AuditEntry {
@@ -134,6 +137,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Gestiona ediciones, disciplinas, inscripciones y resultados",
     icon: Trophy,
     color: "orange"
+  },
+  {
+    id: "gimnasio",
+    name: "Gimnasio UPT",
+    description: "Supervisa registros de ingresos, salidas y duración de sesiones",
+    icon: Dumbbell,
+    color: "burgundy"
   }
 ];
 
@@ -335,6 +345,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "olimpiadas" && (
             <GestionOlimpiadas onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "gimnasio" && (
+            <GestionGimnasio />
           )}
         </div>
 

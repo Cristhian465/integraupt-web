@@ -7,3 +7,4 @@ export { GestionReportes } from "./GestionReportes/ReportesPage.tsx";
 export { GestionIncidencias } from "./GestionIncidencias/IncidenciasGestionPage.tsx";
 export { GestionAuditoria } from "./GestionAuditoria/AuditoriaPage.tsx";
 export { GestionOlimpiadas } from "./GestionOlimpiadas/OlimpiadasPage.tsx";
+export { GestionGimnasio } from "./GestionGimnasio/GestionGimnasio.tsx";

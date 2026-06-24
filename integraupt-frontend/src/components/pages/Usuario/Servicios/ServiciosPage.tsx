@@ -11,7 +11,8 @@ import {
   LibraryBig,
   Brain,
   Bus,
-  Trophy
+  Trophy,
+  Dumbbell
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -38,6 +39,7 @@ interface ServiciosPageProps {
   onNavigateToPsicologia: () => void;
   onNavigateToBurra: () => void;
   onNavigateToOlimpiadas: () => void;
+  onNavigateToGimnasio: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -66,6 +68,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToPsicologia,
   onNavigateToBurra,
   onNavigateToOlimpiadas,
+  onNavigateToGimnasio,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -264,6 +267,35 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Ver Olimpiadas
+              </button>
+            </div>
+          </article>
+          <article
+            className="servicios-menu-card servicios-menu-card-gimnasio"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-gimnasio">
+                <Dumbbell className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Gimnasio UPT</h2>
+            <p className="servicios-menu-card-description">
+              Registra tu asistencia y haz seguimiento a tus sesiones de gimnasio.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-gimnasio">
+              Deporte y Salud
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-gimnasio"
+                onClick={(event) => {
+                  onNavigateToGimnasio();
+                }}
+              >
+                Ver Gimnasio
               </button>
             </div>
           </article>

@@ -168,6 +168,16 @@ services:
     ports: ["8095:8000"]
     networks: [integraupt]
 
+  servicio-gimnasio:
+    build:
+      context: ./Integraupt-Backend/servicio-gimnasio
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-gimnasio/.env.docker
+    depends_on: [servicio-usuarios]
+    ports: ["8096:8000"]
+    networks: [integraupt]
+
   frontend:
     build:
       context: ./integraupt-frontend
@@ -188,6 +198,7 @@ services:
       - servicio-usuarios
       - servicio-burra
       - servicio-olimpiadas
+      - servicio-gimnasio
     networks: [ integraupt ]
 
 networks:

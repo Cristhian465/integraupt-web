@@ -34,6 +34,7 @@ const DEFAULT_QR_RESERVAS_BACKEND_URL = "http://localhost:8090";
 const DEFAULT_AUDITORIA_BACKEND_URL = "http://localhost:8091";
 const DEFAULT_PSICOLOGIA_BACKEND_URL = "http://localhost:8093";
 const DEFAULT_OLIMPIADAS_BACKEND_URL = "http://localhost:8094";
+const DEFAULT_GIMNASIO_BACKEND_URL = "http://localhost:8096";
 
 // ==========================
 // Resolución final de URLs
@@ -110,6 +111,11 @@ export const OLIMPIADAS_API_BASE_URL = resolveBaseUrl(
   DEFAULT_OLIMPIADAS_BACKEND_URL
 );
 
+export const GIMNASIO_API_BASE_URL = resolveBaseUrl(
+  env.VITE_GIMNASIO_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_GIMNASIO_BACKEND_URL
+);
+
 
 // ==========================
 // Helpers para construir URLs
@@ -156,6 +162,9 @@ export const getPsicologiaApiUrl = (path: string) =>
 
 export const getOlimpiadasApiUrl = (path: string) =>
   buildServiceUrl(OLIMPIADAS_API_BASE_URL, path);
+
+export const getGimnasioApiUrl = (path: string) =>
+  buildServiceUrl(GIMNASIO_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper
