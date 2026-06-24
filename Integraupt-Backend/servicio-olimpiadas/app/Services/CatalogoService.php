@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Escuela;
+use App\Models\Estudiante;
 use App\Models\Facultad;
 use Illuminate\Support\Collection;
 
@@ -22,5 +23,24 @@ class CatalogoService
         }
 
         return $query->get();
+    }
+
+    public function buscarEstudiantes(string $busqueda): Collection
+    {
+        $busqueda = trim($busqueda);
+        if ($busqueda === '') {
+            return collect();
+        }
+
+        return Estudiante::with(['usuario', 'escuela.facultad'])
+            ->where(function ($query) use ($busqueda) {
+                $query->where('Codigo', 'like', "%{$busqueda}%")
+                    ->orWhereHas('usuario', function ($q) use ($busqueda) {
+                        $q->where('Nombre', 'like', "%{$busqueda}%")
+                            ->orWhere('Apellido', 'like', "%{$busqueda}%");
+                    });
+            })
+            ->limit(15)
+            ->get();
     }
 }

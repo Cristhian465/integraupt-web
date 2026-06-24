@@ -58,6 +58,7 @@ class DisciplinaController extends Controller
             'nombre' => $disciplina->Nombre,
             'descripcion' => $disciplina->Descripcion,
             'tipoParticipacion' => $disciplina->TipoParticipacion,
+            'tipoPuntuacion' => $disciplina->TipoPuntuacion,
             'reglas' => $disciplina->Reglas,
             'cupoMaximoDefault' => $disciplina->CupoMaximoDefault,
             'estado' => $disciplina->Estado,

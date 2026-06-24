@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Escuela;
+use App\Models\Estudiante;
 use App\Models\Facultad;
 use App\Services\CatalogoService;
 use Illuminate\Http\JsonResponse;
@@ -42,5 +43,22 @@ class CatalogoController extends Controller
             ->all();
 
         return response()->json($escuelas);
+    }
+
+    public function buscarEstudiantes(Request $request): JsonResponse
+    {
+        $busqueda = (string) $request->query('busqueda', '');
+
+        $estudiantes = $this->catalogoService->buscarEstudiantes($busqueda)
+            ->map(fn (Estudiante $estudiante) => [
+                'usuarioId' => $estudiante->IdUsuario,
+                'nombreCompleto' => trim(($estudiante->usuario?->Nombre ?? '') . ' ' . ($estudiante->usuario?->Apellido ?? '')),
+                'codigo' => $estudiante->Codigo,
+                'facultadId' => $estudiante->escuela?->IdFacultad,
+                'facultadNombre' => $estudiante->escuela?->facultad?->Nombre,
+            ])
+            ->all();
+
+        return response()->json($estudiantes);
     }
 }

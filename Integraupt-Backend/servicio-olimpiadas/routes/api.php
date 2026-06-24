@@ -5,11 +5,13 @@ use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\EdicionController;
 use App\Http\Controllers\InscripcionController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResultadoController;
 
 Route::prefix('catalogos')->group(function () {
     Route::get('/facultades', [CatalogoController::class, 'listarFacultades']);
     Route::get('/escuelas', [CatalogoController::class, 'listarEscuelas']);
+    Route::get('/estudiantes', [CatalogoController::class, 'buscarEstudiantes']);
 });
 
 Route::prefix('disciplinas')->group(function () {
@@ -31,6 +33,7 @@ Route::prefix('ediciones')->group(function () {
 
     Route::get('/{id}/disciplinas', [EdicionController::class, 'listarDisciplinas']);
     Route::post('/{id}/disciplinas', [EdicionController::class, 'vincularDisciplina']);
+    Route::get('/{id}/medallero', [EdicionController::class, 'medallero']);
 });
 
 Route::prefix('edicion-disciplinas')->group(function () {
@@ -40,6 +43,8 @@ Route::prefix('edicion-disciplinas')->group(function () {
     Route::get('/{edicionDisciplinaId}/fixture', [ResultadoController::class, 'fixture']);
     Route::get('/{edicionDisciplinaId}/tabla', [ResultadoController::class, 'tabla']);
     Route::get('/{edicionDisciplinaId}/participantes', [ResultadoController::class, 'participantes']);
+    Route::get('/{edicionDisciplinaId}/posiciones', [ResultadoController::class, 'posiciones']);
+    Route::get('/{edicionDisciplinaId}/anotadores', [ResultadoController::class, 'anotadores']);
 });
 
 Route::prefix('inscripciones')->group(function () {
@@ -52,4 +57,22 @@ Route::prefix('inscripciones')->group(function () {
 Route::prefix('resultados')->group(function () {
     Route::post('/', [ResultadoController::class, 'store']);
     Route::put('/{id}', [ResultadoController::class, 'update']);
+});
+
+Route::prefix('resultados-posicion')->group(function () {
+    Route::post('/', [ResultadoController::class, 'storePosicion']);
+    Route::put('/{id}', [ResultadoController::class, 'updatePosicion']);
+});
+
+Route::prefix('anotadores')->group(function () {
+    Route::post('/', [ResultadoController::class, 'storeAnotador']);
+    Route::put('/{id}', [ResultadoController::class, 'updateAnotador']);
+});
+
+Route::prefix('posts')->group(function () {
+    Route::get('/', [PostController::class, 'index']);
+    Route::post('/', [PostController::class, 'store']);
+    Route::delete('/{id}', [PostController::class, 'destroy']);
+    Route::get('/{id}/comentarios', [PostController::class, 'comentarios']);
+    Route::post('/{id}/comentarios', [PostController::class, 'storeComentario']);
 });

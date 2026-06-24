@@ -148,6 +148,16 @@ class EdicionController extends Controller
         }
     }
 
+    public function medallero($id)
+    {
+        try {
+            $filas = $this->edicionService->medallero((int) $id)->all();
+            return response()->json($filas);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
     private function mapear(OlimpiadaEdicion $edicion): array
     {
         return [
@@ -174,9 +184,12 @@ class EdicionController extends Controller
             'edicionId' => $vinculo->Edicion,
             'disciplinaId' => $vinculo->Disciplina,
             'disciplinaNombre' => $vinculo->disciplina?->Nombre,
+            'categoria' => $vinculo->Categoria,
             'tipoParticipacion' => $vinculo->disciplina?->TipoParticipacion,
+            'tipoPuntuacion' => $vinculo->disciplina?->TipoPuntuacion,
             'cupoMaximoPorFacultad' => $vinculo->CupoMaximoPorFacultad,
             'reglasEspecificas' => $vinculo->ReglasEspecificas,
+            'lugar' => $vinculo->Lugar,
             'estado' => $vinculo->Estado,
             'inscritosActivos' => $vinculo->inscritosActivos(),
         ];

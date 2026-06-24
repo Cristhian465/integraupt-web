@@ -5,7 +5,11 @@
 
 .olimpiadas-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #fff7ed 100%);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(249, 115, 22, 0.18), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(37, 99, 235, 0.18), transparent 45%),
+    radial-gradient(circle at 50% 100%, rgba(124, 58, 237, 0.14), transparent 50%),
+    linear-gradient(160deg, #0f172a 0%, #1e293b 35%, #0f172a 100%);
 }
 
 .olimpiadas-main {
@@ -24,7 +28,18 @@
 }
 
 .olimpiadas-welcome {
-  background: linear-gradient(135deg, rgba(217, 119, 6, 0.95) 0%, rgba(180, 83, 9, 0.9) 100%);
+  background: linear-gradient(120deg, #f97316 0%, #db2777 55%, #7c3aed 100%);
+  box-shadow: 0 25px 50px -20px rgba(124, 58, 237, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.olimpiadas-welcome::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.25), transparent 55%);
+  pointer-events: none;
 }
 
 .olimpiadas-grid {
@@ -41,9 +56,10 @@
 
 .olimpiadas-card {
   background-color: #ffffff;
-  border-radius: 0.75rem;
-  box-shadow: 0 15px 35px -15px rgba(15, 23, 42, 0.35);
+  border-radius: 1rem;
+  box-shadow: 0 20px 45px -20px rgba(0, 0, 0, 0.55);
   padding: 1.5rem;
+  border-top: 4px solid #f97316;
 }
 
 @media (min-width: 768px) {
@@ -76,6 +92,19 @@
   height: 1.5rem;
   color: #b45309;
   flex-shrink: 0;
+}
+
+.olimpiadas-card-icon-gold {
+  color: #ca8a04;
+}
+
+.olimpiadas-medallero-card {
+  border-top-color: #facc15;
+  background: linear-gradient(180deg, #fffbeb 0%, #ffffff 30%);
+}
+
+.olimpiadas-noticias-card {
+  border-top-color: #7c3aed;
 }
 
 .olimpiadas-input {
@@ -159,6 +188,32 @@
   font-weight: 600;
   background-color: #b45309;
   color: #ffffff;
+}
+
+.olimpiadas-disciplina-action-inscrito {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.olimpiadas-hint {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.olimpiadas-facultad-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.olimpiadas-facultad-dot {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: var(--dot-color, #64748b);
+  flex-shrink: 0;
 }
 
 .olimpiadas-feedback {
@@ -343,4 +398,353 @@
   font-weight: 600;
   font-size: 0.8rem;
   text-transform: uppercase;
+}
+
+/* ===== Medallero general ===== */
+.olimpiadas-medallero-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.olimpiadas-medallero-row {
+  display: grid;
+  grid-template-columns: 2.5rem 0.3rem 1fr auto auto;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.6rem;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.olimpiadas-medallero-row-lider {
+  background: linear-gradient(90deg, #fef9c3, #fffbeb);
+  border-color: #facc15;
+  box-shadow: 0 10px 25px -15px rgba(202, 138, 4, 0.5);
+}
+
+.olimpiadas-medallero-posicion {
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-align: center;
+  color: #92400e;
+}
+
+.olimpiadas-medallero-barra {
+  width: 0.3rem;
+  height: 1.6rem;
+  border-radius: 999px;
+  background-color: var(--dot-color, #64748b);
+}
+
+.olimpiadas-medallero-facultad {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.olimpiadas-medallero-medallas {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.olimpiadas-medallero-puntos {
+  font-weight: 800;
+  color: #b45309;
+  white-space: nowrap;
+}
+
+/* ===== Filtros de fixture ===== */
+.olimpiadas-fixture-filtros {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.olimpiadas-fixture-filtros button {
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  color: #475569;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.olimpiadas-fixture-filtros button.active {
+  background: linear-gradient(120deg, #f97316, #db2777);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ===== Match cards (estilo torneo) ===== */
+.olimpiadas-matchcard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.olimpiadas-matchcard {
+  border-radius: 0.9rem;
+  background: linear-gradient(160deg, #0f172a, #1e293b);
+  padding: 1rem 1.25rem;
+  color: #f8fafc;
+  box-shadow: 0 15px 30px -18px rgba(15, 23, 42, 0.7);
+}
+
+.olimpiadas-matchcard-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.olimpiadas-matchcard-body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.olimpiadas-matchcard-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.olimpiadas-matchcard-shield {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.5rem;
+  background-color: var(--dot-color, #64748b);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
+}
+
+.olimpiadas-matchcard-team-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.olimpiadas-matchcard-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.olimpiadas-matchcard-winner {
+  color: #facc15;
+}
+
+.olimpiadas-matchcard-dash {
+  color: #64748b;
+  font-weight: 400;
+}
+
+.olimpiadas-matchcard-vs {
+  font-size: 1rem;
+  color: #94a3b8;
+  border: 1px solid #334155;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+
+.olimpiadas-matchcard-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.85rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.3);
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+/* ===== Goleadores ===== */
+.olimpiadas-goleadores {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.olimpiadas-goleadores h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  color: #92400e;
+  margin: 0 0 0.75rem;
+}
+
+.olimpiadas-goleadores ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.olimpiadas-goleadores li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.75rem;
+}
+
+.olimpiadas-goleadores strong {
+  color: #b45309;
+}
+
+/* ===== Noticias / posts ===== */
+.olimpiadas-posts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.olimpiadas-post-card {
+  display: flex;
+  gap: 1.25rem;
+  border-radius: 0.85rem;
+  background: linear-gradient(160deg, #faf5ff, #ffffff);
+  border: 1px solid #ede9fe;
+  padding: 1.1rem;
+}
+
+.olimpiadas-post-img {
+  width: 9rem;
+  height: 9rem;
+  object-fit: cover;
+  border-radius: 0.7rem;
+  flex-shrink: 0;
+}
+
+.olimpiadas-post-content h3 {
+  margin: 0 0 0.4rem;
+  color: #6d28d9;
+}
+
+.olimpiadas-post-content p {
+  margin: 0 0 0.5rem;
+  color: #334155;
+}
+
+.olimpiadas-post-meta {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.olimpiadas-post-comments-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  border: none;
+  background: none;
+  color: #7c3aed;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.olimpiadas-post-comments {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #ede9fe;
+}
+
+.olimpiadas-post-comments ul {
+  list-style: none;
+  margin: 0 0 0.75rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 12rem;
+  overflow-y: auto;
+}
+
+.olimpiadas-post-comments li {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.olimpiadas-post-comments-empty {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.olimpiadas-post-comment-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.olimpiadas-post-comment-form button {
+  border: none;
+  border-radius: 0.6rem;
+  background: linear-gradient(120deg, #7c3aed, #db2777);
+  color: #fff;
+  padding: 0 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.olimpiadas-post-comment-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .olimpiadas-medallero-row {
+    grid-template-columns: 2rem 0.3rem 1fr;
+    grid-template-areas:
+      "pos bar fac"
+      "pos bar med"
+      "pos bar pts";
+    row-gap: 0.25rem;
+  }
+
+  .olimpiadas-medallero-medallas,
+  .olimpiadas-medallero-puntos {
+    justify-content: flex-start;
+  }
+
+  .olimpiadas-post-card {
+    flex-direction: column;
+  }
+
+  .olimpiadas-post-img {
+    width: 100%;
+    height: 10rem;
+  }
 }

@@ -38,6 +38,12 @@ class InscripcionService
             throw new ModelNotFoundException('El usuario indicado no existe.');
         }
 
+        // Restricción: solo estudiantes matriculados pueden inscribirse
+        $estudiante = Estudiante::where('IdUsuario', $usuarioId)->first();
+        if (!$estudiante) {
+            throw new InvalidArgumentException('Solo los estudiantes matriculados pueden inscribirse en las Olimpiadas.');
+        }
+
         $facultadId = $this->resolverFacultadUsuario($usuarioId);
         if ($facultadId === null) {
             throw new InvalidArgumentException('No fue posible determinar la facultad del usuario para inscribirlo.');
@@ -50,6 +56,37 @@ class InscripcionService
 
         if ($yaInscrito) {
             throw new LogicException('El usuario ya se encuentra inscrito en esta disciplina para la edición actual.');
+        }
+
+        // Restricción de bases: máximo 2 deportes colectivos y 2 deportes individuales por estudiante
+        $edicionId = $edicionDisciplina->Edicion;
+        $inscripcionesUsuarioEnEdicion = OlimpiadaInscripcion::where('Usuario', $usuarioId)
+            ->where('Estado', 'inscrito')
+            ->whereHas('edicionDisciplina', function ($query) use ($edicionId) {
+                $query->where('Edicion', $edicionId);
+            })
+            ->with('edicionDisciplina.disciplina')
+            ->get();
+
+        $colectivos = 0;
+        $individuales = 0;
+        foreach ($inscripcionesUsuarioEnEdicion as $ins) {
+            if ($ins->edicionDisciplina && $ins->edicionDisciplina->disciplina) {
+                if ($ins->edicionDisciplina->disciplina->TipoParticipacion === 'equipo') {
+                    $colectivos++;
+                } elseif ($ins->edicionDisciplina->disciplina->TipoParticipacion === 'individual') {
+                    $individuales++;
+                }
+            }
+        }
+
+        if ($edicionDisciplina->disciplina) {
+            if ($edicionDisciplina->disciplina->TipoParticipacion === 'equipo' && $colectivos >= 2) {
+                throw new LogicException('No puedes inscribirte en más de 2 deportes colectivos.');
+            }
+            if ($edicionDisciplina->disciplina->TipoParticipacion === 'individual' && $individuales >= 2) {
+                throw new LogicException('No puedes inscribirte en más de 2 deportes individuales.');
+            }
         }
 
         if ($edicionDisciplina->CupoMaximoPorFacultad !== null) {

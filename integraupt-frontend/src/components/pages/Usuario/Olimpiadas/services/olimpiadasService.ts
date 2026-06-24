@@ -1,9 +1,14 @@
 import { getOlimpiadasApiUrl } from '../../../../../utils/apiConfig';
 import type {
+  AnotadorResponse,
+  ComentarioResponse,
   EdicionDisciplinaResponse,
   EdicionResponse,
   InscripcionMiaResponse,
+  MedalleroFilaResponse,
+  PostResponse,
   ResultadoResponse,
+  ResultadoPosicionResponse,
   TablaPosicionResponse,
 } from '../types';
 
@@ -60,6 +65,17 @@ export const obtenerFixture = async (
   return response.json();
 };
 
+export const obtenerResultadosPosicion = async (
+  edicionDisciplinaId: number,
+  signal?: AbortSignal,
+): Promise<ResultadoPosicionResponse[]> => {
+  const response = await fetch(buildOlimpiadasUrl(`/edicion-disciplinas/${edicionDisciplinaId}/posiciones`), { signal });
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
+  return response.json();
+};
+
 export const obtenerTablaPosiciones = async (
   edicionDisciplinaId: number,
   signal?: AbortSignal,
@@ -110,4 +126,57 @@ export const cancelarInscripcion = async (inscripcionId: number, usuarioId: numb
   if (!response.ok) {
     throw new Error(await parseErrorMessage(response));
   }
+};
+
+export const obtenerMedallero = async (
+  edicionId: number,
+  signal?: AbortSignal,
+): Promise<MedalleroFilaResponse[]> => {
+  const response = await fetch(buildOlimpiadasUrl(`/ediciones/${edicionId}/medallero`), { signal });
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const obtenerAnotadores = async (
+  edicionDisciplinaId: number,
+  signal?: AbortSignal,
+): Promise<AnotadorResponse[]> => {
+  const response = await fetch(buildOlimpiadasUrl(`/edicion-disciplinas/${edicionDisciplinaId}/anotadores`), { signal });
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const obtenerPosts = async (edicionId: number, signal?: AbortSignal): Promise<PostResponse[]> => {
+  const response = await fetch(buildOlimpiadasUrl(`/posts?edicionId=${edicionId}`), { signal });
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const obtenerComentarios = async (postId: number, signal?: AbortSignal): Promise<ComentarioResponse[]> => {
+  const response = await fetch(buildOlimpiadasUrl(`/posts/${postId}/comentarios`), { signal });
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const comentarPost = async (
+  postId: number,
+  payload: { usuarioId: number; contenido: string },
+): Promise<ComentarioResponse> => {
+  const response = await fetch(buildOlimpiadasUrl(`/posts/${postId}/comentarios`), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    throw new Error(await parseErrorMessage(response));
+  }
+  return response.json();
 };

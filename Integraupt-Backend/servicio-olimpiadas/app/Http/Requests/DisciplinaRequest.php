@@ -17,6 +17,7 @@ class DisciplinaRequest extends FormRequest
             'nombre' => 'required|string|max:150',
             'descripcion' => 'nullable|string',
             'tipoParticipacion' => 'nullable|in:individual,equipo',
+            'tipoPuntuacion' => 'nullable|in:partido,posiciones',
             'reglas' => 'nullable|string',
             'cupoMaximoDefault' => 'nullable|integer|min:1',
             'estado' => 'nullable|in:activa,inactiva',

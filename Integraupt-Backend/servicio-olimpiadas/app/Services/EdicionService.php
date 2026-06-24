@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Facultad;
 use App\Models\OlimpiadaDisciplina;
 use App\Models\OlimpiadaEdicion;
 use App\Models\OlimpiadaEdicionDisciplina;
+use App\Models\OlimpiadaParticipacionFacultad;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
@@ -140,6 +142,7 @@ class EdicionService
     {
         $edicion = $this->obtener($edicionId);
         $disciplinaId = (int) $datos['disciplinaId'];
+        $categoria = $datos['categoria'] ?? 'general';
 
         $disciplina = OlimpiadaDisciplina::find($disciplinaId);
         if (!$disciplina) {
@@ -148,19 +151,67 @@ class EdicionService
 
         $existe = OlimpiadaEdicionDisciplina::where('Edicion', $edicion->IdEdicion)
             ->where('Disciplina', $disciplinaId)
+            ->where('Categoria', $categoria)
             ->exists();
 
         if ($existe) {
-            throw new InvalidArgumentException('Esa disciplina ya está vinculada a la edición indicada.');
+            throw new InvalidArgumentException('Esa disciplina ya está vinculada a la edición indicada en esa categoría.');
         }
 
         return OlimpiadaEdicionDisciplina::create([
             'Edicion' => $edicion->IdEdicion,
             'Disciplina' => $disciplinaId,
+            'Categoria' => $categoria,
             'CupoMaximoPorFacultad' => $datos['cupoMaximoPorFacultad'] ?? $disciplina->CupoMaximoDefault,
             'ReglasEspecificas' => $datos['reglasEspecificas'] ?? null,
+            'Lugar' => $datos['lugar'] ?? null,
             'Estado' => $datos['estado'] ?? 'activa',
         ]);
+    }
+
+    public function medallero(int $edicionId): Collection
+    {
+        $this->obtener($edicionId);
+
+        $edicionDisciplinaIds = OlimpiadaEdicionDisciplina::where('Edicion', $edicionId)->pluck('IdEdicionDisciplina');
+
+        $filas = OlimpiadaParticipacionFacultad::with('facultad')
+            ->whereIn('EdicionDisciplina', $edicionDisciplinaIds)
+            ->get()
+            ->groupBy('Facultad')
+            ->map(function ($grupo) {
+                $facultad = $grupo->first()->facultad;
+                return [
+                    'facultadId' => $facultad?->IdFacultad,
+                    'facultadNombre' => $facultad?->Nombre,
+                    'facultadAbreviatura' => $facultad?->Abreviatura,
+                    'oros' => $grupo->where('Posicion', 1)->count(),
+                    'platas' => $grupo->where('Posicion', 2)->count(),
+                    'bronces' => $grupo->where('Posicion', 3)->count(),
+                    'disciplinas' => $grupo->count(),
+                    'puntosTotales' => (int) $grupo->sum('Puntos'),
+                ];
+            })
+            ->values()
+            ->sortByDesc(fn ($fila) => [$fila['puntosTotales'], $fila['oros'], $fila['platas'], $fila['bronces']])
+            ->values();
+
+        $facultadesSinDatos = Facultad::whereNotIn('IdFacultad', $filas->pluck('facultadId'))->get();
+        $extra = $facultadesSinDatos->map(fn (Facultad $facultad) => [
+            'facultadId' => $facultad->IdFacultad,
+            'facultadNombre' => $facultad->Nombre,
+            'facultadAbreviatura' => $facultad->Abreviatura,
+            'oros' => 0,
+            'platas' => 0,
+            'bronces' => 0,
+            'disciplinas' => 0,
+            'puntosTotales' => 0,
+        ]);
+
+        return $filas->concat($extra)->values()->map(function ($fila, $index) {
+            $fila['posicion'] = $index + 1;
+            return $fila;
+        });
     }
 
     public function actualizarVinculo(int $edicionDisciplinaId, array $datos): OlimpiadaEdicionDisciplina
@@ -173,6 +224,7 @@ class EdicionService
         $vinculo->fill([
             'CupoMaximoPorFacultad' => $datos['cupoMaximoPorFacultad'] ?? $vinculo->CupoMaximoPorFacultad,
             'ReglasEspecificas' => $datos['reglasEspecificas'] ?? $vinculo->ReglasEspecificas,
+            'Lugar' => $datos['lugar'] ?? $vinculo->Lugar,
         ]);
         $vinculo->save();
 

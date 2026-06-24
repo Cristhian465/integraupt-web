@@ -25,6 +25,7 @@ class DisciplinaService
             'Nombre' => trim($datos['nombre']),
             'Descripcion' => $datos['descripcion'] ?? null,
             'TipoParticipacion' => $datos['tipoParticipacion'] ?? 'equipo',
+            'TipoPuntuacion' => $datos['tipoPuntuacion'] ?? 'partido',
             'Reglas' => $datos['reglas'] ?? null,
             'CupoMaximoDefault' => $datos['cupoMaximoDefault'] ?? null,
             'Estado' => $datos['estado'] ?? 'activa',
@@ -43,6 +44,7 @@ class DisciplinaService
             'Nombre' => isset($datos['nombre']) ? trim($datos['nombre']) : $disciplina->Nombre,
             'Descripcion' => $datos['descripcion'] ?? $disciplina->Descripcion,
             'TipoParticipacion' => $datos['tipoParticipacion'] ?? $disciplina->TipoParticipacion,
+            'TipoPuntuacion' => $datos['tipoPuntuacion'] ?? $disciplina->TipoPuntuacion,
             'Reglas' => $datos['reglas'] ?? $disciplina->Reglas,
             'CupoMaximoDefault' => $datos['cupoMaximoDefault'] ?? $disciplina->CupoMaximoDefault,
         ]);

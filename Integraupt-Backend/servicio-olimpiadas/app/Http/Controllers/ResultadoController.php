@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnotadorRequest;
 use App\Http\Requests\ResultadoRequest;
+use App\Http\Requests\ResultadoPosicionRequest;
+use App\Models\OlimpiadaAnotador;
 use App\Models\OlimpiadaInscripcion;
 use App\Models\OlimpiadaParticipacionFacultad;
 use App\Models\OlimpiadaResultado;
+use App\Models\OlimpiadaResultadoPosicion;
 use App\Services\ResultadoService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -63,6 +67,74 @@ class ResultadoController extends Controller
         }
     }
 
+    public function posiciones($edicionDisciplinaId)
+    {
+        $posiciones = $this->resultadoService->listarResultadosPosicion((int) $edicionDisciplinaId)
+            ->map(fn (OlimpiadaResultadoPosicion $p) => $this->mapearPosicion($p))
+            ->all();
+
+        return response()->json($posiciones);
+    }
+
+    public function storePosicion(ResultadoPosicionRequest $request)
+    {
+        $posicion = $this->resultadoService->crearResultadoPosicion($request->validated());
+        return response()->json($this->mapearPosicion($posicion), 201);
+    }
+
+    public function updatePosicion(ResultadoPosicionRequest $request, $id)
+    {
+        try {
+            $posicion = $this->resultadoService->actualizarResultadoPosicion((int) $id, $request->validated());
+            return response()->json($this->mapearPosicion($posicion));
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
+    public function anotadores($edicionDisciplinaId)
+    {
+        $anotadores = $this->resultadoService->listarAnotadores((int) $edicionDisciplinaId)
+            ->map(fn (OlimpiadaAnotador $a) => $this->mapearAnotador($a))
+            ->all();
+
+        return response()->json($anotadores);
+    }
+
+    public function storeAnotador(AnotadorRequest $request)
+    {
+        try {
+            $anotador = $this->resultadoService->crearAnotador($request->validated());
+            return response()->json($this->mapearAnotador($anotador), 201);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
+    public function updateAnotador(AnotadorRequest $request, $id)
+    {
+        try {
+            $anotador = $this->resultadoService->actualizarAnotador((int) $id, $request->validated());
+            return response()->json($this->mapearAnotador($anotador));
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
+    private function mapearAnotador(OlimpiadaAnotador $a): array
+    {
+        return [
+            'id' => $a->IdAnotador,
+            'edicionDisciplinaId' => $a->EdicionDisciplina,
+            'facultadId' => $a->Facultad,
+            'facultadNombre' => $a->facultad?->Nombre,
+            'facultadAbreviatura' => $a->facultad?->Abreviatura,
+            'nombreJugador' => $a->NombreJugador,
+            'cantidad' => $a->Cantidad,
+            'observaciones' => $a->Observaciones,
+        ];
+    }
+
     private function mapearResultado(OlimpiadaResultado $resultado): array
     {
         return [
@@ -75,6 +147,7 @@ class ResultadoController extends Controller
             'fase' => $resultado->Fase,
             'grupo' => $resultado->Grupo,
             'fechaPartido' => $resultado->FechaPartido,
+            'lugar' => $resultado->Lugar,
             'puntajeLocal' => $resultado->PuntajeLocal,
             'puntajeVisitante' => $resultado->PuntajeVisitante,
             'facultadGanadoraId' => $resultado->FacultadGanadora,
@@ -98,6 +171,24 @@ class ResultadoController extends Controller
             'puntosEnContra' => $p->PuntosEnContra,
             'puntos' => $p->Puntos,
             'posicion' => $p->Posicion,
+        ];
+    }
+
+    private function mapearPosicion(OlimpiadaResultadoPosicion $p): array
+    {
+        return [
+            'id' => $p->IdResultadoPosicion,
+            'edicionDisciplinaId' => $p->EdicionDisciplina,
+            'facultadId' => $p->Facultad,
+            'facultadNombre' => $p->facultad?->Nombre,
+            'facultadAbreviatura' => $p->facultad?->Abreviatura,
+            'posicion' => $p->Posicion,
+            'puntos' => $p->Puntos,
+            'prueba' => $p->Prueba,
+            'fecha' => $p->Fecha,
+            'lugar' => $p->Lugar,
+            'observaciones' => $p->Observaciones,
+            'estado' => $p->Estado,
         ];
     }
 }

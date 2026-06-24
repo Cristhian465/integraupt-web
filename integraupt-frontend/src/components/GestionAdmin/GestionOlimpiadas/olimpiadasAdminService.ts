@@ -1,11 +1,16 @@
 import { getOlimpiadasApiUrl } from '../../../utils/apiConfig';
 import type {
+  Anotador,
   DisciplinaCatalogo,
   Edicion,
   EdicionDisciplina,
+  EstudianteBusqueda,
   FacultadOption,
   InscripcionAdmin,
+  MedalleroFila,
+  Post,
   Resultado,
+  ResultadoPosicion,
   TablaPosicion,
 } from './types';
 
@@ -85,6 +90,12 @@ export const cambiarEstadoVinculo = (
 export const fetchParticipantes = (edicionDisciplinaId: number): Promise<InscripcionAdmin[]> =>
   request(`/edicion-disciplinas/${edicionDisciplinaId}/participantes`);
 
+export const buscarEstudiantes = (busqueda: string): Promise<EstudianteBusqueda[]> =>
+  request(`/catalogos/estudiantes?busqueda=${encodeURIComponent(busqueda)}`);
+
+export const inscribirParticipante = (payload: Record<string, unknown>): Promise<unknown> =>
+  request('/inscripciones', { method: 'POST', body: JSON.stringify(payload) });
+
 export const fetchFixture = (edicionDisciplinaId: number): Promise<Resultado[]> =>
   request(`/edicion-disciplinas/${edicionDisciplinaId}/fixture`);
 
@@ -96,3 +107,33 @@ export const crearResultado = (payload: Record<string, unknown>): Promise<Result
 
 export const actualizarResultado = (id: number, payload: Record<string, unknown>): Promise<Resultado> =>
   request(`/resultados/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+
+export const fetchResultadosPosicion = (edicionDisciplinaId: number): Promise<ResultadoPosicion[]> =>
+  request(`/edicion-disciplinas/${edicionDisciplinaId}/posiciones`);
+
+export const crearResultadoPosicion = (payload: Record<string, unknown>): Promise<ResultadoPosicion> =>
+  request('/resultados-posicion', { method: 'POST', body: JSON.stringify(payload) });
+
+export const actualizarResultadoPosicion = (id: number, payload: Record<string, unknown>): Promise<ResultadoPosicion> =>
+  request(`/resultados-posicion/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+
+export const fetchMedallero = (edicionId: number): Promise<MedalleroFila[]> =>
+  request(`/ediciones/${edicionId}/medallero`);
+
+export const fetchAnotadores = (edicionDisciplinaId: number): Promise<Anotador[]> =>
+  request(`/edicion-disciplinas/${edicionDisciplinaId}/anotadores`);
+
+export const crearAnotador = (payload: Record<string, unknown>): Promise<Anotador> =>
+  request('/anotadores', { method: 'POST', body: JSON.stringify(payload) });
+
+export const actualizarAnotador = (id: number, payload: Record<string, unknown>): Promise<Anotador> =>
+  request(`/anotadores/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+
+export const fetchPosts = (edicionId: number): Promise<Post[]> =>
+  request(`/posts?edicionId=${edicionId}`);
+
+export const crearPost = (payload: Record<string, unknown>): Promise<Post> =>
+  request('/posts', { method: 'POST', body: JSON.stringify(payload) });
+
+export const eliminarPost = (id: number): Promise<unknown> =>
+  request(`/posts/${id}`, { method: 'DELETE' });

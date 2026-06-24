@@ -18,6 +18,7 @@ class ResultadoRequest extends FormRequest
             'fase' => 'nullable|string|max:50',
             'grupo' => 'nullable|string|max:50',
             'fechaPartido' => 'nullable|date',
+            'lugar' => 'nullable|string|max:150',
             'puntajeLocal' => 'nullable|integer|min:0',
             'puntajeVisitante' => 'nullable|integer|min:0',
             'estado' => 'nullable|in:programado,en_curso,finalizado,cancelado,suspendido',

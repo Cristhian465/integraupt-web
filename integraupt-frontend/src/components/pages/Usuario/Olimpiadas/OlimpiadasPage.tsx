@@ -1,30 +1,45 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import {
   AlertTriangle,
   CheckCircle2,
   Loader2,
   Medal,
+  MessageCircle,
+  Newspaper,
+  Send,
   Swords,
+  Target,
   Trophy,
   XCircle,
 } from 'lucide-react';
 import '../../../../styles/OlimpiadasScreen.css';
 import { Navbar } from '../Navbar';
+import { facultadColor } from '../../../../utils/facultadColors';
 import {
   cancelarInscripcion,
-  inscribirse,
+  comentarPost,
+  obtenerAnotadores,
+  obtenerComentarios,
   obtenerDisciplinasDeEdicion,
   obtenerEdicionActual,
   obtenerEdiciones,
   obtenerFixture,
+  obtenerMedallero,
   obtenerMisInscripciones,
+  obtenerPosts,
+  obtenerResultadosPosicion,
   obtenerTablaPosiciones,
 } from './services/olimpiadasService';
 import type {
+  AnotadorResponse,
+  ComentarioResponse,
   EdicionDisciplinaResponse,
   EdicionResponse,
   InscripcionMiaResponse,
+  MedalleroFilaResponse,
+  PostResponse,
   ResultadoResponse,
+  ResultadoPosicionResponse,
   TablaPosicionResponse,
 } from './types';
 
@@ -108,18 +123,37 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
   const [selectedDisciplinaVinculoId, setSelectedDisciplinaVinculoId] = useState<number | null>(null);
 
   const [fixture, setFixture] = useState<ResultadoResponse[]>([]);
+  const [resultadosPosicion, setResultadosPosicion] = useState<ResultadoPosicionResponse[]>([]);
   const [tabla, setTabla] = useState<TablaPosicionResponse[]>([]);
   const [resultadosLoading, setResultadosLoading] = useState(false);
 
   const [misInscripciones, setMisInscripciones] = useState<InscripcionMiaResponse[]>([]);
   const [inscripcionesLoading, setInscripcionesLoading] = useState(false);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [inscribiendoId, setInscribiendoId] = useState<number | null>(null);
   const [cancelandoId, setCancelandoId] = useState<number | null>(null);
+
+  const [medallero, setMedallero] = useState<MedalleroFilaResponse[]>([]);
+  const [medalleroLoading, setMedalleroLoading] = useState(false);
+
+  const [anotadores, setAnotadores] = useState<AnotadorResponse[]>([]);
+
+  const [fixtureFiltro, setFixtureFiltro] = useState<'todos' | 'proximos' | 'anteriores'>('todos');
+
+  const [posts, setPosts] = useState<PostResponse[]>([]);
+  const [postsLoading, setPostsLoading] = useState(false);
+  const [expandedPostId, setExpandedPostId] = useState<number | null>(null);
+  const [comentariosPorPost, setComentariosPorPost] = useState<Record<number, ComentarioResponse[]>>({});
+  const [comentarioTexto, setComentarioTexto] = useState('');
+  const [comentando, setComentando] = useState(false);
 
   const selectedEdicion = useMemo(
     () => ediciones.find((e) => e.id === selectedEdicionId) ?? null,
     [ediciones, selectedEdicionId],
+  );
+
+  const selectedVinculo = useMemo(
+    () => disciplinas.find((d) => d.id === selectedDisciplinaVinculoId) ?? null,
+    [disciplinas, selectedDisciplinaVinculoId],
   );
 
   const cargarMisInscripciones = useCallback((signal?: AbortSignal) => {
@@ -198,6 +232,7 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
   useEffect(() => {
     if (selectedDisciplinaVinculoId == null) {
       setFixture([]);
+      setResultadosPosicion([]);
       setTabla([]);
       return;
     }
@@ -205,51 +240,127 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
     const abortController = new AbortController();
     setResultadosLoading(true);
 
-    Promise.all([
-      obtenerFixture(selectedDisciplinaVinculoId, abortController.signal),
-      obtenerTablaPosiciones(selectedDisciplinaVinculoId, abortController.signal),
-    ])
-      .then(([fixtureData, tablaData]) => {
-        setFixture(Array.isArray(fixtureData) ? fixtureData : []);
-        setTabla(Array.isArray(tablaData) ? tablaData : []);
-      })
+    const selectedVinculo = disciplinas.find((d) => d.id === selectedDisciplinaVinculoId);
+    const isPosiciones = selectedVinculo?.tipoPuntuacion === 'posiciones';
+
+    if (isPosiciones) {
+      Promise.all([
+        obtenerResultadosPosicion(selectedDisciplinaVinculoId, abortController.signal),
+        obtenerTablaPosiciones(selectedDisciplinaVinculoId, abortController.signal),
+      ])
+        .then(([posicionesData, tablaData]) => {
+          setResultadosPosicion(Array.isArray(posicionesData) ? posicionesData : []);
+          setFixture([]);
+          setTabla(Array.isArray(tablaData) ? tablaData : []);
+        })
+        .catch((error) => {
+          if (error instanceof DOMException && error.name === 'AbortError') return;
+        })
+        .finally(() => setResultadosLoading(false));
+    } else {
+      Promise.all([
+        obtenerFixture(selectedDisciplinaVinculoId, abortController.signal),
+        obtenerTablaPosiciones(selectedDisciplinaVinculoId, abortController.signal),
+      ])
+        .then(([fixtureData, tablaData]) => {
+          setFixture(Array.isArray(fixtureData) ? fixtureData : []);
+          setResultadosPosicion([]);
+          setTabla(Array.isArray(tablaData) ? tablaData : []);
+        })
+        .catch((error) => {
+          if (error instanceof DOMException && error.name === 'AbortError') return;
+        })
+        .finally(() => setResultadosLoading(false));
+    }
+
+    return () => abortController.abort();
+  }, [selectedDisciplinaVinculoId, disciplinas]);
+
+  useEffect(() => {
+    const vinculo = disciplinas.find((d) => d.id === selectedDisciplinaVinculoId);
+    if (selectedDisciplinaVinculoId == null || vinculo?.tipoPuntuacion !== 'partido') {
+      setAnotadores([]);
+      return;
+    }
+    const abortController = new AbortController();
+    obtenerAnotadores(selectedDisciplinaVinculoId, abortController.signal)
+      .then((data) => setAnotadores(Array.isArray(data) ? data : []))
+      .catch((error) => {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+      });
+    return () => abortController.abort();
+  }, [selectedDisciplinaVinculoId, disciplinas]);
+
+  useEffect(() => {
+    if (selectedEdicionId == null) {
+      setMedallero([]);
+      return;
+    }
+    const abortController = new AbortController();
+    setMedalleroLoading(true);
+    obtenerMedallero(selectedEdicionId, abortController.signal)
+      .then((data) => setMedallero(Array.isArray(data) ? data : []))
       .catch((error) => {
         if (error instanceof DOMException && error.name === 'AbortError') return;
       })
-      .finally(() => setResultadosLoading(false));
-
+      .finally(() => setMedalleroLoading(false));
     return () => abortController.abort();
-  }, [selectedDisciplinaVinculoId]);
+  }, [selectedEdicionId]);
+
+  useEffect(() => {
+    if (selectedEdicionId == null) {
+      setPosts([]);
+      return;
+    }
+    const abortController = new AbortController();
+    setPostsLoading(true);
+    obtenerPosts(selectedEdicionId, abortController.signal)
+      .then((data) => setPosts(Array.isArray(data) ? data : []))
+      .catch((error) => {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+      })
+      .finally(() => setPostsLoading(false));
+    return () => abortController.abort();
+  }, [selectedEdicionId]);
+
+  const handleExpandPost = useCallback((post: PostResponse) => {
+    if (expandedPostId === post.id) {
+      setExpandedPostId(null);
+      return;
+    }
+    setExpandedPostId(post.id);
+    setComentarioTexto('');
+    if (!comentariosPorPost[post.id]) {
+      obtenerComentarios(post.id)
+        .then((data) => setComentariosPorPost((prev) => ({ ...prev, [post.id]: Array.isArray(data) ? data : [] })))
+        .catch(() => undefined);
+    }
+  }, [expandedPostId, comentariosPorPost]);
+
+  const handleComentar = useCallback(
+    async (postId: number) => {
+      if (userId == null || !comentarioTexto.trim()) return;
+      setComentando(true);
+      try {
+        await comentarPost(postId, { usuarioId: userId, contenido: comentarioTexto.trim() });
+        setComentarioTexto('');
+        const data = await obtenerComentarios(postId);
+        setComentariosPorPost((prev) => ({ ...prev, [postId]: Array.isArray(data) ? data : [] }));
+        setPosts((prev) => prev.map((p) => (p.id === postId ? { ...p, totalComentarios: p.totalComentarios + 1 } : p)));
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'No fue posible publicar el comentario.';
+        setFeedback({ type: 'error', message });
+      } finally {
+        setComentando(false);
+      }
+    },
+    [userId, comentarioTexto],
+  );
 
   const notify = useCallback((value: Feedback) => {
     setFeedback(value);
     window.setTimeout(() => setFeedback((current) => (current === value ? null : current)), 4500);
   }, []);
-
-  const handleInscribirse = useCallback(
-    async (vinculo: EdicionDisciplinaResponse) => {
-      if (userId == null) {
-        notify({ type: 'error', message: 'No fue posible identificar al usuario actual.' });
-        return;
-      }
-
-      setInscribiendoId(vinculo.id);
-      try {
-        await inscribirse({ edicionDisciplinaId: vinculo.id, usuarioId: userId });
-        notify({ type: 'success', message: `Te inscribiste en ${vinculo.disciplinaNombre ?? 'la disciplina'}.` });
-        cargarMisInscripciones();
-        if (selectedEdicionId != null) {
-          obtenerDisciplinasDeEdicion(selectedEdicionId).then((data) => setDisciplinas(Array.isArray(data) ? data : []));
-        }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : 'No fue posible completar la inscripción.';
-        notify({ type: 'error', message });
-      } finally {
-        setInscribiendoId(null);
-      }
-    },
-    [userId, notify, cargarMisInscripciones, selectedEdicionId],
-  );
 
   const handleCancelar = useCallback(
     async (inscripcion: InscripcionMiaResponse) => {
@@ -273,6 +384,14 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
     () => new Set(misInscripciones.filter((i) => i.estado === 'inscrito').map((i) => i.edicionDisciplinaId)),
     [misInscripciones],
   );
+
+  const fixtureFiltrado = useMemo(() => {
+    if (fixtureFiltro === 'todos') return fixture;
+    if (fixtureFiltro === 'proximos') {
+      return fixture.filter((r) => r.estado === 'programado' || r.estado === 'en_curso' || r.estado === 'suspendido');
+    }
+    return fixture.filter((r) => r.estado === 'finalizado' || r.estado === 'cancelado');
+  }, [fixture, fixtureFiltro]);
 
   return (
     <div className="olimpiadas-container">
@@ -369,6 +488,49 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
           )}
         </section>
 
+        <section className="olimpiadas-card olimpiadas-medallero-card" aria-labelledby="medallero-title">
+          <div className="olimpiadas-card-header">
+            <Trophy className="olimpiadas-card-icon olimpiadas-card-icon-gold" aria-hidden="true" />
+            <div>
+              <h2 id="medallero-title">Medallero general</h2>
+              <p>Suma de puntos de todas las disciplinas: así va la pelea por el título de campeón interfacultades.</p>
+            </div>
+          </div>
+
+          {medalleroLoading ? (
+            <div className="olimpiadas-empty" role="status">
+              <Loader2 className="olimpiadas-loading-icon" aria-hidden="true" />
+              <p>Cargando medallero…</p>
+            </div>
+          ) : medallero.length === 0 ? (
+            <div className="olimpiadas-empty" role="status">
+              <p>Todavía no hay resultados registrados en esta edición.</p>
+            </div>
+          ) : (
+            <ol className="olimpiadas-medallero-list">
+              {medallero.map((fila) => (
+                <li
+                  key={fila.facultadId}
+                  className={`olimpiadas-medallero-row${fila.posicion === 1 ? ' olimpiadas-medallero-row-lider' : ''}`}
+                  style={{ '--dot-color': facultadColor(fila.facultadAbreviatura ?? fila.facultadNombre) } as CSSProperties}
+                >
+                  <span className="olimpiadas-medallero-posicion">
+                    {fila.posicion === 1 ? '🏆' : `#${fila.posicion}`}
+                  </span>
+                  <span className="olimpiadas-medallero-barra" aria-hidden="true" />
+                  <span className="olimpiadas-medallero-facultad">{fila.facultadNombre}</span>
+                  <span className="olimpiadas-medallero-medallas">
+                    <span title="Oros">🥇 {fila.oros}</span>
+                    <span title="Platas">🥈 {fila.platas}</span>
+                    <span title="Bronces">🥉 {fila.bronces}</span>
+                  </span>
+                  <span className="olimpiadas-medallero-puntos">{fila.puntosTotales} pts</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
+
         <section className="olimpiadas-card" aria-labelledby="disciplinas-title">
           <div className="olimpiadas-card-header">
             <Swords className="olimpiadas-card-icon" aria-hidden="true" />
@@ -396,8 +558,6 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
             <div className="olimpiadas-disciplinas-grid">
               {disciplinas.map((vinculo) => {
                 const yaInscrito = disciplinasInscritas.has(vinculo.id);
-                const puedeInscribirse =
-                  selectedEdicion?.inscripcionAbierta && vinculo.estado === 'activa' && !yaInscrito;
 
                 return (
                   <button
@@ -414,30 +574,19 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
                       {vinculo.inscritosActivos} inscritos
                       {vinculo.cupoMaximoPorFacultad ? ` / cupo ${vinculo.cupoMaximoPorFacultad}` : ''}
                     </span>
-                    <span
-                      className="olimpiadas-disciplina-action"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        if (puedeInscribirse) {
-                          handleInscribirse(vinculo);
-                        }
-                      }}
-                    >
-                      {yaInscrito ? (
-                        'Ya estás inscrito'
-                      ) : inscribiendoId === vinculo.id ? (
-                        <Loader2 className="olimpiadas-button-icon olimpiadas-button-spinner" />
-                      ) : puedeInscribirse ? (
-                        'Inscribirme'
-                      ) : (
-                        'Inscripción no disponible'
-                      )}
-                    </span>
+                    {yaInscrito && (
+                      <span className="olimpiadas-disciplina-action olimpiadas-disciplina-action-inscrito">
+                        Ya estás inscrito
+                      </span>
+                    )}
                   </button>
                 );
               })}
             </div>
           )}
+          <p className="olimpiadas-hint">
+            La inscripción de participantes la gestiona el área administrativa de Bienestar Universitario.
+          </p>
         </section>
 
         <div className="olimpiadas-grid">
@@ -445,45 +594,149 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
             <div className="olimpiadas-card-header">
               <Swords className="olimpiadas-card-icon" aria-hidden="true" />
               <div>
-                <h2 id="fixture-title">Fixture de enfrentamientos</h2>
-                <p>Sorteos y resultados de la disciplina seleccionada.</p>
+                <h2 id="fixture-title">
+                  {selectedVinculo?.tipoPuntuacion === 'posiciones'
+                    ? 'Resultados por posición'
+                    : 'Fixture de enfrentamientos'}
+                </h2>
+                <p>
+                  {selectedVinculo?.tipoPuntuacion === 'posiciones'
+                    ? 'Resultados registrados por prueba en esta edición.'
+                    : 'Sorteos y resultados de la disciplina seleccionada.'}
+                </p>
               </div>
             </div>
+
+            {selectedVinculo?.tipoPuntuacion !== 'posiciones' && fixture.length > 0 && (
+              <div className="olimpiadas-fixture-filtros">
+                {(['todos', 'proximos', 'anteriores'] as const).map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    className={fixtureFiltro === f ? 'active' : ''}
+                    onClick={() => setFixtureFiltro(f)}
+                  >
+                    {f === 'todos' ? 'Todos' : f === 'proximos' ? 'Próximos' : 'Anteriores'}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {resultadosLoading ? (
               <div className="olimpiadas-empty" role="status">
                 <Loader2 className="olimpiadas-loading-icon" aria-hidden="true" />
                 <p>Cargando fixture…</p>
               </div>
-            ) : fixture.length === 0 ? (
+            ) : selectedVinculo?.tipoPuntuacion === 'posiciones' ? (
+              resultadosPosicion.length === 0 ? (
+                <div className="olimpiadas-empty" role="status">
+                  <p>Aún no hay resultados registrados para esta disciplina.</p>
+                </div>
+              ) : (
+                <ul className="olimpiadas-list">
+                  {resultadosPosicion.map((res) => (
+                    <li key={res.id} className="olimpiadas-list-item">
+                      <div className="olimpiadas-list-header">
+                        <span
+                          className="olimpiadas-list-title olimpiadas-facultad-tag"
+                          style={{ '--dot-color': facultadColor(res.facultadAbreviatura ?? res.facultadNombre) } as CSSProperties}
+                        >
+                          <span className="olimpiadas-facultad-dot" />
+                          Puesto {res.posicion}º: {res.facultadNombre}
+                        </span>
+                        <span className="olimpiadas-status olimpiadas-status-finalizado">
+                          {res.puntos} pts
+                        </span>
+                      </div>
+                      <div className="olimpiadas-list-body">
+                        <span>{res.prueba ? `Prueba: ${res.prueba}` : 'General'}</span>
+                        <span>{formatFecha(res.fecha)}</span>
+                        {res.lugar && <span>Sede: {res.lugar}</span>}
+                      </div>
+                      {res.observaciones && (
+                        <div className="olimpiadas-list-body" style={{ marginTop: '0.25rem', fontStyle: 'italic', opacity: 0.8 }}>
+                          <span>Obs: {res.observaciones}</span>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )
+            ) : fixtureFiltrado.length === 0 ? (
               <div className="olimpiadas-empty" role="status">
-                <p>Aún no hay enfrentamientos programados para esta disciplina.</p>
+                <p>No hay enfrentamientos en este filtro.</p>
               </div>
             ) : (
-              <ul className="olimpiadas-list">
-                {fixture.map((resultado) => (
-                  <li key={resultado.id} className="olimpiadas-list-item">
-                    <div className="olimpiadas-list-header">
-                      <span className="olimpiadas-list-title">
-                        {resultado.facultadLocalNombre ?? 'Por definir'}
-                        {resultado.facultadVisitanteNombre ? ` vs ${resultado.facultadVisitanteNombre}` : ''}
-                      </span>
-                      <span className={`olimpiadas-status olimpiadas-status-${resultado.estado}`}>
-                        {resultado.estado}
-                      </span>
-                    </div>
-                    <div className="olimpiadas-list-body">
-                      <span>{resultado.fase}{resultado.grupo ? ` · ${resultado.grupo}` : ''}</span>
-                      <span>{formatFecha(resultado.fechaPartido)}</span>
-                      {resultado.puntajeLocal !== null && resultado.puntajeVisitante !== null && (
-                        <span className="olimpiadas-marcador">
-                          {resultado.puntajeLocal} - {resultado.puntajeVisitante}
-                        </span>
-                      )}
-                    </div>
-                  </li>
-                ))}
+              <ul className="olimpiadas-matchcard-list">
+                {fixtureFiltrado.map((resultado) => {
+                  const finalizado = resultado.estado === 'finalizado';
+                  return (
+                    <li key={resultado.id} className="olimpiadas-matchcard">
+                      <div className="olimpiadas-matchcard-meta">
+                        <span>{resultado.fase}{resultado.grupo ? ` · Grupo ${resultado.grupo}` : ''}</span>
+                        <span className={`olimpiadas-status olimpiadas-status-${resultado.estado}`}>{resultado.estado}</span>
+                      </div>
+                      <div className="olimpiadas-matchcard-body">
+                        <div
+                          className="olimpiadas-matchcard-team"
+                          style={{ '--dot-color': facultadColor(resultado.facultadLocalNombre) } as CSSProperties}
+                        >
+                          <span className="olimpiadas-matchcard-shield" />
+                          <span className="olimpiadas-matchcard-team-name">{resultado.facultadLocalNombre ?? 'Por definir'}</span>
+                        </div>
+
+                        <div className="olimpiadas-matchcard-score">
+                          {finalizado && resultado.puntajeLocal !== null && resultado.puntajeVisitante !== null ? (
+                            <>
+                              <span className={resultado.puntajeLocal > resultado.puntajeVisitante ? 'olimpiadas-matchcard-winner' : ''}>
+                                {resultado.puntajeLocal}
+                              </span>
+                              <span className="olimpiadas-matchcard-dash">-</span>
+                              <span className={resultado.puntajeVisitante > resultado.puntajeLocal ? 'olimpiadas-matchcard-winner' : ''}>
+                                {resultado.puntajeVisitante}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="olimpiadas-matchcard-vs">VS</span>
+                          )}
+                        </div>
+
+                        <div
+                          className="olimpiadas-matchcard-team"
+                          style={{ '--dot-color': facultadColor(resultado.facultadVisitanteNombre) } as CSSProperties}
+                        >
+                          <span className="olimpiadas-matchcard-shield" />
+                          <span className="olimpiadas-matchcard-team-name">{resultado.facultadVisitanteNombre ?? 'Por definir'}</span>
+                        </div>
+                      </div>
+                      <div className="olimpiadas-matchcard-footer">
+                        <span>{formatFecha(resultado.fechaPartido)}</span>
+                        {resultado.lugar && <span>Sede: {resultado.lugar}</span>}
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
+            )}
+
+            {anotadores.length > 0 && (
+              <div className="olimpiadas-goleadores">
+                <h3><Target size={16} /> Goleadores / Anotadores</h3>
+                <ol>
+                  {anotadores.map((a) => (
+                    <li key={a.id}>
+                      <span
+                        className="olimpiadas-facultad-tag"
+                        style={{ '--dot-color': facultadColor(a.facultadAbreviatura ?? a.facultadNombre) } as CSSProperties}
+                      >
+                        <span className="olimpiadas-facultad-dot" />
+                        {a.nombreJugador} ({a.facultadAbreviatura ?? a.facultadNombre})
+                      </span>
+                      <strong>{a.cantidad}</strong>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             )}
           </section>
 
@@ -517,7 +770,15 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
                   {tabla.map((fila) => (
                     <tr key={fila.facultadId}>
                       <td>{fila.posicion ?? '—'}</td>
-                      <td>{fila.facultadAbreviatura ?? fila.facultadNombre}</td>
+                      <td>
+                        <span
+                          className="olimpiadas-facultad-tag"
+                          style={{ '--dot-color': facultadColor(fila.facultadAbreviatura ?? fila.facultadNombre) } as CSSProperties}
+                        >
+                          <span className="olimpiadas-facultad-dot" />
+                          {fila.facultadAbreviatura ?? fila.facultadNombre}
+                        </span>
+                      </td>
                       <td>{fila.partidosJugados}</td>
                       <td>{fila.partidosGanados}</td>
                       <td>{fila.partidosEmpatados}</td>
@@ -562,7 +823,13 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
                     </span>
                   </div>
                   <div className="olimpiadas-list-body">
-                    <span>Representas a {inscripcion.facultadNombre}</span>
+                    <span
+                      className="olimpiadas-facultad-tag"
+                      style={{ '--dot-color': facultadColor(inscripcion.facultadNombre) } as CSSProperties}
+                    >
+                      <span className="olimpiadas-facultad-dot" />
+                      Representas a {inscripcion.facultadNombre}
+                    </span>
                     <span>Inscrito el {formatFecha(inscripcion.fechaInscripcion)}</span>
                   </div>
                   {inscripcion.estado === 'inscrito' && (
@@ -582,6 +849,74 @@ export const OlimpiadasPage: React.FC<OlimpiadasPageProps> = ({
                       </button>
                     </div>
                   )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section className="olimpiadas-card olimpiadas-noticias-card" aria-labelledby="noticias-title">
+          <div className="olimpiadas-card-header">
+            <Newspaper className="olimpiadas-card-icon" aria-hidden="true" />
+            <div>
+              <h2 id="noticias-title">Noticias y comunidad</h2>
+              <p>Novedades publicadas por el comité organizador. ¡Comenta y anima a tu facultad!</p>
+            </div>
+          </div>
+
+          {postsLoading ? (
+            <div className="olimpiadas-empty" role="status">
+              <Loader2 className="olimpiadas-loading-icon" aria-hidden="true" />
+              <p>Cargando noticias…</p>
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="olimpiadas-empty" role="status">
+              <p>Aún no hay publicaciones para esta edición.</p>
+            </div>
+          ) : (
+            <ul className="olimpiadas-posts-list">
+              {posts.map((post) => (
+                <li key={post.id} className="olimpiadas-post-card">
+                  {post.imagenUrl && <img src={post.imagenUrl} alt={post.titulo} className="olimpiadas-post-img" />}
+                  <div className="olimpiadas-post-content">
+                    <h3>{post.titulo}</h3>
+                    <p>{post.contenido}</p>
+                    <span className="olimpiadas-post-meta">
+                      {post.autor ?? 'Comité Olímpico UPT'} · {formatFecha(post.fechaPublicacion)}
+                    </span>
+
+                    <button type="button" className="olimpiadas-post-comments-toggle" onClick={() => handleExpandPost(post)}>
+                      <MessageCircle size={16} /> {post.totalComentarios} comentario{post.totalComentarios === 1 ? '' : 's'}
+                    </button>
+
+                    {expandedPostId === post.id && (
+                      <div className="olimpiadas-post-comments">
+                        <ul>
+                          {(comentariosPorPost[post.id] ?? []).map((c) => (
+                            <li key={c.id}>
+                              <strong>{c.usuarioNombre ?? 'Estudiante'}</strong>
+                              <span>{c.contenido}</span>
+                            </li>
+                          ))}
+                          {(comentariosPorPost[post.id] ?? []).length === 0 && (
+                            <li className="olimpiadas-post-comments-empty">Sé el primero en comentar.</li>
+                          )}
+                        </ul>
+                        <div className="olimpiadas-post-comment-form">
+                          <input
+                            className="olimpiadas-input"
+                            placeholder="Escribe un comentario de aliento…"
+                            value={comentarioTexto}
+                            onChange={(e) => setComentarioTexto(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleComentar(post.id)}
+                          />
+                          <button type="button" onClick={() => handleComentar(post.id)} disabled={comentando}>
+                            <Send size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>

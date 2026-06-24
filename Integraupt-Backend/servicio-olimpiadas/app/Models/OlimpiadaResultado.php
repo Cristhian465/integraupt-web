@@ -19,6 +19,7 @@ class OlimpiadaResultado extends Model
         'Fase',
         'Grupo',
         'FechaPartido',
+        'Lugar',
         'PuntajeLocal',
         'PuntajeVisitante',
         'FacultadGanadora',

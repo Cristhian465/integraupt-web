@@ -16,6 +16,7 @@ class OlimpiadaDisciplina extends Model
         'Nombre',
         'Descripcion',
         'TipoParticipacion',
+        'TipoPuntuacion',
         'Reglas',
         'CupoMaximoDefault',
         'Estado',

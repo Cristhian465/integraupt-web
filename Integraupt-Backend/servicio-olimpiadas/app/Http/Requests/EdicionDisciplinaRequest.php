@@ -16,6 +16,8 @@ class EdicionDisciplinaRequest extends FormRequest
         $reglas = [
             'cupoMaximoPorFacultad' => 'nullable|integer|min:1',
             'reglasEspecificas' => 'nullable|string',
+            'lugar' => 'nullable|string|max:150',
+            'categoria' => 'nullable|in:general,varones,damas,mixto',
             'estado' => 'nullable|in:activa,inactiva',
         ];
 

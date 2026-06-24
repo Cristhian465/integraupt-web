@@ -15,8 +15,10 @@ class OlimpiadaEdicionDisciplina extends Model
     protected $fillable = [
         'Edicion',
         'Disciplina',
+        'Categoria',
         'CupoMaximoPorFacultad',
         'ReglasEspecificas',
+        'Lugar',
         'Estado',
     ];
 
@@ -43,6 +45,16 @@ class OlimpiadaEdicionDisciplina extends Model
     public function participacionesFacultad()
     {
         return $this->hasMany(OlimpiadaParticipacionFacultad::class, 'EdicionDisciplina', 'IdEdicionDisciplina');
+    }
+
+    public function resultadosPosicion()
+    {
+        return $this->hasMany(OlimpiadaResultadoPosicion::class, 'EdicionDisciplina', 'IdEdicionDisciplina');
+    }
+
+    public function anotadores()
+    {
+        return $this->hasMany(OlimpiadaAnotador::class, 'EdicionDisciplina', 'IdEdicionDisciplina');
     }
 
     public function inscritosActivos()
