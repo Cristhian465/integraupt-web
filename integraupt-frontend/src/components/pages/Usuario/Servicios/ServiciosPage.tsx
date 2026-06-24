@@ -13,7 +13,8 @@ import {
   Bus,
   Trophy,
   Dumbbell,
-  HeartPulse
+  HeartPulse,
+  GraduationCap
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -42,6 +43,7 @@ interface ServiciosPageProps {
   onNavigateToOlimpiadas: () => void;
   onNavigateToGimnasio: () => void;
   onNavigateToPoliclinico: () => void;
+  onNavigateToAulaVirtual: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -72,6 +74,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToOlimpiadas,
   onNavigateToGimnasio,
   onNavigateToPoliclinico,
+  onNavigateToAulaVirtual,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -333,6 +336,35 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
             </div>
           </article>
 
+          <article
+            className="servicios-menu-card servicios-menu-card-aulavirtual"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-aulavirtual">
+                <GraduationCap className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Aula Virtual</h2>
+            <p className="servicios-menu-card-description">
+              Conecta tu cuenta del Aula Virtual y revisa tus cursos, notas y próximos eventos.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-aulavirtual">
+              Moodle UPT
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-aulavirtual"
+                onClick={(event) => {
+                  onNavigateToAulaVirtual();
+                }}
+              >
+                Ver Aula Virtual
+              </button>
+            </div>
+          </article>
         </section>
       </main>
     </div>

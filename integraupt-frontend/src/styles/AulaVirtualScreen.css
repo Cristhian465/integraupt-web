@@ -1,0 +1,621 @@
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 15px 35px -15px rgba(15, 23, 42, 0.35);
+  }
+  50% {
+    box-shadow: 0 15px 35px -15px rgba(5, 150, 105, 0.5);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aulavirtual-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.aulavirtual-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #ecfdf5 100%);
+}
+
+.aulavirtual-main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@media (min-width: 640px) {
+  .aulavirtual-main {
+    padding: 2.5rem 1.5rem 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .aulavirtual-main {
+    padding: 3rem 2rem 4rem;
+  }
+}
+
+.aulavirtual-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+@media (min-width: 1024px) {
+  .aulavirtual-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.aulavirtual-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 15px 35px -15px rgba(15, 23, 42, 0.35);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInRight 0.6s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.aulavirtual-grid .aulavirtual-card {
+  margin-top: 0;
+}
+
+.aulavirtual-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s;
+}
+
+.aulavirtual-card:hover::before {
+  left: 100%;
+}
+
+.aulavirtual-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 45px -20px rgba(15, 23, 42, 0.4);
+}
+
+@media (min-width: 768px) {
+  .aulavirtual-card {
+    padding: 2rem;
+  }
+}
+
+.aulavirtual-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.aulavirtual-card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.aulavirtual-card:hover .aulavirtual-card-header h2 {
+  color: #059669;
+}
+
+.aulavirtual-card-header p {
+  margin: 0.25rem 0 0;
+  color: #475569;
+}
+
+.aulavirtual-card-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #059669;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.aulavirtual-card:hover .aulavirtual-card-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.aulavirtual-privacy-note {
+  background-color: #ecfdf5;
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  color: #047857;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.aulavirtual-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.aulavirtual-label {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.aulavirtual-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #cbd5f5;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+.aulavirtual-input:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+  background-color: #ffffff;
+  transform: scale(1.02);
+}
+
+.aulavirtual-primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.aulavirtual-primary-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.aulavirtual-primary-button:hover::before {
+  left: 100%;
+}
+
+.aulavirtual-primary-button:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 30px -15px rgba(5, 150, 105, 0.6);
+}
+
+.aulavirtual-primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.aulavirtual-button-icon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.aulavirtual-primary-button:hover .aulavirtual-button-icon {
+  transform: scale(1.2);
+}
+
+.aulavirtual-button-spinner {
+  animation: aulavirtual-spin 1s linear infinite;
+}
+
+.aulavirtual-feedback {
+  margin-top: 1rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  animation: bounceIn 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.aulavirtual-feedback:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -15px rgba(0, 0, 0, 0.2);
+}
+
+.aulavirtual-feedback p {
+  margin: 0;
+}
+
+.aulavirtual-feedback-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.aulavirtual-feedback:hover .aulavirtual-feedback-icon {
+  transform: scale(1.2);
+}
+
+.aulavirtual-feedback-success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.aulavirtual-feedback-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.aulavirtual-feedback-info {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+.aulavirtual-empty {
+  border-radius: 0.75rem;
+  background-color: #f8fafc;
+  padding: 1.5rem;
+  color: #475569;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.aulavirtual-empty:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -20px rgba(0, 0, 0, 0.15);
+}
+
+.aulavirtual-loading-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  animation: aulavirtual-spin 1s linear infinite;
+  color: #059669;
+}
+
+.aulavirtual-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.aulavirtual-list-item {
+  border: 1px solid rgba(5, 150, 105, 0.18);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  background-color: #f8fafc;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInRight 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.aulavirtual-list-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s;
+}
+
+.aulavirtual-list-item:hover::before {
+  left: 100%;
+}
+
+.aulavirtual-list-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 35px -20px rgba(15, 23, 42, 0.45);
+}
+
+.aulavirtual-curso-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #047857;
+  transition: color 0.3s ease;
+}
+
+.aulavirtual-curso-header:hover {
+  color: #059669;
+}
+
+.aulavirtual-curso-nombre {
+  text-align: left;
+}
+
+.aulavirtual-curso-body {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(5, 150, 105, 0.25);
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.aulavirtual-curso-empty {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.aulavirtual-notas-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.aulavirtual-nota-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #1f2937;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.aulavirtual-nota-item:last-child {
+  border-bottom: none;
+}
+
+.aulavirtual-nota-nombre {
+  color: #334155;
+}
+
+.aulavirtual-nota-valor {
+  font-weight: 600;
+  color: #047857;
+  white-space: nowrap;
+}
+
+.aulavirtual-evento-nombre {
+  display: block;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.aulavirtual-evento-curso {
+  display: block;
+  font-size: 0.85rem;
+  color: #475569;
+  margin-top: 0.15rem;
+}
+
+.aulavirtual-evento-fecha {
+  display: block;
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.35rem;
+}
+
+.aulavirtual-connected-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background-color: #ecfdf5;
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  color: #047857;
+  font-size: 0.95rem;
+  margin-top: 1.5rem;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.aulavirtual-disconnect-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 0.6rem;
+  background-color: #fff5f5;
+  color: #b91c1c;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aulavirtual-disconnect-button:hover:not(:disabled) {
+  background-color: #fee2e2;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -12px rgba(185, 28, 28, 0.4);
+}
+
+.aulavirtual-disconnect-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.home-welcome-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.95) 0%, rgba(4, 120, 87, 0.9) 100%);
+  color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 1.75rem;
+  box-shadow: 0 25px 45px -30px rgba(5, 150, 105, 0.9);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.home-welcome-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmer 3s infinite;
+}
+
+.home-welcome-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.35), transparent 55%);
+}
+
+.home-welcome-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.home-welcome-date {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  opacity: 0.8;
+  margin-bottom: 0.75rem;
+}
+
+.home-title {
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.home-subtitle {
+  max-width: 540px;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.home-welcome-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  animation: float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.home-welcome-avatar:hover {
+  animation: float 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .home-welcome-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}

@@ -6,6 +6,7 @@ import { IncidenciasPage } from "./pages/Usuario/Incidencia/IncidenciasPage";
 import { PsicologiaPage } from './pages/Usuario/Psicologia/PsicologiaPage';
 import { OlimpiadasPage } from './pages/Usuario/Olimpiadas/OlimpiadasPage';
 import { PoliclinicoPage } from './pages/Usuario/Policlinico/PoliclinicoPage';
+import { AulaVirtualPage } from './pages/Usuario/AulaVirtual/AulaVirtualPage';
 import { ServiciosPage } from './pages/Usuario/Servicios/ServiciosPage';
 import { BurraPage } from './pages/Usuario/Burra/BurraPage';
 import { GimnasioPage } from './pages/Usuario/Gimnasio/GimnasioPage';
@@ -39,7 +40,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const isAdministrative = user.user_metadata.login_type === 'administrative';
 
   const [activeView, setActiveView] = useState<
-     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'perfil' | 'burra' | 'gimnasio' | 'policlinico'
+     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'gimnasio' | 'aulavirtual' | 'perfil'
    >(() => {
      if (typeof window === 'undefined') {
        return 'inicio';
@@ -58,7 +59,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
          storedView === 'perfil' ||
          storedView === 'burra' ||
          storedView === 'gimnasio' ||
-         storedView === 'policlinico'
+         storedView === 'policlinico' ||
+         storedView === 'aulavirtual' ||
+         storedView === 'perfil'
        ) {
          return storedView;
        }
@@ -129,6 +132,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     setActiveView('policlinico');
   }, []);
 
+  const handleNavigateToAulaVirtual = useCallback(() => {
+    setActiveView('aulavirtual');
+  }, []);
+
   const handleNavigateToPerfil = useCallback(() => {
     setActiveView('perfil');
   }, []);
@@ -164,6 +171,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         onNavigateToOlimpiadas={handleNavigateToOlimpiadas}
         onNavigateToGimnasio={handleNavigateToGimnasio}
         onNavigateToPoliclinico={handleNavigateToPoliclinico}
+        onNavigateToAulaVirtual={handleNavigateToAulaVirtual}
         onLogout={handleLogout}
         isLoggingOut={isLoggingOut}
       />
@@ -225,6 +233,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   if (activeView === 'policlinico') {
     return (
       <PoliclinicoPage
+        user={user}
+        onNavigateToInicio={handleNavigateToInicio}
+        onNavigateToServicios={handleNavigateToServicios}
+        onNavigateToPerfil={handleNavigateToPerfil}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+      />
+    );
+  }
+
+  if (activeView === 'aulavirtual') {
+    return (
+      <AulaVirtualPage
         user={user}
         onNavigateToInicio={handleNavigateToInicio}
         onNavigateToServicios={handleNavigateToServicios}

@@ -255,6 +255,10 @@
   background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
 }
 
+.servicios-menu-icon-aulavirtual {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
 .servicios-menu-icon-svg {
   height: 2.5rem;
   width: 2.5rem;
@@ -376,6 +380,16 @@
   box-shadow: 0 8px 20px -10px rgba(8, 145, 178, 0.3);
 }
 
+.servicios-menu-card-badge-aulavirtual {
+  background-color: rgba(5, 150, 105, 0.12);
+  color: #047857;
+  border-color: rgba(5, 150, 105, 0.2);
+}
+
+.servicios-menu-card:hover .servicios-menu-card-badge-aulavirtual {
+  box-shadow: 0 8px 20px -10px rgba(5, 150, 105, 0.3);
+}
+
 .servicios-menu-card-actions {
   display: flex;
   justify-content: center;
@@ -479,6 +493,15 @@
 .servicios-menu-card-button-policlinico:hover {
   background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
   box-shadow: 0 15px 25px -15px rgba(8, 145, 178, 0.5);
+}
+
+.servicios-menu-card-button-aulavirtual {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.servicios-menu-card-button-aulavirtual:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  box-shadow: 0 15px 25px -15px rgba(5, 150, 105, 0.5);
 }
 
 /* Welcome Card Animations */
