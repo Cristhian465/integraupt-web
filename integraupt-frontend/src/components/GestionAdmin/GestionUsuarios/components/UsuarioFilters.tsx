@@ -1,14 +1,19 @@
 import React from "react";
 import { RefreshCw, Search } from "lucide-react";
 import type { UsuarioRole } from "../usuariosService";
+import type { BackendEscuela } from "../types";
+import { sortCatalogByNombre } from "../mappers";
 
 export type UsuarioStatusFilter = "all" | "active" | "inactive";
 
 interface UsuarioFiltersProps {
   search: string;
   status: UsuarioStatusFilter;
+  escuela: string;
+  escuelas: BackendEscuela[];
   onSearchChange: (value: string) => void;
   onStatusChange: (value: UsuarioStatusFilter) => void;
+  onEscuelaChange: (value: string) => void;
   onReload: () => void;
   total: number;
   filtered: number;
@@ -30,14 +35,19 @@ const roleLabel = (role: UsuarioRole): string => {
 export const UsuarioFilters: React.FC<UsuarioFiltersProps> = ({
   search,
   status,
+  escuela,
+  escuelas,
   onSearchChange,
   onStatusChange,
+  onEscuelaChange,
   onReload,
   total,
   filtered,
   loading,
   role
 }) => {
+  const escuelasOrdenadas = sortCatalogByNombre(escuelas);
+
   return (
     <div className="usuario-filters">
       <div className="usuario-filters-left">
@@ -55,6 +65,14 @@ export const UsuarioFilters: React.FC<UsuarioFiltersProps> = ({
           <option value="all">Todos los estados</option>
           <option value="active">Solo activos</option>
           <option value="inactive">Solo inactivos</option>
+        </select>
+        <select value={escuela} onChange={(event) => onEscuelaChange(event.target.value)}>
+          <option value="">Todas las escuelas</option>
+          {escuelasOrdenadas.map((item) => (
+            <option key={item.idEscuela} value={item.idEscuela}>
+              {item.nombre}
+            </option>
+          ))}
         </select>
       </div>
 

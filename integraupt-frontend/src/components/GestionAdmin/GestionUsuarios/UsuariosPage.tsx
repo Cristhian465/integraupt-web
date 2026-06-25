@@ -57,6 +57,7 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
   const [activeRole, setActiveRole] = useState<UsuarioRole>("administrativo");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<UsuarioStatusFilter>(DEFAULT_STATUS);
+  const [escuelaFilter, setEscuelaFilter] = useState("");
   const [modalMode, setModalMode] = useState<ModalMode>("create");
   const [modalOpen, setModalOpen] = useState(false);
   const [formValues, setFormValues] = useState<UsuarioFormValues>(createEmptyFormValues());
@@ -91,9 +92,11 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
         (statusFilter === "active" && record.estado === 1) ||
         (statusFilter === "inactive" && record.estado !== 1);
 
-      return matchesSearch && matchesStatus;
+      const matchesEscuela = !escuelaFilter || record.idEscuela?.toString() === escuelaFilter;
+
+      return matchesSearch && matchesStatus && matchesEscuela;
     });
-  }, [records, searchTerm, statusFilter]);
+  }, [records, searchTerm, statusFilter, escuelaFilter]);
 
   const totalActivos = useMemo(() => records.filter((record) => record.estado === 1).length, [records]);
   const totalInactivos = useMemo(() => records.filter((record) => record.estado !== 1).length, [records]);
@@ -110,7 +113,7 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, statusFilter, activeRole]);
+  }, [searchTerm, statusFilter, escuelaFilter, activeRole]);
 
   const totalPages = Math.ceil(filteredRecords.length / ITEMS_PER_PAGE) || 1;
   const paginatedRecords = useMemo(() => {
@@ -122,6 +125,7 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
     setActiveRole(role);
     setSearchTerm("");
     setStatusFilter(DEFAULT_STATUS);
+    setEscuelaFilter("");
     setFormErrors([]);
     setModalOpen(false);
   };
@@ -343,8 +347,11 @@ export const GestionUsuarios: React.FC<UsuariosPageProps> = ({ onAuditLog }) => 
         <UsuarioFilters
           search={searchTerm}
           status={statusFilter}
+          escuela={escuelaFilter}
+          escuelas={catalogs.escuelas}
           onSearchChange={setSearchTerm}
           onStatusChange={setStatusFilter}
+          onEscuelaChange={setEscuelaFilter}
           onReload={() => {
             setFormErrors([]);
             void reload();

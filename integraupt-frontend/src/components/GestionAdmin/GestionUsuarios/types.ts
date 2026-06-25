@@ -83,6 +83,7 @@ export interface UsuarioRecord {
   apellidos: string;
   correo: string;
   rolDescripcion: string;
+  idEscuela?: number | null;
   escuela?: string | null;
   facultad?: string | null;
   turno?: string | null;
@@ -111,6 +112,7 @@ export interface UsuarioFormValues {
   turno: string;
   extension: string;
   idRol: string;
+  fechaIncorporacion: string;
 }
 
 export const createEmptyFormValues = (): UsuarioFormValues => ({
@@ -128,7 +130,8 @@ export const createEmptyFormValues = (): UsuarioFormValues => ({
   especialidad: "",
   turno: "",
   extension: "",
-  idRol: ""
+  idRol: "",
+  fechaIncorporacion: ""
 });
 
 export type CatalogoEstado = "idle" | "loading" | "error" | "ready";

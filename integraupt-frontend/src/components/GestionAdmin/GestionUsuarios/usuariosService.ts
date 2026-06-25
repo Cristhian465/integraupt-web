@@ -37,6 +37,7 @@ export interface DocentePayload {
   codigoDocente: string;
   tipoContrato: string;
   especialidad?: string;
+  fechaIncorporacion: string;
 }
 
 export interface AdministrativoPayload {
@@ -52,6 +53,7 @@ export interface AdministrativoPayload {
   turno: string;
   extension?: string;
   idRol: number;
+  fechaIncorporacion: string;
 }
 
 export type PayloadMap = {

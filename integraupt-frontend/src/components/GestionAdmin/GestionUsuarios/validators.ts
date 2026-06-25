@@ -67,6 +67,9 @@ export const validateUsuarioForm = (
     if (!values.tipoContrato.trim()) {
       errors.push("Selecciona el tipo de contrato.");
     }
+    if (!values.fechaIncorporacion.trim()) {
+      errors.push("Ingresa la fecha de incorporacion.");
+    }
   }
 
   if (role === "administrativo") {
@@ -75,6 +78,9 @@ export const validateUsuarioForm = (
     }
     if (!values.idRol) {
       errors.push("Selecciona el rol del administrativo.");
+    }
+    if (!values.fechaIncorporacion.trim()) {
+      errors.push("Ingresa la fecha de incorporacion.");
     }
   }
 
@@ -131,7 +137,8 @@ export const buildPayloadFromValues = (
         idEscuela,
         codigoDocente: values.codigoGenerico.trim(),
         tipoContrato: values.tipoContrato.trim(),
-        especialidad: values.especialidad.trim() || undefined
+        especialidad: values.especialidad.trim() || undefined,
+        fechaIncorporacion: values.fechaIncorporacion.trim()
       };
       return payload;
     }
@@ -153,7 +160,8 @@ export const buildPayloadFromValues = (
         idEscuela,
         turno: values.turno.trim(),
         extension: values.extension.trim() || undefined,
-        idRol
+        idRol,
+        fechaIncorporacion: values.fechaIncorporacion.trim()
       };
       return payload;
     }

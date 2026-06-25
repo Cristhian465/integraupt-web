@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { LoginType, BackendSession } from '../types';
 import { generateCaptcha } from '../captchaUtils';
 import { autenticacionService } from '../services/autenticacionService';
+import { getLoginApiUrl } from '../../../../utils/apiConfig';
 
 export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => {
   const [selectedType, setSelectedType] = useState<LoginType | null>(null);
@@ -93,7 +94,7 @@ export const useLogin = (onLoginSuccess?: (session: BackendSession) => void) => 
     console.log('Redirigiendo a autenticación con Google...');
     setLoading(true);
     setError(null);
-    window.location.href = 'http://localhost:8081/api/auth/google/redirect';
+    window.location.href = getLoginApiUrl('/api/auth/google/redirect');
   }, []);
 
   useEffect(() => {

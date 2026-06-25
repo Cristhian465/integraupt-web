@@ -30,6 +30,7 @@ export const GestionEspacios: React.FC<GestionEspaciosProps> = ({ onAuditLog }) 
     error: escuelasError
   } = useEscuelas();
   const [searchTerm, setSearchTerm] = useState("");
+  const [escuelaFilter, setEscuelaFilter] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [mode, setMode] = useState<EspacioFormMode>("create");
   const [formValues, setFormValues] = useState<EspacioFormValues>(createEmptyFormValues());
@@ -42,22 +43,22 @@ export const GestionEspacios: React.FC<GestionEspaciosProps> = ({ onAuditLog }) 
 
   const filteredEspacios = useMemo(() => {
     const query = searchTerm.trim().toLowerCase();
-    if (!query) {
-      return espacios;
-    }
-
     return espacios.filter((espacio) => {
-      return (
+      const matchesSearch =
+        !query ||
         espacio.nombre.toLowerCase().includes(query) ||
         espacio.codigo.toLowerCase().includes(query) ||
-        espacio.tipo.toLowerCase().includes(query)
-      );
+        espacio.tipo.toLowerCase().includes(query);
+
+      const matchesEscuela = !escuelaFilter || espacio.escuelaId.toString() === escuelaFilter;
+
+      return matchesSearch && matchesEscuela;
     });
-  }, [espacios, searchTerm]);
+  }, [espacios, searchTerm, escuelaFilter]);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm]);
+  }, [searchTerm, escuelaFilter]);
 
   const totalPages = Math.ceil(filteredEspacios.length / ITEMS_PER_PAGE) || 1;
   const paginatedEspacios = useMemo(() => {
@@ -236,6 +237,16 @@ export const GestionEspacios: React.FC<GestionEspaciosProps> = ({ onAuditLog }) 
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </div>
+        <select value={escuelaFilter} onChange={(event) => setEscuelaFilter(event.target.value)}>
+          <option value="">Todas las escuelas</option>
+          {[...escuelas]
+            .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"))
+            .map((escuela) => (
+              <option key={escuela.id} value={escuela.id}>
+                {escuela.nombre}
+              </option>
+            ))}
+        </select>
         <div className="gestion-espacios-meta">
           {filteredEspacios.length} resultados visibles
         </div>

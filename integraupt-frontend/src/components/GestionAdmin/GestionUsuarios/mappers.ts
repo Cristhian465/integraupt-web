@@ -48,6 +48,13 @@ const turnoDescripcion = (value?: string | null): string => {
   }
 };
 
+const toDateInputValue = (value?: string | null): string => {
+  if (!value) {
+    return "";
+  }
+  return value.slice(0, 10);
+};
+
 const pickUsuarioCorreo = (usuario?: BackendUsuario | null): string | null => {
   if (!usuario) {
     return null;
@@ -94,6 +101,7 @@ export const mapEstudianteToRecord = (estudiante: BackendEstudiante): UsuarioRec
   apellidos: estudiante.usuario.apellido,
   correo: pickUsuarioCorreo(estudiante.usuario) ?? "Sin correo",
   rolDescripcion: estudiante.usuario.rol?.nombre ?? "Estudiante",
+  idEscuela: estudiante.escuela?.idEscuela ?? null,
   escuela: estudiante.escuela?.nombre ?? null,
   facultad: estudiante.escuela?.facultad?.nombre ?? null,
   estado: estudiante.usuario.estado,
@@ -114,6 +122,7 @@ export const mapDocenteToRecord = (docente: BackendDocente): UsuarioRecord => ({
   apellidos: docente.usuario.apellido,
   correo: pickUsuarioCorreo(docente.usuario) ?? "Sin correo",
   rolDescripcion: docente.usuario.rol?.nombre ?? "Docente",
+  idEscuela: docente.escuela?.idEscuela ?? null,
   escuela: docente.escuela?.nombre ?? null,
   facultad: docente.escuela?.facultad?.nombre ?? null,
   estado: docente.usuario.estado,
@@ -143,6 +152,7 @@ export const mapAdministrativoToRecord = (
   telefono: administrativo.usuario.celular,
   fechaRegistro: administrativo.usuario.fechaRegistro ?? undefined,
   codigo: administrativo.usuario.rol?.nombre ?? "Sin rol",
+  idEscuela: administrativo.escuela?.idEscuela ?? null,
   escuela: administrativo.escuela?.nombre ?? null,
   facultad: administrativo.escuela?.facultad?.nombre ?? null,
   turno: turnoDescripcion(administrativo.turno)
@@ -214,7 +224,8 @@ export const mapEntityToFormValues = (
       especialidad: docente.especialidad ?? "",
       turno: "",
       extension: "",
-      idRol: ""
+      idRol: "",
+      fechaIncorporacion: toDateInputValue(docente.fechaIncorporacion)
     };
   }
 
@@ -240,7 +251,8 @@ export const mapEntityToFormValues = (
     especialidad: "",
     turno: turnoDescripcion(administrativo.turno),
     extension: administrativo.extension ?? "",
-    idRol: administrativo.usuario.rol?.idRol?.toString() ?? ""
+    idRol: administrativo.usuario.rol?.idRol?.toString() ?? "",
+    fechaIncorporacion: toDateInputValue(administrativo.fechaIncorporacion)
   };
 };
 

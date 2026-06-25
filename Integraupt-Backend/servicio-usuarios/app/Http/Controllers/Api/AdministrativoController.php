@@ -38,6 +38,7 @@ class AdministrativoController extends Controller
             'correo' => 'required|email',
             'password' => 'required|string',
             'turno' => 'required|string',
+            'idRol' => 'required|integer',
             'fechaIncorporacion' => 'required|string',
         ]);
 
@@ -49,7 +50,7 @@ class AdministrativoController extends Controller
                 'Apellido' => $request->apellido,
                 'TipoDoc' => $request->idTipoDoc,
                 'NumDoc' => $request->numDoc,
-                'Rol' => 3, // Administrativo default
+                'Rol' => $request->idRol,
                 'Celular' => $request->celular,
                 'Genero' => $request->genero,
                 'Estado' => 1,
@@ -103,6 +104,7 @@ class AdministrativoController extends Controller
                     'NumDoc' => $request->numDoc ?? $usuario->NumDoc,
                     'Celular' => $request->celular ?? $usuario->Celular,
                     'Genero' => $request->genero ?? $usuario->Genero,
+                    'Rol' => $request->idRol ?? $usuario->Rol,
                 ]);
 
                 if ($request->correo || $request->password) {

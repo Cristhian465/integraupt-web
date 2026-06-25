@@ -226,6 +226,16 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
                   />
                 </label>
               </div>
+              <div className="usuario-form-row">
+                <label>
+                  Fecha de incorporacion
+                  <input
+                    type="date"
+                    value={values.fechaIncorporacion}
+                    onChange={(event) => onChange("fechaIncorporacion", event.target.value)}
+                  />
+                </label>
+              </div>
             </>
           )}
         </div>
@@ -278,6 +288,16 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
                 maxLength={5}
                 onChange={(event) => onChange("extension", event.target.value)}
                 placeholder="Opcional"
+              />
+            </label>
+          </div>
+          <div className="usuario-form-row">
+            <label>
+              Fecha de incorporacion
+              <input
+                type="date"
+                value={values.fechaIncorporacion}
+                onChange={(event) => onChange("fechaIncorporacion", event.target.value)}
               />
             </label>
           </div>
