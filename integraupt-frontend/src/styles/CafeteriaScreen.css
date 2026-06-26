@@ -1,0 +1,396 @@
+.cafeteria-screen-container {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(249, 115, 22, 0.18), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(234, 88, 12, 0.16), transparent 45%),
+    linear-gradient(160deg, #fff7ed 0%, #ffedd5 40%, #fff7ed 100%);
+}
+
+.cafeteria-screen-main {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .cafeteria-screen-main {
+    padding: 2.5rem 1.5rem 3.5rem;
+  }
+}
+
+.cafeteria-welcome {
+  background: linear-gradient(120deg, #f97316 0%, #ea580c 55%, #c2410c 100%);
+  box-shadow: 0 25px 50px -20px rgba(194, 65, 12, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.cafeteria-feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.cafeteria-feedback-success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.cafeteria-feedback-error {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.cafeteria-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 0.375rem;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+}
+
+.cafeteria-tabs button {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: #78716c;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cafeteria-tabs button.active {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
+.cafeteria-loading {
+  color: #78716c;
+  padding: 1.5rem 0;
+}
+
+.cafeteria-menu-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .cafeteria-menu-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.cafeteria-menu-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .cafeteria-menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.cafeteria-menu-card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 15px 35px -20px rgba(0, 0, 0, 0.35);
+  border-top: 4px solid #f97316;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cafeteria-menu-nombre {
+  font-weight: 600;
+  color: #1c1917;
+  margin-bottom: 0.25rem;
+}
+
+.cafeteria-menu-desc {
+  font-size: 0.8125rem;
+  color: #78716c;
+  margin-bottom: 0.5rem;
+}
+
+.cafeteria-menu-precio {
+  font-weight: 700;
+  color: #ea580c;
+}
+
+.cafeteria-menu-stock-bajo {
+  display: inline-block;
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #b45309;
+  background-color: #fef3c7;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.cafeteria-menu-sin-stock {
+  display: inline-block;
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #b91c1c;
+  background-color: #fee2e2;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.cafeteria-menu-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.cafeteria-menu-stepper button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid #fdba74;
+  background-color: #fff7ed;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cafeteria-menu-stepper button:hover:not(:disabled) {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
+.cafeteria-menu-stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cafeteria-menu-stepper span {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cafeteria-carrito {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 15px 35px -20px rgba(0, 0, 0, 0.35);
+  position: sticky;
+  top: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .cafeteria-carrito {
+    width: 20rem;
+  }
+}
+
+.cafeteria-carrito h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1c1917;
+  margin-bottom: 1rem;
+}
+
+.cafeteria-carrito-vacio {
+  color: #78716c;
+  font-size: 0.875rem;
+}
+
+.cafeteria-carrito-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #44403c;
+  margin-bottom: 0.75rem;
+}
+
+.cafeteria-carrito-total {
+  font-weight: 700;
+  color: #ea580c;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.cafeteria-checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cafeteria-checkout-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  color: #44403c;
+}
+
+.cafeteria-checkout-label input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d6d3d1;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.cafeteria-checkout-upload {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  border: 1px dashed #fdba74;
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  color: #c2410c;
+  cursor: pointer;
+  background-color: #fff7ed;
+}
+
+.cafeteria-checkout-upload input {
+  display: none;
+}
+
+.cafeteria-checkout-button {
+  border: none;
+  background-color: #f97316;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cafeteria-checkout-button:hover:not(:disabled) {
+  background-color: #ea580c;
+}
+
+.cafeteria-checkout-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cafeteria-mis-pedidos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cafeteria-pedido-mio {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 15px 35px -20px rgba(0, 0, 0, 0.35);
+}
+
+.cafeteria-pedido-mio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cafeteria-pedido-mio ul {
+  list-style: none;
+  font-size: 0.875rem;
+  color: #57534e;
+  margin-bottom: 0.5rem;
+}
+
+.cafeteria-status-badge {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-transform: capitalize;
+}
+
+.cafeteria-status-badge.pendiente_revision {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.cafeteria-status-badge.pagado,
+.cafeteria-status-badge.preparando {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.cafeteria-status-badge.listo {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.cafeteria-status-badge.entregado {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.cafeteria-status-badge.rechazado,
+.cafeteria-status-badge.cancelado {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.cafeteria-pedido-qr {
+  font-size: 0.875rem;
+  color: #166534;
+  background-color: #f0fdf4;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+}
+
+.cafeteria-pedido-qr code {
+  font-weight: 700;
+}
+
+.cafeteria-pedido-motivo {
+  font-size: 0.875rem;
+  color: #b91c1c;
+}
+
+.cafeteria-cancelar-button {
+  margin-top: 0.5rem;
+  border: 1px solid #fca5a5;
+  background-color: #ffffff;
+  color: #b91c1c;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.375rem 0.875rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cafeteria-cancelar-button:hover {
+  background-color: #fee2e2;
+}

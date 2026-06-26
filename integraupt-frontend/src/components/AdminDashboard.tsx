@@ -15,7 +15,8 @@ import {
   Dumbbell,
   Brain,
   HeartPulse,
-  CalendarPlus
+  CalendarPlus,
+  Coffee
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -31,7 +32,8 @@ import {
   GestionGimnasio,
   GestionPsicologia,
   GestionPoliclinico,
-  GestionEventos
+  GestionEventos,
+  GestionCafeteria
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -49,7 +51,8 @@ type ModuleId =
   | "gimnasio"
   | "psicologia"
   | "policlinico"
-  | "eventos";
+  | "eventos"
+  | "cafeteria";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -174,6 +177,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Organiza charlas, talleres y actividades por facultad o escuela",
     icon: CalendarPlus,
     color: "indigo"
+  },
+  {
+    id: "cafeteria",
+    name: "Cafeteria UPT",
+    description: "Administra el stock y los pedidos de la cafeteria de tu facultad",
+    icon: Coffee,
+    color: "orange"
   }
 ];
 
@@ -183,6 +193,8 @@ const SUPERVISOR_ALLOWED_MODULES: ModuleId[] = [
   "reports",
   "incidencias"
 ];
+
+const ENCARGADO_CAFETERIA_ALLOWED_MODULES: ModuleId[] = ["cafeteria"];
 
 const formatTimestamp = (isoDate: string): string => {
   try {
@@ -205,6 +217,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
   );
 
   const isSupervisor = normalizedRole === "supervisor";
+  const isEncargadoCafeteria = normalizedRole === "encargado cafe";
 
   const availableModules = useMemo(() => {
     if (isSupervisor) {
@@ -212,8 +225,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
         SUPERVISOR_ALLOWED_MODULES.includes(module.id)
       );
     }
+    if (isEncargadoCafeteria) {
+      return MODULES.filter((module) =>
+        ENCARGADO_CAFETERIA_ALLOWED_MODULES.includes(module.id)
+      );
+    }
     return MODULES;
-  }, [isSupervisor]);
+  }, [isSupervisor, isEncargadoCafeteria]);
 
   const [activeModule, setActiveModule] = useState<ModuleId>("labs");
 
@@ -391,6 +409,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "eventos" && (
             <GestionEventos onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "cafeteria" && (
+            <GestionCafeteria onAuditLog={addAuditLog} currentUser={user} />
           )}
         </div>
 

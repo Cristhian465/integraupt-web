@@ -1,0 +1,507 @@
+.gestion-cafeteria {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.gestion-cafeteria-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gestion-cafeteria-title {
+  font-size: 1.5rem;
+  margin: 0.25rem 0;
+  color: #0f172a;
+}
+
+.gestion-cafeteria-subtitle {
+  margin: 0;
+  color: #475569;
+}
+
+.gestion-cafeteria-btn {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.65rem 1.25rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.gestion-cafeteria-btn.small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
+}
+
+.gestion-cafeteria-btn.primary {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #ffffff;
+}
+
+.gestion-cafeteria-btn.secondary {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.gestion-cafeteria-btn.ghost {
+  background: transparent;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.gestion-cafeteria-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gestion-cafeteria-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gestion-cafeteria-stat {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  flex: 1;
+  min-width: 180px;
+}
+
+.gestion-cafeteria-stat p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #9a3412;
+}
+
+.gestion-cafeteria-stat strong {
+  font-size: 1.2rem;
+  color: #7c2d12;
+}
+
+.gestion-cafeteria-alert,
+.cafeteria-empty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.gestion-cafeteria-alert.success {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.gestion-cafeteria-alert.error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.cafeteria-empty {
+  color: #94a3b8;
+  border: 1px dashed #e2e8f0;
+}
+
+/* Toolbar admin */
+.cafeteria-admin-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cafeteria-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.45rem 0.75rem;
+}
+
+.cafeteria-selector select {
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+}
+
+.cafeteria-crear-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cafeteria-crear-form input,
+.cafeteria-crear-form select {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.cafeteria-encargado-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.cafeteria-encargado-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.7rem;
+  max-width: 320px;
+}
+
+.cafeteria-encargado-search input {
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  flex: 1;
+}
+
+.cafeteria-encargado-results {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  max-width: 320px;
+}
+
+.cafeteria-encargado-results li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cafeteria-encargado-results button {
+  border: none;
+  background: #f97316;
+  color: #fff;
+  border-radius: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* Secciones */
+.cafeteria-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.cafeteria-section-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0f172a;
+}
+
+.cafeteria-section-header select {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+}
+
+.cafeteria-productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.cafeteria-producto-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cafeteria-producto-card.inactivo {
+  opacity: 0.55;
+  background: #f8fafc;
+}
+
+.cafeteria-producto-nombre {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.cafeteria-producto-desc {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.cafeteria-producto-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #334155;
+}
+
+.cafeteria-producto-meta .sin-stock {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.cafeteria-producto-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cafeteria-producto-actions button {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+/* Pedidos */
+.cafeteria-pedidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.cafeteria-pedido-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: #fff;
+}
+
+.cafeteria-pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cafeteria-pedido-usuario {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 0.9rem;
+}
+
+.cafeteria-pedido-fecha {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.cafeteria-pedido-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cafeteria-pedido-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: #1e293b;
+}
+
+.cafeteria-comprobante-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.cafeteria-pedido-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cafeteria-rechazo-inline {
+  display: flex;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.cafeteria-rechazo-inline input {
+  flex: 1;
+  border: 1px solid #fecaca;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.78rem;
+}
+
+.cafeteria-pedido-qr {
+  font-size: 0.78rem;
+  background: #fef9c3;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.5rem;
+  margin: 0;
+}
+
+.cafeteria-pedido-motivo {
+  font-size: 0.78rem;
+  color: #b91c1c;
+  margin: 0;
+}
+
+.cafeteria-status-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.cafeteria-status-badge.pendiente_revision {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.cafeteria-status-badge.pagado,
+.cafeteria-status-badge.preparando {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.cafeteria-status-badge.listo {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.cafeteria-status-badge.entregado {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.cafeteria-status-badge.rechazado,
+.cafeteria-status-badge.cancelado {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Modal de producto (reutiliza estructura tipo evento) */
+.cafeteria-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.cafeteria-modal {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.cafeteria-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cafeteria-modal-close {
+  border: none;
+  background: #f1f5f9;
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.cafeteria-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.cafeteria-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cafeteria-form-group-full {
+  grid-column: 1 / -1;
+}
+
+.cafeteria-form-checkbox label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.cafeteria-form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.cafeteria-form-input,
+.cafeteria-form-textarea {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+}
+
+.cafeteria-form-errors {
+  background: #fef2f2;
+  border-radius: 0.6rem;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  color: #b91c1c;
+  font-size: 0.85rem;
+}
+
+.cafeteria-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}

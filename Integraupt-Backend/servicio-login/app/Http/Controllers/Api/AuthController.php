@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     private const SESSION_INACTIVITY_MINUTES = 20;
     private const ACADEMIC_ROLES = [1, 2];
-    private const ADMINISTRATIVE_ROLES = [3, 4];
+    private const ADMINISTRATIVE_ROLES = [3, 4, 5];
 
     public function login(Request $request): JsonResponse
     {

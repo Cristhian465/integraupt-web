@@ -15,7 +15,8 @@ import {
   HeartPulse,
   Calculator,
   Dumbbell,
-  GraduationCap
+  GraduationCap,
+  Coffee
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -46,6 +47,7 @@ interface ServiciosPageProps {
   onNavigateToPoliclinico: () => void;
   onNavigateToPromedio: () => void;
   onNavigateToAulaVirtual: () => void;
+  onNavigateToCafeteria: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -78,6 +80,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToPoliclinico,
   onNavigateToPromedio,
   onNavigateToAulaVirtual,
+  onNavigateToCafeteria,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -335,6 +338,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Agendar cita
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-cafeteria"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-cafeteria">
+                <Coffee className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Cafeteria UPT</h2>
+            <p className="servicios-menu-card-description">
+              Explora el menu de tu facultad, realiza tu pedido y pagalo por Yape.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-cafeteria">
+              Servicios de alimentacion
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-cafeteria"
+                onClick={(event) => {
+                  onNavigateToCafeteria();
+                }}
+              >
+                Realizar pedido
               </button>
             </div>
           </article>

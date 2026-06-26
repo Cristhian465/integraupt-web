@@ -39,6 +39,7 @@ const DEFAULT_POLICLINICO_BACKEND_URL = "http://localhost:8096";
 const DEFAULT_PROMEDIO_BACKEND_URL = "http://localhost:8067";
 const DEFAULT_MOODLE_BACKEND_URL = "http://localhost:8097";
 const DEFAULT_EVENTOS_BACKEND_URL = "http://localhost:8099";
+const DEFAULT_CAFETERIA_BACKEND_URL = "http://localhost:8100";
 
 // ==========================
 // Resolución final de URLs
@@ -140,6 +141,11 @@ export const EVENTOS_API_BASE_URL = resolveBaseUrl(
   DEFAULT_EVENTOS_BACKEND_URL
 );
 
+export const CAFETERIA_API_BASE_URL = resolveBaseUrl(
+  env.VITE_CAFETERIA_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_CAFETERIA_BACKEND_URL
+);
+
 
 // ==========================
 // Helpers para construir URLs
@@ -201,6 +207,9 @@ export const getMoodleApiUrl = (path: string) =>
 
 export const getEventosApiUrl = (path: string) =>
   buildServiceUrl(EVENTOS_API_BASE_URL, path);
+
+export const getCafeteriaApiUrl = (path: string) =>
+  buildServiceUrl(CAFETERIA_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper
