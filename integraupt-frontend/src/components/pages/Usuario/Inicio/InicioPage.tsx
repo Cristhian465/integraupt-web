@@ -40,6 +40,7 @@ interface IntegraUPTAppProps {
   onNavigateToReservas: () => void;
   onNavigateToIncidencias: () => void;
   onNavigateToPerfil: () => void;
+  onNavigateToElecciones: () => void;
   onLogout: () => void;
   isLoggingOut: boolean;
 }
@@ -252,6 +253,7 @@ export const IntegraUPTApp: React.FC<IntegraUPTAppProps> = ({
       onNavigateToReservas,
        onNavigateToIncidencias,
         onNavigateToPerfil,
+        onNavigateToElecciones,
            onLogout,
            isLoggingOut
 }) => {

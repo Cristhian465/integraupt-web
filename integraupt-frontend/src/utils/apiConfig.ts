@@ -40,6 +40,7 @@ const DEFAULT_PROMEDIO_BACKEND_URL = "http://localhost:8067";
 const DEFAULT_MOODLE_BACKEND_URL = "http://localhost:8097";
 const DEFAULT_EVENTOS_BACKEND_URL = "http://localhost:8099";
 const DEFAULT_CAFETERIA_BACKEND_URL = "http://localhost:8100";
+const DEFAULT_ELECCIONES_BACKEND_URL = "http://localhost:8219";
 
 // ==========================
 // Resolución final de URLs
@@ -146,6 +147,10 @@ export const CAFETERIA_API_BASE_URL = resolveBaseUrl(
   DEFAULT_CAFETERIA_BACKEND_URL
 );
 
+export const ELECCIONES_API_BASE_URL = resolveBaseUrl(
+  env.VITE_ELECCIONES_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_ELECCIONES_BACKEND_URL
+);
 
 // ==========================
 // Helpers para construir URLs
@@ -210,6 +215,9 @@ export const getEventosApiUrl = (path: string) =>
 
 export const getCafeteriaApiUrl = (path: string) =>
   buildServiceUrl(CAFETERIA_API_BASE_URL, path);
+
+export const getEleccionesApiUrl = (path: string) =>
+  buildServiceUrl(ELECCIONES_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper

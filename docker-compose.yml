@@ -229,6 +229,19 @@ services:
     ports: [ "8100:8000" ]
     networks: [ integraupt ]
 
+  servicio-elecciones:
+    build:
+      context: ./Integraupt-Backend/servicio-elecciones
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-elecciones/.env.docker
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8101:8000" ]
+    networks: [ integraupt ]
+    volumes:
+      - ./Integraupt-Backend/servicio-elecciones:/app
+      - /app/vendor
+
   frontend:
     build:
       context: ./integraupt-frontend
@@ -256,6 +269,7 @@ services:
       - servicio-promedio
       - servicio-gimnasio
       - servicio-moodle
+      - servicio-elecciones
     networks: [ integraupt ]
 
 networks:
