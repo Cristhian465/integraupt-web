@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { AlertTriangle, CalendarDays, CheckCircle2, Download, MapPin, Sparkles, Users } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import jsPDF from "jspdf";
 import "../../../../styles/EventosScreen.css";
 import { Navbar } from "../Navbar";
@@ -346,9 +347,13 @@ export const EventosPage: React.FC<EventosPageProps> = ({
                     </span>
                   </div>
                   {(inscripcion.estado === "inscrito" || inscripcion.estado === "en_espera") && (
-                    <p className="eventos-pedido-qr">
-                      Codigo QR de ingreso: <code>{inscripcion.codigoQr}</code>
-                    </p>
+                    <div className="eventos-qr-box">
+                      <p className="eventos-pedido-qr">
+                        Muestra este codigo en el ingreso para tu check-in:
+                      </p>
+                      <QRCodeSVG value={inscripcion.codigoQr} size={140} />
+                      <code className="eventos-qr-texto">{inscripcion.codigoQr}</code>
+                    </div>
                   )}
                   {inscripcion.estado === "asistio" && inscripcion.certificadoId && (
                     <button
