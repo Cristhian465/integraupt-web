@@ -12,4 +12,5 @@ export { GestionPsicologia } from "./GestionPsicologia/PsicologiaAdminPage.tsx";
 export { GestionPoliclinico } from "./GestionPoliclinico/PoliclinicoAdminPage.tsx";
 export { GestionEventos } from "./GestionEventos/EventosPage.tsx";
 export { GestionCafeteria } from "./GestionCafeteria/GestionCafeteria.tsx";
+export { GestionElecciones } from "./GestionElecciones.tsx";
 export { GestionCanales } from "./GestionCanales/CanalesPage.tsx";

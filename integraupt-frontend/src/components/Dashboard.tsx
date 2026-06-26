@@ -12,6 +12,7 @@ import { BurraPage } from './pages/Usuario/Burra/BurraPage';
 import { PromedioPage } from './pages/Usuario/Promedio/PromedioPage';
 import { GimnasioPage } from './pages/Usuario/Gimnasio/GimnasioPage';
 import { CafeteriaPage } from './pages/Usuario/Cafeteria/CafeteriaPage';
+import { EleccionesPage } from './pages/Usuario/Elecciones/EleccionesPage';
 import { EventosPage } from './pages/Usuario/Eventos/EventosPage';
 import { CanalesPage } from './pages/Usuario/Canales/CanalesPage';
 import { requestBackendLogout } from '../utils/logout';
@@ -44,7 +45,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const isAdministrative = user.user_metadata.login_type === 'administrative';
 
   const [activeView, setActiveView] = useState<
-     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'promedio' | 'gimnasio' | 'aulavirtual' | 'perfil' | 'cafeteria' | 'eventos' | 'canales'
+     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'promedio' | 'gimnasio' | 'aulavirtual' | 'perfil' | 'cafeteria' | 'elecciones' | 'eventos' | 'canales'
    >(() => {
      if (typeof window === 'undefined') {
        return 'inicio';
@@ -67,6 +68,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
          storedView === 'policlinico' ||
          storedView === 'aulavirtual' ||
          storedView === 'cafeteria' ||
+         storedView === 'elecciones' ||
          storedView === 'eventos' ||
          storedView === 'canales'
        ) {
@@ -155,6 +157,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     setActiveView('cafeteria');
   }, []);
 
+  const handleNavigateToElecciones = useCallback(() => {
+    setActiveView('elecciones');
+  }, []);
+
   const handleNavigateToEventos = useCallback(() => {
     setActiveView('eventos');
   }, []);
@@ -197,6 +203,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         onNavigateToPromedio={handleNavigateToPromedio}
         onNavigateToAulaVirtual={handleNavigateToAulaVirtual}
         onNavigateToCafeteria={handleNavigateToCafeteria}
+        onNavigateToElecciones={handleNavigateToElecciones}
         onNavigateToEventos={handleNavigateToEventos}
         onNavigateToCanales={handleNavigateToCanales}
         onLogout={handleLogout}
@@ -309,6 +316,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     );
   }
 
+  if (activeView === 'elecciones') {
+    return (
+      <EleccionesPage
+        user={user}
+        onNavigateToInicio={handleNavigateToInicio}
+        onNavigateToServicios={handleNavigateToServicios}
+        onNavigateToPerfil={handleNavigateToPerfil}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+      />
+    );
+  }
+
   if (activeView === 'eventos') {
     return (
       <EventosPage
@@ -381,6 +401,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
       onNavigateToReservas={handleNavigateToReservas}
       onNavigateToIncidencias={handleNavigateToIncidencias}
       onNavigateToPerfil={handleNavigateToPerfil}
+      onNavigateToElecciones={handleNavigateToElecciones}
       onLogout={handleLogout}
       isLoggingOut={isLoggingOut}
     />

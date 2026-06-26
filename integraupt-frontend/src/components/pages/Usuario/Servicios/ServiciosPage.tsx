@@ -17,6 +17,7 @@ import {
   Dumbbell,
   GraduationCap,
   Coffee,
+  Vote,
   CalendarPlus,
   MessageSquare
 } from 'lucide-react';
@@ -50,6 +51,7 @@ interface ServiciosPageProps {
   onNavigateToPromedio: () => void;
   onNavigateToAulaVirtual: () => void;
   onNavigateToCafeteria: () => void;
+  onNavigateToElecciones: () => void;
   onNavigateToEventos: () => void;
   onNavigateToCanales: () => void;
   onLogout?: () => void;
@@ -85,6 +87,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToPromedio,
   onNavigateToAulaVirtual,
   onNavigateToCafeteria,
+  onNavigateToElecciones,
   onNavigateToEventos,
   onNavigateToCanales,
   onLogout,
@@ -465,6 +468,37 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Ver Aula Virtual
+              </button>
+            </div>
+          </article>
+          <article
+            className="servicios-menu-card servicios-menu-card-elecciones"
+            role="article"
+            tabIndex={0}
+            style={{ borderColor: '#1e3a8a' }}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-elecciones" style={{ background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)', color: '#ffffff', boxShadow: '0 4px 6px -1px rgba(30, 58, 138, 0.3)' }}>
+                <Vote className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Elecciones UPT</h2>
+            <p className="servicios-menu-card-description">
+              Vota por tus representantes estudiantiles y consulta los resultados de las elecciones.
+            </p>
+            <div className="servicios-menu-card-badge" style={{ backgroundColor: '#1e3a8a', color: '#ffffff', border: 'none' }}>
+              Participación Estudiantil
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button"
+                style={{ background: 'linear-gradient(90deg, #1e40af 0%, #1e3a8a 100%)', color: 'white', border: 'none', boxShadow: '0 4px 6px -1px rgba(30, 58, 138, 0.4)' }}
+                onClick={(event) => {
+                  onNavigateToElecciones();
+                }}
+              >
+                Ver Elecciones
               </button>
             </div>
           </article>

@@ -17,6 +17,7 @@ import {
   HeartPulse,
   CalendarPlus,
   Coffee,
+  Vote,
   MessageSquare
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
@@ -35,6 +36,7 @@ import {
   GestionPoliclinico,
   GestionEventos,
   GestionCafeteria,
+  GestionElecciones,
   GestionCanales
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
@@ -55,6 +57,7 @@ type ModuleId =
   | "policlinico"
   | "eventos"
   | "cafeteria"
+  | "elecciones"
   | "canales";
 
 interface ModuleDefinition {
@@ -187,6 +190,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Administra el stock y los pedidos de la cafeteria de tu facultad",
     icon: Coffee,
     color: "orange"
+  },
+  {
+    id: "elecciones",
+    name: "Gestión de Elecciones",
+    description: "Administra procesos electorales, candidatos y resultados.",
+    icon: Vote,
+    color: "indigo"
   },
   {
     id: "canales",
@@ -423,6 +433,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "cafeteria" && (
             <GestionCafeteria onAuditLog={addAuditLog} currentUser={user} />
+          )}
+
+          {activeModule === "elecciones" && (
+            <GestionElecciones onAuditLog={addAuditLog} />
           )}
 
           {activeModule === "canales" && (
