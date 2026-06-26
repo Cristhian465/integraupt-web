@@ -16,7 +16,8 @@ import {
   Calculator,
   Dumbbell,
   GraduationCap,
-  Coffee
+  Coffee,
+  CalendarPlus
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -48,6 +49,7 @@ interface ServiciosPageProps {
   onNavigateToPromedio: () => void;
   onNavigateToAulaVirtual: () => void;
   onNavigateToCafeteria: () => void;
+  onNavigateToEventos: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -81,6 +83,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToPromedio,
   onNavigateToAulaVirtual,
   onNavigateToCafeteria,
+  onNavigateToEventos,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -282,6 +285,37 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
               </button>
             </div>
           </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-eventos"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-eventos">
+                <CalendarPlus className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Eventos UPT</h2>
+            <p className="servicios-menu-card-description">
+              Descubre charlas, talleres y actividades de tu facultad e inscribete.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-eventos">
+              Charlas y talleres
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-eventos"
+                onClick={(event) => {
+                  onNavigateToEventos();
+                }}
+              >
+                Ver Eventos
+              </button>
+            </div>
+          </article>
+
           <article
             className="servicios-menu-card servicios-menu-card-gimnasio"
             role="article"

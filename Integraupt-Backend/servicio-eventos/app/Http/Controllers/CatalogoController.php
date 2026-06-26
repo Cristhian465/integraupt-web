@@ -99,4 +99,16 @@ class CatalogoController extends Controller
 
         return response()->json($docentes);
     }
+
+    public function miFacultad(Request $request): JsonResponse
+    {
+        $usuarioId = (int) $request->query('usuarioId');
+        $resultado = $this->catalogoService->resolverFacultadDeUsuario($usuarioId);
+
+        if ($resultado === null) {
+            return response()->json(['message' => 'Usuario no encontrado como estudiante o docente.'], 404);
+        }
+
+        return response()->json($resultado);
+    }
 }
