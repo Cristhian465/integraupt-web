@@ -38,6 +38,7 @@ const DEFAULT_GIMNASIO_BACKEND_URL = "http://localhost:8098";
 const DEFAULT_POLICLINICO_BACKEND_URL = "http://localhost:8096";
 const DEFAULT_PROMEDIO_BACKEND_URL = "http://localhost:8067";
 const DEFAULT_MOODLE_BACKEND_URL = "http://localhost:8097";
+const DEFAULT_EVENTOS_BACKEND_URL = "http://localhost:8099";
 
 // ==========================
 // Resolución final de URLs
@@ -134,6 +135,11 @@ export const MOODLE_API_BASE_URL = resolveBaseUrl(
   DEFAULT_MOODLE_BACKEND_URL
 );
 
+export const EVENTOS_API_BASE_URL = resolveBaseUrl(
+  env.VITE_EVENTOS_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_EVENTOS_BACKEND_URL
+);
+
 
 // ==========================
 // Helpers para construir URLs
@@ -192,6 +198,9 @@ export const getPromedioApiUrl = (path: string) =>
 
 export const getMoodleApiUrl = (path: string) =>
   buildServiceUrl(MOODLE_API_BASE_URL, path);
+
+export const getEventosApiUrl = (path: string) =>
+  buildServiceUrl(EVENTOS_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper

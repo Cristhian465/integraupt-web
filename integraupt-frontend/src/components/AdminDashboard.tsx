@@ -14,7 +14,8 @@ import {
   Trophy,
   Dumbbell,
   Brain,
-  HeartPulse
+  HeartPulse,
+  CalendarPlus
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -29,7 +30,8 @@ import {
   GestionOlimpiadas,
   GestionGimnasio,
   GestionPsicologia,
-  GestionPoliclinico
+  GestionPoliclinico,
+  GestionEventos
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -46,7 +48,8 @@ type ModuleId =
   | "olimpiadas"
   | "gimnasio"
   | "psicologia"
-  | "policlinico";
+  | "policlinico"
+  | "eventos";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -164,6 +167,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Gestiona citas médicas, médicos y tipos de atención",
     icon: HeartPulse,
     color: "blue"
+  },
+  {
+    id: "eventos",
+    name: "Gestion de Eventos",
+    description: "Organiza charlas, talleres y actividades por facultad o escuela",
+    icon: CalendarPlus,
+    color: "indigo"
   }
 ];
 
@@ -377,6 +387,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "policlinico" && (
             <GestionPoliclinico onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "eventos" && (
+            <GestionEventos onAuditLog={addAuditLog} />
           )}
         </div>
 

@@ -209,6 +209,16 @@ services:
     ports: [ "8097:8000" ]
     networks: [ integraupt ]
 
+  servicio-eventos:
+    build:
+      context: ./Integraupt-Backend/servicio-eventos
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-eventos/.env.docker
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8099:8000" ]
+    networks: [ integraupt ]
+
   frontend:
     build:
       context: ./integraupt-frontend
