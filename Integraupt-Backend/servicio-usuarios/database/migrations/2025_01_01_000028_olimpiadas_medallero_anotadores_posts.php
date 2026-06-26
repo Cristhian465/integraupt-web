@@ -2,24 +2,35 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
-            $table->enum('Categoria', ['general', 'varones', 'damas', 'mixto'])->default('general')->after('Disciplina');
-        });
+        $indexNames = collect(DB::select("SHOW INDEX FROM olimpiada_edicion_disciplina"))->pluck('Key_name')->unique()->all();
 
-        Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
-            $table->index('Edicion', 'olimp_edicion_disciplina_edicion_idx');
-        });
+        if (!Schema::hasColumn('olimpiada_edicion_disciplina', 'Categoria')) {
+            Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
+                $table->enum('Categoria', ['general', 'varones', 'damas', 'mixto'])->default('general')->after('Disciplina');
+            });
+        }
 
-        Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
-            $table->dropUnique(['Edicion', 'Disciplina']);
-            $table->unique(['Edicion', 'Disciplina', 'Categoria'], 'olimp_edicion_disciplina_cat_unique');
-        });
+        if (!in_array('olimp_edicion_disciplina_edicion_idx', $indexNames)) {
+            Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
+                $table->index('Edicion', 'olimp_edicion_disciplina_edicion_idx');
+            });
+        }
+
+        if (!in_array('olimp_edicion_disciplina_cat_unique', $indexNames)) {
+            Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) use ($indexNames) {
+                if (in_array('olimpiada_edicion_disciplina_edicion_disciplina_unique', $indexNames)) {
+                    $table->dropUnique(['Edicion', 'Disciplina']);
+                }
+                $table->unique(['Edicion', 'Disciplina', 'Categoria'], 'olimp_edicion_disciplina_cat_unique');
+            });
+        }
 
         Schema::create('olimpiada_anotador', function (Blueprint $table) {
             $table->bigIncrements('IdAnotador');

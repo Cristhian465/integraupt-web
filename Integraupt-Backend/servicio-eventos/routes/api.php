@@ -11,7 +11,10 @@ Route::prefix('catalogos')->group(function () {
     Route::get('/espacios', [CatalogoController::class, 'listarEspacios']);
     Route::get('/estudiantes', [CatalogoController::class, 'buscarEstudiantes']);
     Route::get('/docentes', [CatalogoController::class, 'buscarDocentes']);
+    Route::get('/mi-facultad', [CatalogoController::class, 'miFacultad']);
 });
+
+Route::get('/mis-inscripciones', [InscripcionController::class, 'misInscripciones']);
 
 Route::prefix('eventos')->group(function () {
     Route::get('/', [EventoController::class, 'index']);

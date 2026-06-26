@@ -236,11 +236,24 @@ services:
       args: { PHP_VERSION: "8.4" }
     env_file: ./Integraupt-Backend/servicio-elecciones/.env.docker
     depends_on: [ servicio-usuarios ]
-    ports: [ "8101:8000" ]
+    ports: [ "8219:8000" ]
     networks: [ integraupt ]
     volumes:
       - ./Integraupt-Backend/servicio-elecciones:/app
       - /app/vendor
+
+  servicio-canales:
+    build:
+      context: ./Integraupt-Backend/servicio-canales
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.2" }
+    env_file: ./Integraupt-Backend/servicio-canales/.env.docker
+    command: sh -c "php artisan storage:link --force 2>/dev/null; php artisan serve --host=0.0.0.0 --port=8000"
+    depends_on: [ servicio-usuarios ]
+    ports: [ "8101:8000" ]
+    volumes:
+      - canales_storage:/app/storage/app/public
+    networks: [ integraupt ]
 
   frontend:
     build:
@@ -270,6 +283,7 @@ services:
       - servicio-gimnasio
       - servicio-moodle
       - servicio-elecciones
+      - servicio-canales
     networks: [ integraupt ]
 
 networks:
@@ -278,3 +292,4 @@ networks:
 
 volumes:
   db_data:
+  canales_storage:

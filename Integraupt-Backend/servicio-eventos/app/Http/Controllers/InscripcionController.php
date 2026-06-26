@@ -47,6 +47,17 @@ class InscripcionController extends Controller
         }
     }
 
+    public function misInscripciones(Request $request)
+    {
+        $usuarioId = (int) $request->query('usuarioId');
+
+        $inscripciones = $this->inscripcionService->listarPorUsuario($usuarioId)
+            ->map(fn (EventoInscripcion $i) => $this->mapearConEvento($i))
+            ->all();
+
+        return response()->json($inscripciones);
+    }
+
     public function checkin(Request $request, $idEvento)
     {
         $request->validate(['codigoQr' => 'required|string']);
@@ -73,5 +84,18 @@ class InscripcionController extends Controller
             'codigoQr' => $inscripcion->CodigoQr,
             'fechaInscripcion' => optional($inscripcion->FechaInscripcion)->toIso8601String(),
         ];
+    }
+
+    private function mapearConEvento(EventoInscripcion $inscripcion): array
+    {
+        $evento = $inscripcion->evento;
+
+        return array_merge($this->mapear($inscripcion), [
+            'eventoTitulo' => $evento?->Titulo,
+            'eventoTipoEvento' => $evento?->TipoEvento,
+            'eventoFechaInicio' => optional($evento?->FechaInicio)->toIso8601String(),
+            'eventoFechaFin' => optional($evento?->FechaFin)->toIso8601String(),
+            'eventoEstado' => $evento?->Estado,
+        ]);
     }
 }

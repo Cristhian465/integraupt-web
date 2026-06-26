@@ -21,6 +21,14 @@ class InscripcionService
             ->get();
     }
 
+    public function listarPorUsuario(int $idUsuario): Collection
+    {
+        return EventoInscripcion::with('evento')
+            ->where('IdUsuario', $idUsuario)
+            ->orderByDesc('FechaInscripcion')
+            ->get();
+    }
+
     public function inscribir(int $idEvento, int $idUsuario): EventoInscripcion
     {
         $evento = Evento::findOrFail($idEvento);

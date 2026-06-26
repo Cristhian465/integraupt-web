@@ -17,7 +17,9 @@ import {
   Dumbbell,
   GraduationCap,
   Coffee,
-  Vote
+  Vote,
+  CalendarPlus,
+  MessageSquare
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -50,6 +52,8 @@ interface ServiciosPageProps {
   onNavigateToAulaVirtual: () => void;
   onNavigateToCafeteria: () => void;
   onNavigateToElecciones: () => void;
+  onNavigateToEventos: () => void;
+  onNavigateToCanales: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -84,6 +88,8 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToAulaVirtual,
   onNavigateToCafeteria,
   onNavigateToElecciones,
+  onNavigateToEventos,
+  onNavigateToCanales,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -285,6 +291,37 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
               </button>
             </div>
           </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-eventos"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-eventos">
+                <CalendarPlus className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Eventos UPT</h2>
+            <p className="servicios-menu-card-description">
+              Descubre charlas, talleres y actividades de tu facultad e inscribete.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-eventos">
+              Charlas y talleres
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-eventos"
+                onClick={(event) => {
+                  onNavigateToEventos();
+                }}
+              >
+                Ver Eventos
+              </button>
+            </div>
+          </article>
+
           <article
             className="servicios-menu-card servicios-menu-card-gimnasio"
             role="article"
@@ -434,7 +471,6 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
               </button>
             </div>
           </article>
-          
           <article
             className="servicios-menu-card servicios-menu-card-elecciones"
             role="article"
@@ -463,6 +499,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
                 }}
               >
                 Ver Elecciones
+              </button>
+            </div>
+          </article>
+
+          <article
+            className="servicios-menu-card servicios-menu-card-canales"
+            role="article"
+            tabIndex={0}
+          >
+            <div className="servicios-menu-icon-container">
+              <div className="servicios-menu-icon servicios-menu-icon-canales">
+                <MessageSquare className="servicios-menu-icon-svg" aria-hidden="true" />
+              </div>
+            </div>
+            <h2 className="servicios-menu-card-title">Canales</h2>
+            <p className="servicios-menu-card-description">
+              Mantente al día con los anuncios y conversaciones de tu facultad, escuela o curso.
+            </p>
+            <div className="servicios-menu-card-badge servicios-menu-card-badge-canales">
+              Comunicación institucional
+            </div>
+            <div className="servicios-menu-card-actions">
+              <button
+                type="button"
+                className="servicios-menu-card-button servicios-menu-card-button-canales"
+                onClick={(event) => {
+                  onNavigateToCanales();
+                }}
+              >
+                Ver canales
               </button>
             </div>
           </article>

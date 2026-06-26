@@ -63,4 +63,28 @@ class CatalogoService
             ->limit(15)
             ->get();
     }
+
+    /**
+     * @return array{facultadId: int|null, escuelaId: int|null}|null
+     */
+    public function resolverFacultadDeUsuario(int $idUsuario): ?array
+    {
+        $estudiante = Estudiante::with('escuela')->where('IdUsuario', $idUsuario)->first();
+        if ($estudiante) {
+            return [
+                'facultadId' => $estudiante->escuela?->IdFacultad,
+                'escuelaId' => $estudiante->Escuela,
+            ];
+        }
+
+        $docente = Docente::with('escuela')->where('IdUsuario', $idUsuario)->first();
+        if ($docente) {
+            return [
+                'facultadId' => $docente->escuela?->IdFacultad,
+                'escuelaId' => $docente->Escuela,
+            ];
+        }
+
+        return null;
+    }
 }

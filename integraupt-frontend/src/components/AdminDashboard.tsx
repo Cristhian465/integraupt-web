@@ -17,7 +17,8 @@ import {
   HeartPulse,
   CalendarPlus,
   Coffee,
-  Vote
+  Vote,
+  MessageSquare
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -35,7 +36,8 @@ import {
   GestionPoliclinico,
   GestionEventos,
   GestionCafeteria,
-  GestionElecciones
+  GestionElecciones,
+  GestionCanales
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -55,7 +57,8 @@ type ModuleId =
   | "policlinico"
   | "eventos"
   | "cafeteria"
-  | "elecciones";
+  | "elecciones"
+  | "canales";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -193,6 +196,13 @@ const MODULES: ModuleDefinition[] = [
     name: "Gestión de Elecciones",
     description: "Administra procesos electorales, candidatos y resultados.",
     icon: Vote,
+    color: "indigo"
+  },
+  {
+    id: "canales",
+    name: "Gestion de Canales",
+    description: "Crea canales de comunicacion entre administracion, docentes y estudiantes",
+    icon: MessageSquare,
     color: "indigo"
   }
 ];
@@ -427,6 +437,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "elecciones" && (
             <GestionElecciones onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "canales" && (
+            <GestionCanales user={user} onAuditLog={addAuditLog} />
           )}
         </div>
 
