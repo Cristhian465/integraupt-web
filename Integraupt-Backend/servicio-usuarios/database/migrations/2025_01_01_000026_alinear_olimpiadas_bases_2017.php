@@ -9,19 +9,25 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('olimpiada_disciplina', function (Blueprint $table) {
-            $table->enum('TipoPuntuacion', ['partido', 'posiciones'])->default('partido')->after('TipoParticipacion');
-        });
+        if (!Schema::hasColumn('olimpiada_disciplina', 'TipoPuntuacion')) {
+            Schema::table('olimpiada_disciplina', function (Blueprint $table) {
+                $table->enum('TipoPuntuacion', ['partido', 'posiciones'])->default('partido')->after('TipoParticipacion');
+            });
+        }
 
-        Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
-            $table->string('Lugar', 150)->nullable()->after('ReglasEspecificas');
-        });
+        if (!Schema::hasColumn('olimpiada_edicion_disciplina', 'Lugar')) {
+            Schema::table('olimpiada_edicion_disciplina', function (Blueprint $table) {
+                $table->string('Lugar', 150)->nullable()->after('ReglasEspecificas');
+            });
+        }
 
-        Schema::table('olimpiada_resultado', function (Blueprint $table) {
-            $table->string('Lugar', 150)->nullable()->after('FechaPartido');
-        });
+        if (!Schema::hasColumn('olimpiada_resultado', 'Lugar')) {
+            Schema::table('olimpiada_resultado', function (Blueprint $table) {
+                $table->string('Lugar', 150)->nullable()->after('FechaPartido');
+            });
+        }
 
-        Schema::create('olimpiada_resultado_posicion', function (Blueprint $table) {
+        if (!Schema::hasTable('olimpiada_resultado_posicion')) Schema::create('olimpiada_resultado_posicion', function (Blueprint $table) {
             $table->bigIncrements('IdResultadoPosicion');
             $table->unsignedInteger('EdicionDisciplina');
             $table->unsignedInteger('Facultad');
@@ -118,7 +124,7 @@ return new class extends Migration
 
         // ===== Disciplinas adicionales de las Bases 2017 que faltaban en el catálogo =====
 
-        DB::table('olimpiada_disciplina')->insert([
+        DB::table('olimpiada_disciplina')->insertOrIgnore([
             [
                 'Nombre' => 'Futsal',
                 'Descripcion' => 'Futsal damas y varones.',

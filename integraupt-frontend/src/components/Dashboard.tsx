@@ -13,6 +13,7 @@ import { PromedioPage } from './pages/Usuario/Promedio/PromedioPage';
 import { GimnasioPage } from './pages/Usuario/Gimnasio/GimnasioPage';
 import { CafeteriaPage } from './pages/Usuario/Cafeteria/CafeteriaPage';
 import { EventosPage } from './pages/Usuario/Eventos/EventosPage';
+import { CanalesPage } from './pages/Usuario/Canales/CanalesPage';
 import { requestBackendLogout } from '../utils/logout';
 import { isBackendLoginType } from '../utils/apiConfig';
 import { PerfilPage } from './pages/Usuario/Perfil/PerfilPage';
@@ -43,7 +44,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   const isAdministrative = user.user_metadata.login_type === 'administrative';
 
   const [activeView, setActiveView] = useState<
-     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'promedio' | 'gimnasio' | 'aulavirtual' | 'perfil' | 'cafeteria' | 'eventos'
+     'inicio' | 'servicios' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'burra' | 'promedio' | 'gimnasio' | 'aulavirtual' | 'perfil' | 'cafeteria' | 'eventos' | 'canales'
    >(() => {
      if (typeof window === 'undefined') {
        return 'inicio';
@@ -66,7 +67,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
          storedView === 'policlinico' ||
          storedView === 'aulavirtual' ||
          storedView === 'cafeteria' ||
-         storedView === 'eventos'
+         storedView === 'eventos' ||
+         storedView === 'canales'
        ) {
          return storedView;
        }
@@ -133,6 +135,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     setActiveView('gimnasio');
   }, []);
 
+  const handleNavigateToCanales = useCallback(() => {
+    setActiveView('canales');
+  }, []);
+
   const handleNavigateToOlimpiadas = useCallback(() => {
     setActiveView('olimpiadas');
   }, []);
@@ -192,6 +198,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ user }) => {
         onNavigateToAulaVirtual={handleNavigateToAulaVirtual}
         onNavigateToCafeteria={handleNavigateToCafeteria}
         onNavigateToEventos={handleNavigateToEventos}
+        onNavigateToCanales={handleNavigateToCanales}
+        onLogout={handleLogout}
+        isLoggingOut={isLoggingOut}
+      />
+    );
+  }
+
+  if (activeView === 'canales') {
+    return (
+      <CanalesPage
+        user={user}
+        onNavigateToInicio={handleNavigateToInicio}
+        onNavigateToServicios={handleNavigateToServicios}
+        onNavigateToPerfil={handleNavigateToPerfil}
         onLogout={handleLogout}
         isLoggingOut={isLoggingOut}
       />

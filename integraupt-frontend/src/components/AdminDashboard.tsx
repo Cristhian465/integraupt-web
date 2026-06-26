@@ -16,7 +16,8 @@ import {
   Brain,
   HeartPulse,
   CalendarPlus,
-  Coffee
+  Coffee,
+  MessageSquare
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -33,7 +34,8 @@ import {
   GestionPsicologia,
   GestionPoliclinico,
   GestionEventos,
-  GestionCafeteria
+  GestionCafeteria,
+  GestionCanales
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -52,7 +54,8 @@ type ModuleId =
   | "psicologia"
   | "policlinico"
   | "eventos"
-  | "cafeteria";
+  | "cafeteria"
+  | "canales";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -184,6 +187,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Administra el stock y los pedidos de la cafeteria de tu facultad",
     icon: Coffee,
     color: "orange"
+  },
+  {
+    id: "canales",
+    name: "Gestion de Canales",
+    description: "Crea canales de comunicacion entre administracion, docentes y estudiantes",
+    icon: MessageSquare,
+    color: "indigo"
   }
 ];
 
@@ -413,6 +423,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "cafeteria" && (
             <GestionCafeteria onAuditLog={addAuditLog} currentUser={user} />
+          )}
+
+          {activeModule === "canales" && (
+            <GestionCanales user={user} onAuditLog={addAuditLog} />
           )}
         </div>
 
