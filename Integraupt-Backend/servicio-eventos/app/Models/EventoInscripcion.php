@@ -27,6 +27,7 @@ class EventoInscripcion extends Model
         'TipoUsuario',
         'Estado',
         'CodigoQr',
+        'FechaInscripcion',
     ];
 
     protected $casts = [

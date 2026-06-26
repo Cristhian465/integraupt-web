@@ -74,13 +74,15 @@ class InscripcionService
             }
         }
 
-        $inscripcion = EventoInscripcion::create([
-            'IdEvento' => $idEvento,
-            'IdUsuario' => $idUsuario,
-            'TipoUsuario' => $tipo,
-            'Estado' => $estado,
-            'CodigoQr' => (string) Str::uuid(),
-        ]);
+        $inscripcion = EventoInscripcion::updateOrCreate(
+            ['IdEvento' => $idEvento, 'IdUsuario' => $idUsuario],
+            [
+                'TipoUsuario' => $tipo,
+                'Estado' => $estado,
+                'CodigoQr' => (string) Str::uuid(),
+                'FechaInscripcion' => now(),
+            ]
+        );
 
         return $inscripcion->refresh();
     }
