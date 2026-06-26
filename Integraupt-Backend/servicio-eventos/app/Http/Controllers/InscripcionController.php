@@ -83,6 +83,8 @@ class InscripcionController extends Controller
             'estado' => $inscripcion->Estado,
             'codigoQr' => $inscripcion->CodigoQr,
             'fechaInscripcion' => optional($inscripcion->FechaInscripcion)->toIso8601String(),
+            'certificadoId' => $inscripcion->certificado?->IdCertificado,
+            'certificadoUrl' => $inscripcion->certificado?->UrlArchivo,
         ];
     }
 

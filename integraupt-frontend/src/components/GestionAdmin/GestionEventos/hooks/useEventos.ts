@@ -40,8 +40,8 @@ export const useEventos = (filtros: EventoFiltros) => {
     void loadEventos();
   }, [loadEventos]);
 
-  const saveEvento = useCallback(async (payload: EventoPayload, id?: number) => {
-    const result = id ? await updateEvento(id, payload) : await createEvento(payload);
+  const saveEvento = useCallback(async (payload: EventoPayload, id?: number, imagen?: File | null) => {
+    const result = id ? await updateEvento(id, payload, imagen) : await createEvento(payload, imagen);
 
     setEventos((prev) => {
       if (id) {

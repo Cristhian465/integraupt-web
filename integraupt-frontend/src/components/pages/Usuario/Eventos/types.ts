@@ -1,7 +1,7 @@
 export type TipoEvento = "charla" | "taller" | "cultural" | "academico";
 export type AlcanceEvento = "facultad" | "escuela";
 export type EstadoEvento = "borrador" | "publicado" | "en_curso" | "finalizado" | "cancelado";
-export type EstadoInscripcion = "inscrito" | "asistio" | "no_asistio" | "cancelado";
+export type EstadoInscripcion = "inscrito" | "en_espera" | "asistio" | "no_asistio" | "cancelado";
 
 export interface Evento {
   id: number;
@@ -20,6 +20,9 @@ export interface Evento {
   aforoMaximo?: number | null;
   requiereInscripcion: boolean;
   estado: EstadoEvento;
+  imagenUrl?: string | null;
+  inscritos?: number | null;
+  cuposDisponibles?: number | null;
   responsableId: number;
   responsableNombre?: string | null;
 }
@@ -32,6 +35,8 @@ export interface MiInscripcion {
   estado: EstadoInscripcion;
   codigoQr: string;
   fechaInscripcion?: string | null;
+  certificadoId?: number | null;
+  certificadoUrl?: string | null;
   eventoTitulo?: string | null;
   eventoTipoEvento?: TipoEvento | null;
   eventoFechaInicio?: string | null;

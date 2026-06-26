@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogoController;
+use App\Http\Controllers\CertificadoController;
 use App\Http\Controllers\EventoController;
 use App\Http\Controllers\InscripcionController;
 
@@ -15,6 +16,8 @@ Route::prefix('catalogos')->group(function () {
 });
 
 Route::get('/mis-inscripciones', [InscripcionController::class, 'misInscripciones']);
+
+Route::get('/certificados/verificar/{idInscripcion}', [CertificadoController::class, 'verificar']);
 
 Route::prefix('eventos')->group(function () {
     Route::get('/', [EventoController::class, 'index']);

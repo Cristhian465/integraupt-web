@@ -16,6 +16,7 @@ interface EventoModalProps {
   catalogosError: string | null;
   onClose: () => void;
   onChange: (field: keyof EventoFormValues, value: string | boolean) => void;
+  onImageChange: (file: File | null) => void;
   onSubmit: () => void;
 }
 
@@ -32,6 +33,7 @@ export const EventoModal: React.FC<EventoModalProps> = ({
   catalogosError,
   onClose,
   onChange,
+  onImageChange,
   onSubmit
 }) => {
   if (!open) {
@@ -64,6 +66,7 @@ export const EventoModal: React.FC<EventoModalProps> = ({
           espacios={espacios}
           catalogosLoading={catalogosLoading}
           onChange={onChange}
+          onImageChange={onImageChange}
           onSubmit={onSubmit}
           onCancel={onClose}
         />

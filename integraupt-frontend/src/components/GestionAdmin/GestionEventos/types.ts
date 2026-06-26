@@ -2,7 +2,7 @@ export type TipoEvento = "charla" | "taller" | "cultural" | "academico";
 export type AlcanceEvento = "facultad" | "escuela";
 export type EstadoEvento = "borrador" | "publicado" | "en_curso" | "finalizado" | "cancelado";
 export type TipoUsuarioInscripcion = "estudiante" | "docente";
-export type EstadoInscripcion = "inscrito" | "asistio" | "no_asistio" | "cancelado";
+export type EstadoInscripcion = "inscrito" | "en_espera" | "asistio" | "no_asistio" | "cancelado";
 
 export interface Facultad {
   id: number;
@@ -42,6 +42,9 @@ export interface Evento {
   aforoMaximo?: number | null;
   requiereInscripcion: boolean;
   estado: EstadoEvento;
+  imagenUrl?: string | null;
+  inscritos?: number | null;
+  cuposDisponibles?: number | null;
   responsableId: number;
   responsableNombre?: string | null;
 }
@@ -74,6 +77,8 @@ export interface EventoFormValues {
   aforoMaximo: string;
   requiereInscripcion: boolean;
   responsableId: string;
+  imagenFile: File | null;
+  imagenPreviewUrl: string;
 }
 
 export type EventoFormMode = "create" | "edit";
@@ -87,6 +92,8 @@ export interface EventoInscripcion {
   estado: EstadoInscripcion;
   codigoQr: string;
   fechaInscripcion?: string | null;
+  certificadoId?: number | null;
+  certificadoUrl?: string | null;
 }
 
 export interface ReporteAsistencia {

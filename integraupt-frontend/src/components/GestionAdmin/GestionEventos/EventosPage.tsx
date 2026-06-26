@@ -108,6 +108,10 @@ export const GestionEventos: React.FC<GestionEventosProps> = ({ onAuditLog }) =>
     setFormValues((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleImageChange = (file: File | null) => {
+    setFormValues((prev) => ({ ...prev, imagenFile: file }));
+  };
+
   const notifyStatus = (type: StatusMessage["type"], text: string) => {
     setStatusMessage({ type, text });
   };
@@ -122,7 +126,7 @@ export const GestionEventos: React.FC<GestionEventosProps> = ({ onAuditLog }) =>
     setSubmitting(true);
     try {
       const payload = buildPayloadFromValues(formValues);
-      const result = await saveEvento(payload, editingId ?? undefined);
+      const result = await saveEvento(payload, editingId ?? undefined, formValues.imagenFile);
       notifyStatus(
         "success",
         mode === "create" ? "Evento registrado correctamente." : "Evento actualizado correctamente."
@@ -293,6 +297,7 @@ export const GestionEventos: React.FC<GestionEventosProps> = ({ onAuditLog }) =>
         catalogosError={catalogosError}
         onClose={closeModal}
         onChange={handleValueChange}
+        onImageChange={handleImageChange}
         onSubmit={handleSubmit}
       />
 

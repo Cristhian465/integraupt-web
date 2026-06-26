@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import type { Escuela, EspacioCatalogo, EventoFormMode, EventoFormValues, Facultad } from "../types";
 
 interface EventoFormProps {
@@ -11,6 +11,7 @@ interface EventoFormProps {
   espacios: EspacioCatalogo[];
   catalogosLoading: boolean;
   onChange: (field: keyof EventoFormValues, value: string | boolean) => void;
+  onImageChange: (file: File | null) => void;
   onSubmit: () => void;
   onCancel: () => void;
 }
@@ -32,6 +33,7 @@ export const EventoForm: React.FC<EventoFormProps> = ({
   espacios,
   catalogosLoading,
   onChange,
+  onImageChange,
   onSubmit,
   onCancel
 }) => {
@@ -49,6 +51,19 @@ export const EventoForm: React.FC<EventoFormProps> = ({
     if (!values.escuelaId) return espacios;
     return espacios.filter((espacio) => `${espacio.escuelaId}` === values.escuelaId);
   }, [espacios, values.escuelaId]);
+
+  const imagenPreview = useMemo(() => {
+    if (values.imagenFile) return URL.createObjectURL(values.imagenFile);
+    return values.imagenPreviewUrl || null;
+  }, [values.imagenFile, values.imagenPreviewUrl]);
+
+  useEffect(() => {
+    return () => {
+      if (values.imagenFile && imagenPreview) {
+        URL.revokeObjectURL(imagenPreview);
+      }
+    };
+  }, [imagenPreview, values.imagenFile]);
 
   return (
     <form className="evento-form" onSubmit={handleSubmit}>
@@ -256,6 +271,22 @@ export const EventoForm: React.FC<EventoFormProps> = ({
             />
             Requiere inscripcion previa
           </label>
+        </div>
+
+        <div className="evento-form-group evento-form-group-full">
+          <label className="evento-form-label" htmlFor="imagen">
+            Imagen del evento (opcional)
+          </label>
+          <input
+            id="imagen"
+            type="file"
+            accept="image/*"
+            className="evento-form-input"
+            onChange={(event) => onImageChange(event.target.files?.[0] ?? null)}
+          />
+          {imagenPreview && (
+            <img src={imagenPreview} alt="Vista previa del evento" className="evento-form-imagen-preview" />
+          )}
         </div>
       </div>
 

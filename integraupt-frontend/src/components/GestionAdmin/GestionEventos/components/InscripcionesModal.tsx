@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { X, UserPlus, QrCode, XCircle } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { X, UserPlus, QrCode, XCircle, Camera, CameraOff } from "lucide-react";
+import { Html5Qrcode } from "html5-qrcode";
 import type { Evento, EventoInscripcion } from "../types";
 import {
   cancelarInscripcion,
@@ -9,6 +10,16 @@ import {
   inscribirUsuario
 } from "../eventosService";
 import type { ReporteAsistencia } from "../types";
+
+const QR_READER_ELEMENT_ID = "evento-qr-reader";
+
+const INSCRIPCION_ESTADO_LABEL: Record<string, string> = {
+  inscrito: "Inscrito",
+  en_espera: "Lista de espera",
+  asistio: "Asistio",
+  no_asistio: "No asistio",
+  cancelado: "Cancelado"
+};
 
 interface InscripcionesModalProps {
   evento: Evento | null;
@@ -22,6 +33,8 @@ export const InscripcionesModal: React.FC<InscripcionesModalProps> = ({ evento, 
   const [error, setError] = useState<string | null>(null);
   const [usuarioId, setUsuarioId] = useState("");
   const [codigoQr, setCodigoQr] = useState("");
+  const [escaneando, setEscaneando] = useState(false);
+  const scannerRef = useRef<Html5Qrcode | null>(null);
 
   const recargar = async (idEvento: number) => {
     setLoading(true);
@@ -46,8 +59,70 @@ export const InscripcionesModal: React.FC<InscripcionesModalProps> = ({ evento, 
       setUsuarioId("");
       setCodigoQr("");
       setError(null);
+    } else {
+      setEscaneando(false);
     }
   }, [evento]);
+
+  const detenerEscaner = async () => {
+    const scanner = scannerRef.current;
+    scannerRef.current = null;
+    if (scanner) {
+      try {
+        await scanner.stop();
+      } catch {
+        // ya estaba detenido
+      }
+      scanner.clear();
+    }
+  };
+
+  useEffect(() => {
+    if (!escaneando || !evento) {
+      return;
+    }
+
+    const idEvento = evento.id;
+    const scanner = new Html5Qrcode(QR_READER_ELEMENT_ID);
+    scannerRef.current = scanner;
+    let activo = true;
+
+    scanner
+      .start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 220 },
+        async (decodedText) => {
+          if (!activo) return;
+          activo = false;
+          await detenerEscaner();
+          setEscaneando(false);
+          try {
+            await checkinPorQr(idEvento, decodedText.trim());
+            await recargar(idEvento);
+            setError(null);
+          } catch (checkinError) {
+            setError(checkinError instanceof Error ? checkinError.message : "No se pudo registrar el ingreso.");
+          }
+        },
+        () => {
+          // ignorar fotogramas sin codigo detectado
+        }
+      )
+      .catch((startError) => {
+        setError(
+          startError instanceof Error
+            ? `No se pudo acceder a la camara: ${startError.message}`
+            : "No se pudo acceder a la camara."
+        );
+        setEscaneando(false);
+      });
+
+    return () => {
+      activo = false;
+      void detenerEscaner();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [escaneando, evento]);
 
   if (!evento) {
     return null;
@@ -136,8 +211,22 @@ export const InscripcionesModal: React.FC<InscripcionesModalProps> = ({ evento, 
             <button type="submit" className="gestion-eventos-btn primary">
               <QrCode size={16} /> Registrar ingreso
             </button>
+            <button
+              type="button"
+              className="evento-qr-scan-button"
+              onClick={() => setEscaneando((prev) => !prev)}
+            >
+              {escaneando ? <CameraOff size={16} /> : <Camera size={16} />}
+              {escaneando ? "Detener camara" : "Escanear con camara"}
+            </button>
           </form>
         </div>
+
+        {escaneando && (
+          <div className="evento-qr-scanner-box">
+            <div id={QR_READER_ELEMENT_ID} />
+          </div>
+        )}
 
         {error && <div className="evento-form-errors"><p>{error}</p></div>}
 
@@ -164,7 +253,7 @@ export const InscripcionesModal: React.FC<InscripcionesModalProps> = ({ evento, 
                     <td>{inscripcion.tipoUsuario}</td>
                     <td>
                       <span className={`evento-status-badge inscripcion-${inscripcion.estado}`}>
-                        {inscripcion.estado}
+                        {INSCRIPCION_ESTADO_LABEL[inscripcion.estado] ?? inscripcion.estado}
                       </span>
                     </td>
                     <td className="evento-qr-cell">{inscripcion.codigoQr}</td>

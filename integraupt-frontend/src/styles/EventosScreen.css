@@ -125,6 +125,13 @@
   font-weight: 500;
 }
 
+.eventos-card-banner {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
 .eventos-card-content {
   padding: 1.5rem;
 }
@@ -425,6 +432,18 @@
 .eventos-status-badge.eventos-status-cancelado {
   background-color: #fee2e2;
   color: #b91c1c;
+}
+
+.eventos-status-badge.eventos-status-en_espera {
+  background-color: #ffedd5;
+  color: #9a3412;
+}
+
+.eventos-certificado-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
 }
 
 .eventos-pedido-qr {

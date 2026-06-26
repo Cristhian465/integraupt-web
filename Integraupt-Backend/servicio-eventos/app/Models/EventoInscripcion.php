@@ -16,6 +16,7 @@ class EventoInscripcion extends Model
     public const TIPO_DOCENTE = 'docente';
 
     public const ESTADO_INSCRITO = 'inscrito';
+    public const ESTADO_EN_ESPERA = 'en_espera';
     public const ESTADO_ASISTIO = 'asistio';
     public const ESTADO_NO_ASISTIO = 'no_asistio';
     public const ESTADO_CANCELADO = 'cancelado';

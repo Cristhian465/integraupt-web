@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { AlertTriangle, CalendarDays, CheckCircle2, MapPin, Sparkles, Users } from "lucide-react";
+import { AlertTriangle, CalendarDays, CheckCircle2, Download, MapPin, Sparkles, Users } from "lucide-react";
+import jsPDF from "jspdf";
 import "../../../../styles/EventosScreen.css";
 import { Navbar } from "../Navbar";
 import {
@@ -43,9 +44,43 @@ const TIPO_LABEL: Record<string, string> = {
 
 const ESTADO_LABEL: Record<string, string> = {
   inscrito: "Inscrito",
+  en_espera: "Lista de espera",
   asistio: "Asististe",
   no_asistio: "No asististe",
   cancelado: "Cancelado",
+};
+
+const generarCertificadoPdf = (inscripcion: MiInscripcion, displayName: string) => {
+  const doc = new jsPDF({ orientation: "landscape" });
+  const ancho = doc.internal.pageSize.getWidth();
+
+  doc.setFontSize(26);
+  doc.text("Certificado de Participacion", ancho / 2, 50, { align: "center" });
+
+  doc.setFontSize(14);
+  doc.text("Se otorga el presente certificado a:", ancho / 2, 80, { align: "center" });
+
+  doc.setFontSize(20);
+  doc.text(displayName, ancho / 2, 100, { align: "center" });
+
+  doc.setFontSize(14);
+  doc.text(
+    `Por su participacion en "${inscripcion.eventoTitulo ?? "el evento"}"`,
+    ancho / 2,
+    120,
+    { align: "center" }
+  );
+
+  if (inscripcion.eventoFechaInicio) {
+    doc.text(formatFecha(inscripcion.eventoFechaInicio), ancho / 2, 135, { align: "center" });
+  }
+
+  doc.setFontSize(10);
+  doc.text(`Codigo de verificacion: ${inscripcion.certificadoId ?? inscripcion.id}`, ancho / 2, 160, {
+    align: "center",
+  });
+
+  doc.save(`certificado-${inscripcion.eventoTitulo ?? "evento"}.pdf`);
 };
 
 const formatFecha = (iso?: string | null): string => {
@@ -225,6 +260,9 @@ export const EventosPage: React.FC<EventosPageProps> = ({
               const inscripcion = inscripcionPorEvento.get(evento.id);
               return (
                 <div key={evento.id} className="eventos-card">
+                  {evento.imagenUrl && (
+                    <img src={evento.imagenUrl} alt={evento.titulo} className="eventos-card-banner" />
+                  )}
                   <div className="eventos-card-content">
                     <div className="eventos-card-layout">
                       <div className="eventos-card-info">
@@ -252,7 +290,11 @@ export const EventosPage: React.FC<EventosPageProps> = ({
                         {evento.aforoMaximo && (
                           <div className="eventos-participantes">
                             <Users className="eventos-participantes-icon" />
-                            <span className="eventos-participantes-text">Aforo maximo: {evento.aforoMaximo}</span>
+                            <span className="eventos-participantes-text">
+                              {evento.cuposDisponibles === 0
+                                ? "Sin cupos disponibles (te uniras a la lista de espera)"
+                                : `Cupos: ${evento.inscritos ?? 0}/${evento.aforoMaximo}`}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -268,7 +310,11 @@ export const EventosPage: React.FC<EventosPageProps> = ({
                             disabled={procesandoId === evento.id}
                             onClick={() => handleInscribirme(evento)}
                           >
-                            {procesandoId === evento.id ? "Inscribiendo..." : "Inscribirme"}
+                            {procesandoId === evento.id
+                              ? "Inscribiendo..."
+                              : evento.cuposDisponibles === 0
+                                ? "Unirme a lista de espera"
+                                : "Inscribirme"}
                           </button>
                         ) : (
                           <span className="eventos-status-badge">Libre, sin inscripcion</span>
@@ -299,12 +345,21 @@ export const EventosPage: React.FC<EventosPageProps> = ({
                       {ESTADO_LABEL[inscripcion.estado] ?? inscripcion.estado}
                     </span>
                   </div>
-                  {inscripcion.estado === "inscrito" && (
+                  {(inscripcion.estado === "inscrito" || inscripcion.estado === "en_espera") && (
                     <p className="eventos-pedido-qr">
                       Codigo QR de ingreso: <code>{inscripcion.codigoQr}</code>
                     </p>
                   )}
-                  {inscripcion.estado === "inscrito" && (
+                  {inscripcion.estado === "asistio" && inscripcion.certificadoId && (
+                    <button
+                      type="button"
+                      className="eventos-btn eventos-btn-secondary eventos-certificado-button"
+                      onClick={() => generarCertificadoPdf(inscripcion, displayName)}
+                    >
+                      <Download size={14} /> Descargar certificado
+                    </button>
+                  )}
+                  {(inscripcion.estado === "inscrito" || inscripcion.estado === "en_espera") && (
                     <button
                       type="button"
                       className="eventos-cancelar-button"

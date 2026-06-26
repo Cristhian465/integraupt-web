@@ -67,7 +67,16 @@ export const EventoTable: React.FC<EventoTableProps> = ({
                   : `${evento.facultadNombre ?? `Facultad #${evento.facultadId}`} (toda la facultad)`}
               </td>
               <td>{formatFecha(evento.fechaInicio)}</td>
-              <td>{evento.aforoMaximo ?? "Sin limite"}</td>
+              <td className="evento-cupos-cell">
+                {evento.aforoMaximo == null ? (
+                  "Sin limite"
+                ) : (
+                  <span className={evento.cuposDisponibles === 0 ? "evento-cupos-llenos" : undefined}>
+                    {evento.inscritos ?? 0}/{evento.aforoMaximo}
+                    {evento.cuposDisponibles === 0 ? " (lleno)" : ""}
+                  </span>
+                )}
+              </td>
               <td>
                 <span className={`evento-status-badge ${evento.estado}`}>{ESTADO_LABEL[evento.estado]}</span>
               </td>

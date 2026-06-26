@@ -7,6 +7,7 @@ use App\Models\Evento;
 use App\Services\EventoService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class EventoController extends Controller
@@ -49,7 +50,13 @@ class EventoController extends Controller
     public function store(EventoRequest $request)
     {
         try {
-            $evento = $this->eventoService->crear($this->aPascalCase($request->validated()));
+            $datos = $this->aPascalCase($request->validated());
+
+            if ($request->hasFile('imagen')) {
+                $datos['ImagenUrl'] = $this->guardarImagen($request);
+            }
+
+            $evento = $this->eventoService->crear($datos);
             return response()->json($this->mapear($evento), 201);
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
@@ -59,13 +66,34 @@ class EventoController extends Controller
     public function update(EventoRequest $request, $id)
     {
         try {
-            $evento = $this->eventoService->actualizar((int) $id, $this->aPascalCase($request->validated()));
+            $datos = $this->aPascalCase($request->validated());
+
+            if ($request->hasFile('imagen')) {
+                $datos['ImagenUrl'] = $this->guardarImagen($request);
+            }
+
+            $evento = $this->eventoService->actualizar((int) $id, $datos);
             return response()->json($this->mapear($evento));
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Evento no encontrado.'], 404);
         } catch (InvalidArgumentException $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
+    }
+
+    private function guardarImagen(Request $request): string
+    {
+        $file = $request->file('imagen');
+        $destino = public_path('uploads/eventos');
+
+        if (! is_dir($destino)) {
+            mkdir($destino, 0755, true);
+        }
+
+        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $file->move($destino, $filename);
+
+        return rtrim(config('app.url'), '/') . '/uploads/eventos/' . $filename;
     }
 
     public function cambiarEstado(Request $request, $id)
@@ -128,6 +156,11 @@ class EventoController extends Controller
             'aforoMaximo' => $evento->AforoMaximo,
             'requiereInscripcion' => (bool) $evento->RequiereInscripcion,
             'estado' => $evento->Estado,
+            'imagenUrl' => $evento->ImagenUrl,
+            'inscritos' => $evento->inscritos_count ?? null,
+            'cuposDisponibles' => $evento->AforoMaximo !== null
+                ? max(0, $evento->AforoMaximo - ($evento->inscritos_count ?? 0))
+                : null,
             'responsableId' => $evento->IdResponsable,
             'responsableNombre' => $evento->responsable?->NombreCompleto,
         ];

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Evento;
+use App\Models\EventoInscripcion;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
@@ -17,9 +18,15 @@ class EventoService
         Evento::ESTADO_CANCELADO,
     ];
 
+    private const CONTEO_OCUPADOS = [
+        EventoInscripcion::ESTADO_INSCRITO,
+        EventoInscripcion::ESTADO_ASISTIO,
+    ];
+
     public function listar(array $filtros): LengthAwarePaginator
     {
-        $query = Evento::with(['facultad', 'escuela', 'espacio', 'responsable']);
+        $query = Evento::with(['facultad', 'escuela', 'espacio', 'responsable'])
+            ->withCount(['inscripciones as inscritos_count' => fn ($q) => $q->whereIn('Estado', self::CONTEO_OCUPADOS)]);
 
         if (! empty($filtros['facultadId'])) {
             $query->where('IdFacultad', $filtros['facultadId']);
@@ -45,12 +52,55 @@ class EventoService
             $query->where('FechaInicio', '<=', $filtros['hasta']);
         }
 
-        return $query->orderByDesc('FechaInicio')->paginate($filtros['porPagina'] ?? 15);
+        $paginador = $query->orderByDesc('FechaInicio')->paginate($filtros['porPagina'] ?? 15);
+
+        $paginador->setCollection(
+            $paginador->getCollection()->map(fn (Evento $evento) => $this->sincronizarEstado($evento))
+        );
+
+        return $paginador;
     }
 
     public function encontrar(int $id): Evento
     {
-        return Evento::with(['facultad', 'escuela', 'espacio', 'responsable'])->findOrFail($id);
+        $evento = Evento::with(['facultad', 'escuela', 'espacio', 'responsable'])
+            ->withCount(['inscripciones as inscritos_count' => fn ($q) => $q->whereIn('Estado', self::CONTEO_OCUPADOS)])
+            ->findOrFail($id);
+
+        return $this->sincronizarEstado($evento);
+    }
+
+    /**
+     * Corrige perezosamente el Estado del evento segun la fecha actual
+     * (no hay scheduler configurado en el contenedor, asi que esto se
+     * evalua cada vez que el evento se lista o se consulta).
+     */
+    private function sincronizarEstado(Evento $evento): Evento
+    {
+        $ahora = now();
+        $estadosActivos = [Evento::ESTADO_PUBLICADO, Evento::ESTADO_EN_CURSO];
+
+        if (! in_array($evento->Estado, $estadosActivos, true)) {
+            return $evento;
+        }
+
+        if ($ahora->gte($evento->FechaFin)) {
+            $evento->Estado = Evento::ESTADO_FINALIZADO;
+            $evento->save();
+
+            EventoInscripcion::where('IdEvento', $evento->IdEvento)
+                ->where('Estado', EventoInscripcion::ESTADO_INSCRITO)
+                ->update(['Estado' => EventoInscripcion::ESTADO_NO_ASISTIO]);
+
+            return $evento;
+        }
+
+        if ($evento->Estado === Evento::ESTADO_PUBLICADO && $ahora->gte($evento->FechaInicio)) {
+            $evento->Estado = Evento::ESTADO_EN_CURSO;
+            $evento->save();
+        }
+
+        return $evento;
     }
 
     public function crear(array $datos): Evento

@@ -306,6 +306,20 @@
   color: #854d0e;
 }
 
+.evento-status-badge.inscripcion-en_espera {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.evento-cupos-cell {
+  font-size: 0.85rem;
+}
+
+.evento-cupos-cell .evento-cupos-llenos {
+  color: #dc2626;
+  font-weight: 600;
+}
+
 /* Modal */
 .evento-modal-backdrop {
   position: fixed;
@@ -391,6 +405,16 @@
   font-size: 0.88rem;
 }
 
+.evento-form-imagen-preview {
+  width: 100%;
+  max-width: 320px;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 0.6rem;
+  border: 1px solid #e2e8f0;
+  margin-top: 0.5rem;
+}
+
 .evento-form-errors {
   background: #fef2f2;
   border-radius: 0.6rem;
@@ -450,4 +474,30 @@
   font-family: monospace;
   font-size: 0.75rem;
   color: #64748b;
+}
+
+.evento-qr-scan-button {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #5b21b6;
+  font-size: 0.85rem;
+}
+
+.evento-qr-scanner-box {
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.6rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+}
+
+.evento-qr-scanner-box #evento-qr-reader {
+  max-width: 360px;
+  margin: 0 auto;
 }

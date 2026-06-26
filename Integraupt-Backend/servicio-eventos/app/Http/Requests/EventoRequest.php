@@ -26,6 +26,7 @@ class EventoRequest extends FormRequest
             'aforoMaximo' => 'nullable|integer|min:1',
             'requiereInscripcion' => 'nullable|boolean',
             'responsableId' => 'required|integer|exists:usuario,IdUsuario',
+            'imagen' => 'nullable|image|max:5120',
         ];
     }
 }

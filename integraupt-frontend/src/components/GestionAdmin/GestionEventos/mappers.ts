@@ -12,7 +12,9 @@ export const createEmptyFormValues = (): EventoFormValues => ({
   fechaFin: "",
   aforoMaximo: "",
   requiereInscripcion: true,
-  responsableId: ""
+  responsableId: "",
+  imagenFile: null,
+  imagenPreviewUrl: ""
 });
 
 const toDateTimeLocalInput = (isoDate: string): string => {
@@ -36,7 +38,9 @@ export const mapEventoToFormValues = (evento: Evento): EventoFormValues => ({
   fechaFin: toDateTimeLocalInput(evento.fechaFin),
   aforoMaximo: evento.aforoMaximo ? `${evento.aforoMaximo}` : "",
   requiereInscripcion: evento.requiereInscripcion,
-  responsableId: `${evento.responsableId ?? ""}`
+  responsableId: `${evento.responsableId ?? ""}`,
+  imagenFile: null,
+  imagenPreviewUrl: evento.imagenUrl ?? ""
 });
 
 export const buildPayloadFromValues = (values: EventoFormValues): EventoPayload => {

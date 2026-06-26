@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Docente;
 use App\Models\Estudiante;
 use App\Models\Evento;
+use App\Models\EventoCertificado;
 use App\Models\EventoInscripcion;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -13,9 +14,14 @@ use RuntimeException;
 
 class InscripcionService
 {
+    private const ESTADOS_OCUPAN_CUPO = [
+        EventoInscripcion::ESTADO_INSCRITO,
+        EventoInscripcion::ESTADO_ASISTIO,
+    ];
+
     public function listar(int $idEvento): Collection
     {
-        return EventoInscripcion::with('usuario')
+        return EventoInscripcion::with(['usuario', 'certificado'])
             ->where('IdEvento', $idEvento)
             ->orderBy('FechaInscripcion')
             ->get();
@@ -23,7 +29,7 @@ class InscripcionService
 
     public function listarPorUsuario(int $idUsuario): Collection
     {
-        return EventoInscripcion::with('evento')
+        return EventoInscripcion::with(['evento', 'certificado'])
             ->where('IdUsuario', $idUsuario)
             ->orderByDesc('FechaInscripcion')
             ->get();
@@ -56,13 +62,15 @@ class InscripcionService
             throw new InvalidArgumentException('El usuario ya esta inscrito en este evento.');
         }
 
+        $estado = EventoInscripcion::ESTADO_INSCRITO;
+
         if ($evento->AforoMaximo !== null) {
             $ocupados = EventoInscripcion::where('IdEvento', $idEvento)
-                ->where('Estado', '!=', EventoInscripcion::ESTADO_CANCELADO)
+                ->whereIn('Estado', self::ESTADOS_OCUPAN_CUPO)
                 ->count();
 
             if ($ocupados >= $evento->AforoMaximo) {
-                throw new InvalidArgumentException('El evento ha alcanzado su aforo maximo.');
+                $estado = EventoInscripcion::ESTADO_EN_ESPERA;
             }
         }
 
@@ -70,7 +78,7 @@ class InscripcionService
             'IdEvento' => $idEvento,
             'IdUsuario' => $idUsuario,
             'TipoUsuario' => $tipo,
-            'Estado' => EventoInscripcion::ESTADO_INSCRITO,
+            'Estado' => $estado,
             'CodigoQr' => (string) Str::uuid(),
         ]);
 
@@ -80,7 +88,18 @@ class InscripcionService
     public function cancelar(int $idInscripcion): EventoInscripcion
     {
         $inscripcion = EventoInscripcion::findOrFail($idInscripcion);
+        $eraOcupante = in_array($inscripcion->Estado, self::ESTADOS_OCUPAN_CUPO, true);
+
         $inscripcion->update(['Estado' => EventoInscripcion::ESTADO_CANCELADO]);
+
+        if ($eraOcupante) {
+            $siguiente = EventoInscripcion::where('IdEvento', $inscripcion->IdEvento)
+                ->where('Estado', EventoInscripcion::ESTADO_EN_ESPERA)
+                ->orderBy('FechaInscripcion')
+                ->first();
+
+            $siguiente?->update(['Estado' => EventoInscripcion::ESTADO_INSCRITO]);
+        }
 
         return $inscripcion->refresh();
     }
@@ -97,11 +116,20 @@ class InscripcionService
             throw new InvalidArgumentException('Esta inscripcion fue cancelada.');
         }
 
+        if ($inscripcion->Estado === EventoInscripcion::ESTADO_EN_ESPERA) {
+            throw new InvalidArgumentException('Este asistente esta en lista de espera y no tiene cupo confirmado.');
+        }
+
         if ($inscripcion->Estado === EventoInscripcion::ESTADO_ASISTIO) {
             throw new InvalidArgumentException('Este asistente ya registro su ingreso.');
         }
 
         $inscripcion->update(['Estado' => EventoInscripcion::ESTADO_ASISTIO]);
+
+        EventoCertificado::firstOrCreate(
+            ['IdInscripcion' => $inscripcion->IdInscripcion],
+            ['UrlArchivo' => rtrim(config('app.url'), '/') . '/api/certificados/verificar/' . $inscripcion->IdInscripcion]
+        );
 
         return $inscripcion->refresh();
     }

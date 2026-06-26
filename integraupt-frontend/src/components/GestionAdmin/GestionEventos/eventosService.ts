@@ -64,11 +64,45 @@ export const fetchEventos = (filtros: EventoFiltros = {}): Promise<Evento[]> =>
     eventosClient.get<{ data: Evento[] }>("/api/eventos", { params: filtros })
   ).then((response) => response.data);
 
-export const createEvento = (payload: EventoPayload): Promise<Evento> =>
-  unwrap(eventosClient.post<Evento>("/api/eventos", payload));
+const buildFormData = (payload: EventoPayload, imagen?: File | null): FormData => {
+  const formData = new FormData();
 
-export const updateEvento = (id: number, payload: EventoPayload): Promise<Evento> =>
-  unwrap(eventosClient.put<Evento>(`/api/eventos/${id}`, payload));
+  Object.entries(payload).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      formData.append(key, typeof value === "boolean" ? (value ? "1" : "0") : `${value}`);
+    }
+  });
+
+  if (imagen) {
+    formData.append("imagen", imagen);
+  }
+
+  return formData;
+};
+
+export const createEvento = (payload: EventoPayload, imagen?: File | null): Promise<Evento> => {
+  if (imagen) {
+    return unwrap(
+      eventosClient.post<Evento>("/api/eventos", buildFormData(payload, imagen), {
+        headers: { "Content-Type": "multipart/form-data" }
+      })
+    );
+  }
+  return unwrap(eventosClient.post<Evento>("/api/eventos", payload));
+};
+
+export const updateEvento = (id: number, payload: EventoPayload, imagen?: File | null): Promise<Evento> => {
+  if (imagen) {
+    const formData = buildFormData(payload, imagen);
+    formData.append("_method", "PUT");
+    return unwrap(
+      eventosClient.post<Evento>(`/api/eventos/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      })
+    );
+  }
+  return unwrap(eventosClient.put<Evento>(`/api/eventos/${id}`, payload));
+};
 
 export const cambiarEstadoEvento = (id: number, estado: EstadoEvento): Promise<Evento> =>
   unwrap(eventosClient.patch<Evento>(`/api/eventos/${id}/estado`, { estado }));
