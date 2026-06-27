@@ -7,6 +7,7 @@ import '../../../../styles/EleccionesTabs.css';
 
 import { InfoTab } from './Tabs/InfoTab';
 import { VoteTab } from './Tabs/VoteTab';
+import { StatsTab } from './Tabs/StatsTab';
 
 interface EleccionesPageProps {
   user: any;
@@ -42,7 +43,7 @@ export const EleccionesPage: React.FC<EleccionesPageProps> = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  const [activeTab, setActiveTab] = useState<'info' | 'vote'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'vote' | 'stats'>('info');
   const [existingVote, setExistingVote] = useState<any>(null);
   
   const [isVoting, setIsVoting] = useState(false);
@@ -202,7 +203,13 @@ export const EleccionesPage: React.FC<EleccionesPageProps> = ({
                 className={`tab-btn ${activeTab === 'vote' ? 'active' : ''}`}
                 onClick={() => setActiveTab('vote')}
               >
-                Votación {existingVote && '(Completada)'}
+                {existingVote ? 'Ver Mi Voto' : 'Votación'}
+              </button>
+              <button 
+                className={`tab-btn ${activeTab === 'stats' ? 'active' : ''}`}
+                onClick={() => setActiveTab('stats')}
+              >
+                Estadísticas
               </button>
             </div>
 
@@ -217,8 +224,10 @@ export const EleccionesPage: React.FC<EleccionesPageProps> = ({
                   isVoting={isVoting}
                   voteError={voteError}
                   electionEnded={new Date() > new Date(election.end_date)}
+                  onVoteAgain={() => setExistingVote(null)}
                 />
               )}
+              {activeTab === 'stats' && <StatsTab electionId={election.id} />}
             </div>
           </div>
         ) : null}

@@ -37,7 +37,8 @@ class ElectionController extends Controller
             return response()->json(['message' => 'Esta elección no está activa'], 400);
         }
 
-        // Verificar si ya votó
+        // Verificar si ya votó (comentado para permitir seguir votando en pruebas)
+        /*
         $existingVote = Vote::where('election_id', $electionId)
             ->where('student_id', $request->student_id)
             ->first();
@@ -45,10 +46,11 @@ class ElectionController extends Controller
         if ($existingVote) {
             return response()->json(['message' => 'Ya has emitido tu voto en esta elección'], 400);
         }
+        */
 
         $vote = Vote::create([
             'election_id' => $electionId,
-            'student_id' => $request->student_id,
+            'student_id' => $request->student_id . '_' . Str::random(4), // Append random string for testing multiple votes
             'faculty' => $request->faculty,
             'asamblea_party_id' => $request->asamblea_party_id,
             'consejo_uni_party_id' => $request->consejo_uni_party_id,
@@ -145,7 +147,7 @@ class ElectionController extends Controller
             'consejo_fac' => [] // Grouped by faculty later if needed, here total
         ];
 
-        foreach (['asamblea_party_id' => 'asamblea', 'consejo_uni_party_id' => 'consejo_uni', 'consejo_fac_party_id' => 'consejo_fac'] as $column => $cargo) {
+        foreach (['asamblea_party_id' => 'asamblea', 'consejo_uni_party_id' => 'consejo_uni'] as $column => $cargo) {
             $counts = Vote::where('election_id', $id)
                 ->select($column, DB::raw('count(*) as total'))
                 ->groupBy($column)
@@ -165,6 +167,58 @@ class ElectionController extends Controller
                     'percentage' => $totalVotes > 0 ? round(($votes / $totalVotes) * 100, 2) : 0
                 ];
             }
+        }
+
+        // Process consejo_fac by faculty and overall
+        $faculties = Vote::where('election_id', $id)->whereNotNull('faculty')->distinct()->pluck('faculty');
+        
+        $results['consejo_fac_totals'] = [];
+        $countsTotal = Vote::where('election_id', $id)
+            ->select('consejo_fac_party_id', DB::raw('count(*) as total'))
+            ->groupBy('consejo_fac_party_id')
+            ->pluck('total', 'consejo_fac_party_id')->toArray();
+            
+        foreach ($parties as $party) {
+            $partyId = $party->id;
+            $key = $partyId === null ? "" : $partyId;
+            $votes = $countsTotal[$key] ?? 0;
+            $results['consejo_fac_totals'][] = [
+                'id' => $partyId,
+                'name' => $party->name,
+                'color' => $party->color,
+                'votes' => $votes,
+                'percentage' => $totalVotes > 0 ? round(($votes / $totalVotes) * 100, 2) : 0
+            ];
+        }
+
+        $results['consejo_fac'] = [];
+        foreach ($faculties as $faculty) {
+            $facultyTotalVotes = Vote::where('election_id', $id)->where('faculty', $faculty)->count();
+            
+            $countsFac = Vote::where('election_id', $id)
+                ->where('faculty', $faculty)
+                ->select('consejo_fac_party_id', DB::raw('count(*) as total'))
+                ->groupBy('consejo_fac_party_id')
+                ->pluck('total', 'consejo_fac_party_id')->toArray();
+            
+            $facultyResults = [];
+            foreach ($parties as $party) {
+                $partyId = $party->id;
+                $key = $partyId === null ? "" : $partyId;
+                $votes = $countsFac[$key] ?? 0;
+                $facultyResults[] = [
+                    'id' => $partyId,
+                    'name' => $party->name,
+                    'color' => $party->color,
+                    'votes' => $votes,
+                    'percentage' => $facultyTotalVotes > 0 ? round(($votes / $facultyTotalVotes) * 100, 2) : 0
+                ];
+            }
+            
+            $results['consejo_fac'][$faculty] = [
+                'total_votes' => $facultyTotalVotes,
+                'results' => $facultyResults
+            ];
         }
 
         return response()->json([
