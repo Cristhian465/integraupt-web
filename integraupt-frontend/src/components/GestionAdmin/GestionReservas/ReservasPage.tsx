@@ -467,7 +467,11 @@ export const ReservasPage: React.FC<GestionReservasProps> = ({ onAuditLog, curre
         onConfirm={handleConfirmarGestion}
       />
 
-      <ReservaCheckinModal open={checkinAbierto} onClose={() => setCheckinAbierto(false)} />
+      <ReservaCheckinModal
+        open={checkinAbierto}
+        usuarioGestionId={usuarioGestionId}
+        onClose={() => setCheckinAbierto(false)}
+      />
     </section>
   );
 };

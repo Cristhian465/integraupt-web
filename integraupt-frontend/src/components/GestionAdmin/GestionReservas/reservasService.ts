@@ -1,4 +1,4 @@
-import { getAdminReservasApiUrl, getQrReservasApiUrl } from "../../../utils/apiConfig";
+import { getAdminReservasApiUrl, getQrReservasApiUrl, getReservasApiUrl } from "../../../utils/apiConfig";
 import type {
   AdminReservaFilters,
   AdminReservaResponse,
@@ -43,6 +43,16 @@ export const checkinReservaPorQr = async (valorQr: string): Promise<ReservaCheck
   }
 
   return data as ReservaCheckinResultado;
+};
+
+export const obtenerEstadoActualReserva = async (reservaId: number): Promise<string | null> => {
+  const response = await fetch(getReservasApiUrl(`/api/reservas/${reservaId}`));
+  if (!response.ok) {
+    return null;
+  }
+  const data = await response.json().catch(() => null);
+  const estado = data?.estado;
+  return typeof estado === "string" ? estado : null;
 };
 
 export interface AdminReservasQueryContext {

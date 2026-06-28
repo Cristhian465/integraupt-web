@@ -1,21 +1,30 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Camera, CameraOff, CheckCircle2, QrCode, ShieldAlert, X } from "lucide-react";
 import { Html5Qrcode } from "html5-qrcode";
-import { checkinReservaPorQr, type ReservaCheckinResultado } from "../reservasService";
+import {
+  checkinReservaPorQr,
+  gestionarReservaAdmin,
+  obtenerEstadoActualReserva,
+  type ReservaCheckinResultado
+} from "../reservasService";
 
 const QR_READER_ELEMENT_ID = "reserva-qr-reader";
 
+const MOTIVO_APROBACION_AUTOMATICA = "Aprobado automaticamente al registrar el ingreso por QR.";
+
 interface ReservaCheckinModalProps {
   open: boolean;
+  usuarioGestionId: number | null;
   onClose: () => void;
 }
 
-export const ReservaCheckinModal: React.FC<ReservaCheckinModalProps> = ({ open, onClose }) => {
+export const ReservaCheckinModal: React.FC<ReservaCheckinModalProps> = ({ open, usuarioGestionId, onClose }) => {
   const [codigoQr, setCodigoQr] = useState("");
   const [escaneando, setEscaneando] = useState(false);
   const [procesando, setProcesando] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [resultado, setResultado] = useState<ReservaCheckinResultado | null>(null);
+  const [aprobadaAutomaticamente, setAprobadaAutomaticamente] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
   useEffect(() => {
@@ -23,6 +32,7 @@ export const ReservaCheckinModal: React.FC<ReservaCheckinModalProps> = ({ open, 
       setCodigoQr("");
       setError(null);
       setResultado(null);
+      setAprobadaAutomaticamente(false);
     } else {
       setEscaneando(false);
     }
@@ -45,10 +55,38 @@ export const ReservaCheckinModal: React.FC<ReservaCheckinModalProps> = ({ open, 
     if (!valor.trim()) return;
     setProcesando(true);
     setError(null);
+    setAprobadaAutomaticamente(false);
     try {
       const data = await checkinReservaPorQr(valor.trim());
       setResultado(data);
       setCodigoQr("");
+
+      const reservaId = data.reserva.reservaId;
+      if (reservaId != null) {
+        const estadoActual = await obtenerEstadoActualReserva(reservaId);
+        if (estadoActual?.trim().toLowerCase() === "pendiente") {
+          if (usuarioGestionId == null) {
+            setError(
+              "El ingreso se registro, pero no se pudo aprobar automaticamente la reserva: no se identifico al administrador."
+            );
+          } else {
+            try {
+              await gestionarReservaAdmin(reservaId, {
+                usuarioGestionId,
+                accion: "Aprobar",
+                motivo: MOTIVO_APROBACION_AUTOMATICA
+              });
+              setAprobadaAutomaticamente(true);
+            } catch (aprobarError) {
+              setError(
+                aprobarError instanceof Error
+                  ? `El ingreso se registro, pero no se pudo aprobar la reserva: ${aprobarError.message}`
+                  : "El ingreso se registro, pero no se pudo aprobar la reserva automaticamente."
+              );
+            }
+          }
+        }
+      }
     } catch (checkinError) {
       setError(checkinError instanceof Error ? checkinError.message : "No se pudo registrar el ingreso.");
       setResultado(null);
@@ -161,7 +199,10 @@ export const ReservaCheckinModal: React.FC<ReservaCheckinModalProps> = ({ open, 
           {resultado && (
             <div className="reserva-checkin-resultado">
               <p className="reserva-checkin-resultado-titulo">
-                <CheckCircle2 size={18} /> {resultado.mensaje}
+                <CheckCircle2 size={18} />
+                {aprobadaAutomaticamente
+                  ? "Ingreso registrado y reserva aprobada automaticamente."
+                  : resultado.mensaje}
               </p>
               <dl>
                 <dt>Solicitante</dt>
