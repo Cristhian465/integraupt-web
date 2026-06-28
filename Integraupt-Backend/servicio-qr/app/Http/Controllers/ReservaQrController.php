@@ -58,6 +58,33 @@ class ReservaQrController extends Controller
         ]);
     }
 
+    public function checkin(string $token): JsonResponse
+    {
+        $reservaQr = ReservaQr::where('token', $token)->first();
+        if (!$reservaQr) {
+            throw new ReservaQrNotFoundException($token);
+        }
+
+        if ($reservaQr->verificado_en !== null) {
+            return response()->json([
+                'mensaje' => 'Esta reserva ya registro su ingreso.',
+                'token' => $reservaQr->token,
+                'reserva' => $this->buildReserva($reservaQr),
+                'verificadoEn' => $reservaQr->verificado_en,
+            ], 422);
+        }
+
+        $reservaQr->verificado_en = now();
+        $reservaQr->save();
+
+        return response()->json([
+            'mensaje' => 'Ingreso registrado correctamente.',
+            'token' => $reservaQr->token,
+            'reserva' => $this->buildReserva($reservaQr),
+            'verificadoEn' => $reservaQr->verificado_en,
+        ]);
+    }
+
     public function obtenerPorReserva(string $reservaId): JsonResponse
     {
         $reservaQr = ReservaQr::where('reserva_id', $reservaId)->first();

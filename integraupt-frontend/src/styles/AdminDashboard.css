@@ -986,6 +986,81 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
+.admin-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #0f172a;
+  background: white;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.reserva-checkin-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.reserva-checkin-form input {
+  flex: 1;
+  min-width: 220px;
+}
+
+.reserva-checkin-scanner-box {
+  margin-top: 0.75rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: #f8fafc;
+}
+
+.reserva-checkin-scanner-box #reserva-qr-reader {
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.reserva-checkin-resultado {
+  margin-top: 0.75rem;
+  border-radius: 0.75rem;
+  background: #ecfdf5;
+  padding: 0.85rem 1rem;
+}
+
+.reserva-checkin-resultado-titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: #047857;
+  margin: 0 0 0.5rem;
+}
+
+.reserva-checkin-resultado dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.reserva-checkin-resultado dt {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.reserva-checkin-resultado dd {
+  margin: 0;
+  color: #0f172a;
+}
+
 .admin-modal-btn-icon {
   width: 1rem;
   height: 1rem;

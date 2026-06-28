@@ -20,9 +20,11 @@ class ReservaQr extends Model
         'solicitante_nombre',
         'solicitante_codigo',
         'generado_en',
+        'verificado_en',
     ];
 
     protected $casts = [
         'generado_en' => 'datetime',
+        'verificado_en' => 'datetime',
     ];
 }

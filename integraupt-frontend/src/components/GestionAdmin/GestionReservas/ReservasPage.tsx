@@ -5,11 +5,13 @@ import {
   ClipboardCheck,
   Inbox,
   Loader2,
+  QrCode,
   ShieldAlert
 } from "lucide-react";
 import { ReservaFilters } from "./components/ReservaFilters";
 import { ReservaCard } from "./components/ReservaCard";
 import { ReservaModal } from "./components/ReservaModal";
+import { ReservaCheckinModal } from "./components/ReservaCheckinModal";
 import { useReservasAdmin } from "./hooks/useReservas";
 import type { AdminReserva, AdminReservaSummary, ReservaEstado } from "./types";
 import { esEstadoGestionable } from "./validators";
@@ -305,6 +307,7 @@ export const ReservasPage: React.FC<GestionReservasProps> = ({ onAuditLog, curre
   const [modalAbierta, setModalAbierta] = useState(false);
   const [modalAccion, setModalAccion] = useState<"Aprobar" | "Rechazar" | null>(null);
   const [reservaSeleccionada, setReservaSeleccionada] = useState<AdminReserva | null>(null);
+  const [checkinAbierto, setCheckinAbierto] = useState(false);
 
   const handleSolicitarGestion = useCallback((reserva: AdminReserva, accion: "Aprobar" | "Rechazar") => {
     setReservaSeleccionada(reserva);
@@ -356,6 +359,9 @@ export const ReservasPage: React.FC<GestionReservasProps> = ({ onAuditLog, curre
             Administra las solicitudes recibidas y gestiona su aprobación o rechazo.
           </p>
         </div>
+        <button type="button" className="admin-modal-btn admin-modal-primary" onClick={() => setCheckinAbierto(true)}>
+          <QrCode className="admin-modal-btn-icon" /> Check-in QR
+        </button>
       </header>
 
       {showGestionWarning && (
@@ -460,6 +466,8 @@ export const ReservasPage: React.FC<GestionReservasProps> = ({ onAuditLog, curre
         onClose={() => cerrarModal(false)}
         onConfirm={handleConfirmarGestion}
       />
+
+      <ReservaCheckinModal open={checkinAbierto} onClose={() => setCheckinAbierto(false)} />
     </section>
   );
 };

@@ -1,10 +1,49 @@
-import { getAdminReservasApiUrl } from "../../../utils/apiConfig";
+import { getAdminReservasApiUrl, getQrReservasApiUrl } from "../../../utils/apiConfig";
 import type {
   AdminReservaFilters,
   AdminReservaResponse,
   GestionReservaPayload,
   ReservaFiltersState
 } from "./types";
+
+export interface ReservaCheckinResultado {
+  mensaje: string;
+  token: string;
+  verificadoEn: string | null;
+  reserva: {
+    reservaId: number | null;
+    laboratorio: string | null;
+    fecha: string | null;
+    hora: string | null;
+    estado: string | null;
+    solicitanteNombre: string | null;
+    solicitanteCodigo: string | null;
+  };
+}
+
+const extraerTokenDesdeQr = (valor: string): string => {
+  const limpio = valor.trim();
+  const partes = limpio.split("/").filter(Boolean);
+  return partes.length > 0 ? partes[partes.length - 1] : limpio;
+};
+
+export const checkinReservaPorQr = async (valorQr: string): Promise<ReservaCheckinResultado> => {
+  const token = extraerTokenDesdeQr(valorQr);
+  const response = await fetch(getQrReservasApiUrl(`/api/v1/qr/reservas/${encodeURIComponent(token)}/checkin`), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  const data = await response.json().catch(() => null);
+
+  if (!response.ok) {
+    throw new Error(data?.mensaje ?? data?.mensajes?.[0] ?? "No fue posible registrar el ingreso.");
+  }
+
+  return data as ReservaCheckinResultado;
+};
 
 export interface AdminReservasQueryContext {
   usuarioId?: number | null;
