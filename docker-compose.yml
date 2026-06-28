@@ -242,6 +242,20 @@ services:
       - ./Integraupt-Backend/servicio-elecciones:/app
       - /app/vendor
 
+  servicio-silabo:
+    build:
+      context: ./Integraupt-Backend/servicio-silabo
+      dockerfile: ../docker/laravel.Dockerfile
+      args: { PHP_VERSION: "8.4" }
+    env_file: ./Integraupt-Backend/servicio-silabo/.env.docker
+    command: sh -c "php artisan migrate --force --no-interaction; php artisan storage:link --force 2>/dev/null; php artisan serve --host=0.0.0.0 --port=8000"
+    depends_on:
+      db: { condition: service_healthy }
+    ports: [ "8102:8000" ]
+    volumes:
+      - silabo_storage:/app/public/storage/silabos
+    networks: [ integraupt ]
+
   servicio-canales:
     build:
       context: ./Integraupt-Backend/servicio-canales
@@ -284,6 +298,7 @@ services:
       - servicio-moodle
       - servicio-elecciones
       - servicio-canales
+      - servicio-silabo
     networks: [ integraupt ]
 
 networks:
@@ -293,3 +308,4 @@ networks:
 volumes:
   db_data:
   canales_storage:
+  silabo_storage:

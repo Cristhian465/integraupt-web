@@ -19,7 +19,8 @@ import {
   Coffee,
   Vote,
   CalendarPlus,
-  MessageSquare
+  MessageSquare,
+  BookOpen
 } from 'lucide-react';
 import '../../../../styles/ServiciosScreen.css';
 import { Navbar } from '../Navbar';
@@ -54,6 +55,7 @@ interface ServiciosPageProps {
   onNavigateToElecciones: () => void;
   onNavigateToEventos: () => void;
   onNavigateToCanales: () => void;
+  onNavigateToSilabo?: () => void;
   onLogout?: () => void;
   isLoggingOut?: boolean;
 }
@@ -90,6 +92,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   onNavigateToElecciones,
   onNavigateToEventos,
   onNavigateToCanales,
+  onNavigateToSilabo,
   onLogout,
   isLoggingOut = false
 }) => {
@@ -356,6 +359,36 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
               </article>
             </div>
           </section>
+
+          {onNavigateToSilabo && (
+            <section className="servicios-category" aria-label="Sílabo">
+              <h2 className="servicios-category-title">📚 Sílabo y Avance Curricular</h2>
+              <div className="servicios-menu-grid">
+                <article className="servicios-menu-card" role="article" tabIndex={0} style={{ borderColor: '#6366f1' }}>
+                  <div className="servicios-menu-icon-container">
+                    <div className="servicios-menu-icon" style={{ background: 'linear-gradient(135deg,#6366f1,#818cf8)', color: '#fff', boxShadow: '0 4px 6px -1px rgba(99,102,241,.3)' }}>
+                      <BookOpen className="servicios-menu-icon-svg" aria-hidden="true" />
+                    </div>
+                  </div>
+                  <h2 className="servicios-menu-card-title">Sílabo</h2>
+                  <p className="servicios-menu-card-description">
+                    Registra los temas del sílabo que has dictado en clase y realiza el seguimiento de tu avance curricular.
+                  </p>
+                  <div className="servicios-menu-card-badge" style={{ backgroundColor: '#ede9fe', color: '#4338ca' }}>Seguimiento curricular</div>
+                  <div className="servicios-menu-card-actions">
+                    <button
+                      type="button"
+                      className="servicios-menu-card-button"
+                      style={{ background: 'linear-gradient(90deg,#6366f1,#818cf8)', color: '#fff', border: 'none', boxShadow: '0 4px 6px -1px rgba(99,102,241,.4)' }}
+                      onClick={() => onNavigateToSilabo?.()}
+                    >
+                      Ver mi sílabo
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </section>
+          )}
 
           <section className="servicios-category" aria-label="Comunidad y Participación">
             <h2 className="servicios-category-title">🗣️ Comunidad y Participación</h2>

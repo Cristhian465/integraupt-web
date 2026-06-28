@@ -4,7 +4,7 @@ import { Home, LayoutGrid, NotebookPen, UserRound, LogOut } from 'lucide-react';
 interface NavbarProps {
   displayName: string;
   userCode?: string;
-  currentPage: 'inicio' | 'servicios' | 'perfil' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'aulavirtual' | 'cafeteria' | 'eventos' | 'canales';
+  currentPage: 'inicio' | 'servicios' | 'perfil' | 'reservas' | 'incidencias' | 'psicologia' | 'olimpiadas' | 'policlinico' | 'aulavirtual' | 'cafeteria' | 'eventos' | 'canales' | 'silabo';
   onNavigateToInicio: () => void;
   onNavigateToServicios: () => void;
   onNavigateToPerfil: () => void;

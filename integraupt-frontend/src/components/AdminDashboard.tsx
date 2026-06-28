@@ -18,7 +18,8 @@ import {
   CalendarPlus,
   Coffee,
   Vote,
-  MessageSquare
+  MessageSquare,
+  BookOpen
 } from "lucide-react";
 import "./../styles/AdminDashboard.css";
 import {
@@ -37,7 +38,8 @@ import {
   GestionEventos,
   GestionCafeteria,
   GestionElecciones,
-  GestionCanales
+  GestionCanales,
+  GestionSilabo
 } from "./GestionAdmin";
 import { requestBackendLogout } from "../utils/logout";
 import { isBackendLoginType } from "../utils/apiConfig";
@@ -58,7 +60,8 @@ type ModuleId =
   | "eventos"
   | "cafeteria"
   | "elecciones"
-  | "canales";
+  | "canales"
+  | "silabo";
 
 interface ModuleDefinition {
   id: ModuleId;
@@ -204,6 +207,13 @@ const MODULES: ModuleDefinition[] = [
     description: "Crea canales de comunicacion entre administracion, docentes y estudiantes",
     icon: MessageSquare,
     color: "indigo"
+  },
+  {
+    id: "silabo",
+    name: "Gestión de Sílabos",
+    description: "Administra sílabos por curso/ciclo, transcribe temas y aprueba avances de docentes",
+    icon: BookOpen,
+    color: "purple"
   }
 ];
 
@@ -441,6 +451,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ user }) => {
 
           {activeModule === "canales" && (
             <GestionCanales user={user} onAuditLog={addAuditLog} />
+          )}
+
+          {activeModule === "silabo" && (
+            <GestionSilabo onAuditLog={addAuditLog} />
           )}
         </div>
 

@@ -42,6 +42,7 @@ const DEFAULT_EVENTOS_BACKEND_URL = "http://localhost:8099";
 const DEFAULT_CAFETERIA_BACKEND_URL = "http://localhost:8100";
 const DEFAULT_ELECCIONES_BACKEND_URL = "http://localhost:8219";
 const DEFAULT_CANALES_BACKEND_URL = "http://localhost:8101";
+const DEFAULT_SILABO_BACKEND_URL = "http://localhost:8102";
 
 // ==========================
 // Resolución final de URLs
@@ -158,6 +159,11 @@ export const CANALES_API_BASE_URL = resolveBaseUrl(
   DEFAULT_CANALES_BACKEND_URL
 );
 
+export const SILABO_API_BASE_URL = resolveBaseUrl(
+  env.VITE_SILABO_BACKEND_URL ?? env.VITE_BACKEND_URL,
+  DEFAULT_SILABO_BACKEND_URL
+);
+
 // ==========================
 // Helpers para construir URLs
 // ==========================
@@ -227,6 +233,9 @@ export const getEleccionesApiUrl = (path: string) =>
 
 export const getCanalesApiUrl = (path: string) =>
   buildServiceUrl(CANALES_API_BASE_URL, path);
+
+export const getSilaboApiUrl = (path: string) =>
+  buildServiceUrl(SILABO_API_BASE_URL, path);
 
 // ==========================
 // Login Type Helper

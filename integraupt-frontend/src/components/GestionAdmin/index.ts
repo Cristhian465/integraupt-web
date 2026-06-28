@@ -14,3 +14,4 @@ export { GestionEventos } from "./GestionEventos/EventosPage.tsx";
 export { GestionCafeteria } from "./GestionCafeteria/GestionCafeteria.tsx";
 export { GestionElecciones } from "./GestionElecciones.tsx";
 export { GestionCanales } from "./GestionCanales/CanalesPage.tsx";
+export { GestionSilabo } from "./GestionSilabo/GestionSilabo.tsx";
