@@ -18,6 +18,7 @@ class Silabo extends Model
         'Creditos',
         'Docente',
         'HorarioCursoId',
+        'DiasXSemana',
         'ArchivoPdf',
         'FechaCarga',
         'Estado',

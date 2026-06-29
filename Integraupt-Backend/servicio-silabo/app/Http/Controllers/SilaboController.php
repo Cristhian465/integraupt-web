@@ -120,6 +120,7 @@ class SilaboController extends Controller
             'Creditos'       => $request->creditos,
             'Docente'        => $request->docente,
             'HorarioCursoId' => $request->horario_curso_id,
+            'DiasXSemana'    => max(1, min(3, (int) ($request->dias_x_semana ?? 1))),
             'ArchivoPdf'     => $pdfPath,
             'FechaCarga'     => now()->toDateString(),
             'Estado'         => 1,
@@ -158,7 +159,7 @@ class SilaboController extends Controller
 
         $data = $request->only([
             'CodigoCurso', 'NombreCurso', 'CicloNumero', 'Semestre',
-            'Horas', 'Creditos', 'Docente', 'HorarioCursoId', 'Estado',
+            'Horas', 'Creditos', 'Docente', 'HorarioCursoId', 'DiasXSemana', 'Estado',
         ]);
 
         if ($request->hasFile('ArchivoPdf')) {

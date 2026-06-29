@@ -14,18 +14,23 @@ class AvanceController extends Controller
             'SilaboTemaId'   => 'required|integer|exists:silabo_tema,IdTema',
             'DocenteId'      => 'required|integer',
             'HorarioCursoId' => 'nullable|integer',
+            'Sesion'         => 'nullable|integer|min:1|max:3',
             'FechaClase'     => 'required|date',
             'Comentario'     => 'nullable|string',
         ]);
 
+        $sesion = $request->Sesion ?? 1;
+
+        // Verificar duplicado por tema + docente + sesión específica
         $existente = AvanceTema::where('SilaboTemaId', $request->SilaboTemaId)
             ->where('DocenteId', $request->DocenteId)
+            ->where('Sesion', $sesion)
             ->whereIn('Estado', ['pendiente', 'aprobado'])
             ->first();
 
         if ($existente) {
             return response()->json([
-                'message' => 'Ya existe un avance registrado para este tema.',
+                'message' => 'Ya existe un avance registrado para esta sesión.',
                 'avance'  => $existente,
             ], 409);
         }
@@ -34,6 +39,7 @@ class AvanceController extends Controller
             'SilaboTemaId'   => $request->SilaboTemaId,
             'DocenteId'      => $request->DocenteId,
             'HorarioCursoId' => $request->HorarioCursoId,
+            'Sesion'         => $sesion,
             'FechaClase'     => $request->FechaClase,
             'Comentario'     => $request->Comentario,
             'Estado'         => 'pendiente',

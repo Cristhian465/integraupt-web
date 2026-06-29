@@ -13,6 +13,7 @@ class AvanceTema extends Model
         'SilaboTemaId',
         'DocenteId',
         'HorarioCursoId',
+        'Sesion',
         'FechaClase',
         'Comentario',
         'Estado',
