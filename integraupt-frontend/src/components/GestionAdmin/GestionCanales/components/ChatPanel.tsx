@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Hash, Paperclip, Reply, Send, Smile, Trash2, X } from "lucide-react";
-import type { Canal, LinkPreview, Mensaje, Reaccion, Tema } from "../types";
+import { Download, FileArchive, FileSpreadsheet, FileText, Hash, Paperclip, Reply, Send, Smile, Trash2, X } from "lucide-react";
+import type { Canal, LinkPreview, Mensaje, Reaccion, Tema, TipoArchivoAdjunto } from "../types";
 import {
   createTema,
   deleteTema,
@@ -11,16 +11,55 @@ import {
   fetchTemas,
   toggleReaccion,
   updateTema,
-  uploadImagen,
+  uploadArchivo,
 } from "../canalesService";
 
 const EMOJIS = ["❤️", "👍", "😂", "😮", "😢", "👏"];
 const URL_RE = /(https?:\/\/[^\s]+)/g;
+const YOUTUBE_RE = /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/;
+const ADJUNTO_ACCEPT = "image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z";
 
 function detectUrl(t: string) { const m = t.match(URL_RE); return m ? m[0] : null; }
+function youtubeThumb(url: string): string | null {
+  const m = url.match(YOUTUBE_RE);
+  return m ? `https://i.ytimg.com/vi/${m[1]}/hqdefault.jpg` : null;
+}
 function formatHora(iso?: string | null) { if (!iso) return ""; return new Date(iso).toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit" }); }
 function formatFecha(iso?: string | null) { if (!iso) return ""; return new Date(iso).toLocaleDateString("es-PE", { day: "numeric", month: "short" }); }
 function getInitials(n?: string | null) { if (!n) return "?"; return n.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase(); }
+function extensionDe(nombre?: string | null): string {
+  if (!nombre) return "";
+  const i = nombre.lastIndexOf(".");
+  return i >= 0 ? nombre.slice(i + 1).toLowerCase() : "";
+}
+function FileIcon({ nombre }: { nombre?: string | null }) {
+  const ext = extensionDe(nombre);
+  if (["zip", "rar", "7z"].includes(ext)) return <FileArchive size={22} />;
+  if (["xls", "xlsx", "csv"].includes(ext)) return <FileSpreadsheet size={22} />;
+  return <FileText size={22} />;
+}
+function describeAdjunto(tipo?: TipoArchivoAdjunto | null): string {
+  if (tipo === "image") return "📷 Imagen";
+  if (tipo === "video") return "🎥 Video";
+  if (tipo === "audio") return "🎵 Audio";
+  if (tipo === "file") return "📎 Archivo";
+  return "";
+}
+function Adjunto({ tipo, url, nombre }: { tipo?: TipoArchivoAdjunto | null; url?: string | null; nombre?: string | null }) {
+  if (!url) return null;
+  if (tipo === "image") {
+    return <a href={url} target="_blank" rel="noreferrer"><img src={url} alt={nombre ?? "imagen enviada"} className="chat-img" /></a>;
+  }
+  if (tipo === "video") return <video src={url} controls className="chat-video" />;
+  if (tipo === "audio") return <audio src={url} controls className="chat-audio" />;
+  return (
+    <a href={url} target="_blank" rel="noreferrer" className="chat-file-card">
+      <FileIcon nombre={nombre} />
+      <span className="chat-file-name">{nombre ?? "Archivo"}</span>
+      <Download size={14} />
+    </a>
+  );
+}
 
 function ReactionBar({ reacciones, usuarioId, onToggle }: { reacciones: Reaccion[]; usuarioId: number; onToggle: (e: string) => void }) {
   if (!reacciones.length) return null;
@@ -36,16 +75,24 @@ function ReactionBar({ reacciones, usuarioId, onToggle }: { reacciones: Reaccion
   );
 }
 
-function LinkPreviewCard({ preview }: { preview: LinkPreview }) {
-  let host = preview.url;
-  try { host = new URL(preview.url).hostname; } catch {}
+function LinkPreviewCard({ preview, ytThumb, fallbackUrl }: { preview: LinkPreview | null; ytThumb: string | null; fallbackUrl: string }) {
+  if (!preview && !ytThumb) return null;
+  const targetUrl = preview?.url ?? fallbackUrl;
+  let host = targetUrl;
+  try { host = new URL(targetUrl).hostname; } catch {}
+  const image = preview?.image ?? ytThumb;
   return (
-    <a href={preview.url} target="_blank" rel="noreferrer" className="chat-link-preview">
-      {preview.image && <img src={preview.image} alt="" className="chat-link-preview-img" />}
+    <a href={targetUrl} target="_blank" rel="noreferrer" className="chat-link-preview">
+      {image && (
+        <div className="chat-link-preview-img-wrap">
+          <img src={image} alt="" className="chat-link-preview-img" />
+          {ytThumb && <span className="chat-link-preview-play">▶</span>}
+        </div>
+      )}
       <div className="chat-link-preview-body">
-        <p className="chat-link-preview-site">{preview.siteName ?? host}</p>
-        {preview.title && <p className="chat-link-preview-title">{preview.title}</p>}
-        {preview.description && <p className="chat-link-preview-desc">{preview.description}</p>}
+        <p className="chat-link-preview-site">{preview?.siteName ?? (ytThumb ? "YouTube" : host)}</p>
+        {preview?.title && <p className="chat-link-preview-title">{preview.title}</p>}
+        {preview?.description && <p className="chat-link-preview-desc">{preview.description}</p>}
       </div>
     </a>
   );
@@ -57,8 +104,10 @@ function MsgBubble({ msg, isOwn, usuarioId, onReply, onDelete, onEmoji }: {
 }) {
   const [showEmojis, setShowEmojis] = useState(false);
   const url = msg.contenido ? detectUrl(msg.contenido) : null;
+  const ytThumb = url ? youtubeThumb(url) : null;
   const [preview, setPreview] = useState<LinkPreview | null>(null);
   useEffect(() => {
+    setPreview(null);
     if (!url) return;
     let c = false;
     fetchLinkPreview(url).then((p) => { if (!c) setPreview(p); }).catch(() => {});
@@ -74,13 +123,13 @@ function MsgBubble({ msg, isOwn, usuarioId, onReply, onDelete, onEmoji }: {
           <div className="chat-reply-ref">
             <Reply size={12} />
             <span className="chat-reply-ref-name">{msg.respuestaA.usuarioNombre}</span>
-            <span className="chat-reply-ref-text">{msg.respuestaA.imagenUrl && !msg.respuestaA.contenido ? "📷 Imagen" : msg.respuestaA.contenido}</span>
+            <span className="chat-reply-ref-text">{msg.respuestaA.archivoUrl && !msg.respuestaA.contenido ? describeAdjunto(msg.respuestaA.archivoTipo) : msg.respuestaA.contenido}</span>
           </div>
         )}
         <div className={`chat-bubble ${isOwn ? "own" : ""}`}>
-          {msg.imagenUrl && <a href={msg.imagenUrl} target="_blank" rel="noreferrer"><img src={msg.imagenUrl} alt="img" className="chat-img" /></a>}
+          <Adjunto tipo={msg.archivoTipo} url={msg.archivoUrl} nombre={msg.archivoNombre} />
           {msg.contenido && <p className="chat-text">{msg.contenido}</p>}
-          {preview && <LinkPreviewCard preview={preview} />}
+          {url && <LinkPreviewCard preview={preview} ytThumb={ytThumb} fallbackUrl={url} />}
           <span className="chat-time">{formatHora(msg.fechaEnvio)}</span>
         </div>
         <ReactionBar reacciones={msg.reacciones} usuarioId={usuarioId} onToggle={(e) => onEmoji(msg, e)} />
@@ -109,8 +158,8 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
   const [cargando, setCargando] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [replyMsg, setReplyMsg] = useState<Mensaje | null>(null);
-  const [imgPreview, setImgPreview] = useState<string | null>(null);
-  const [imgFile, setImgFile] = useState<File | null>(null);
+  const [adjPreview, setAdjPreview] = useState<string | null>(null);
+  const [adjFile, setAdjFile] = useState<File | null>(null);
   const [nuevoTema, setNuevoTema] = useState("");
   const [editandoTema, setEditandoTema] = useState<Tema | null>(null);
   const [editNombre, setEditNombre] = useState("");
@@ -141,16 +190,38 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
 
   const color = canal.color ?? "#4f46e5";
 
-  const clearImg = () => { setImgFile(null); setImgPreview(null); if (fileRef.current) fileRef.current.value = ""; };
+  const adoptarArchivo = (file: File) => {
+    setAdjFile(file);
+    setAdjPreview(file.type.startsWith("image/") || file.type.startsWith("video/") ? URL.createObjectURL(file) : null);
+  };
+
+  const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.kind === "file") {
+        const file = item.getAsFile();
+        if (file) { e.preventDefault(); adoptarArchivo(file); break; }
+      }
+    }
+  };
+
+  const clearImg = () => { setAdjFile(null); setAdjPreview(null); if (fileRef.current) fileRef.current.value = ""; };
 
   const handleEnviar = async () => {
-    if (!canal || enviando || (!texto.trim() && !imgFile)) return;
+    if (!canal || enviando || (!texto.trim() && !adjFile)) return;
     setEnviando(true);
     try {
-      let imagenUrl: string | null = null;
-      if (imgFile) { imagenUrl = await uploadImagen(imgFile); clearImg(); }
+      let archivoUrl: string | null = null;
+      let archivoTipo: TipoArchivoAdjunto | null = null;
+      let archivoNombre: string | null = null;
+      if (adjFile) {
+        const subido = await uploadArchivo(adjFile);
+        archivoUrl = subido.url; archivoTipo = subido.tipo; archivoNombre = subido.nombre;
+        clearImg();
+      }
       const msg = await enviarMensaje(canal.id, usuarioId, texto.trim(), {
-        temaId: temaActivo?.id ?? null, idMensajeRespuesta: replyMsg?.id ?? null, imagenUrl,
+        temaId: temaActivo?.id ?? null, idMensajeRespuesta: replyMsg?.id ?? null, archivoUrl, archivoTipo, archivoNombre,
       });
       setMensajes((p) => [...p, msg]); setTexto(""); setReplyMsg(null);
     } catch {} finally { setEnviando(false); }
@@ -275,28 +346,35 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
                 <div className="chat-reply-indicator">
                   <Reply size={13} />
                   <span>Respondiendo a <strong>{replyMsg.usuarioNombre}</strong>:&nbsp;
-                    {replyMsg.imagenUrl && !replyMsg.contenido ? "📷 Imagen" : replyMsg.contenido?.slice(0, 60)}
+                    {replyMsg.archivoUrl && !replyMsg.contenido ? describeAdjunto(replyMsg.archivoTipo) : replyMsg.contenido?.slice(0, 60)}
                   </span>
                   <button type="button" onClick={() => setReplyMsg(null)}><X size={13} /></button>
                 </div>
               )}
-              {imgPreview && (
+              {adjFile && (
                 <div className="chat-img-preview">
-                  <img src={imgPreview} alt="preview" />
+                  {adjPreview && adjFile.type.startsWith("image/") && <img src={adjPreview} alt="preview" />}
+                  {adjPreview && adjFile.type.startsWith("video/") && <video src={adjPreview} className="chat-video-preview" />}
+                  {!adjPreview && (
+                    <span className="chat-file-preview-chip">
+                      <FileIcon nombre={adjFile.name} /> {adjFile.name}
+                    </span>
+                  )}
                   <button type="button" onClick={clearImg}><X size={13} /></button>
                 </div>
               )}
               <div className="chat-input-row">
                 <button type="button" className="chat-attach-btn" onClick={() => fileRef.current?.click()}><Paperclip size={18} /></button>
-                <input ref={fileRef} type="file" accept="image/*" style={{ display: "none" }}
-                  onChange={(e) => { const f = e.target.files?.[0]; if (f) { setImgFile(f); setImgPreview(URL.createObjectURL(f)); } }} />
+                <input ref={fileRef} type="file" accept={ADJUNTO_ACCEPT} style={{ display: "none" }}
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) adoptarArchivo(f); }} />
                 <textarea ref={textareaRef} className="chat-textarea"
-                  placeholder={`Mensaje${temaActivo ? ` en #${temaActivo.nombre}` : ""}… (Enter envía)`}
+                  placeholder={`Mensaje${temaActivo ? ` en #${temaActivo.nombre}` : ""}… (Enter envía, Ctrl+V pega imágenes)`}
                   value={texto} onChange={(e) => setTexto(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void handleEnviar(); } }}
+                  onPaste={handlePaste}
                   rows={1} />
                 <button type="button" className="chat-send-btn" style={{ background: color }}
-                  onClick={handleEnviar} disabled={enviando || (!texto.trim() && !imgFile)}>
+                  onClick={handleEnviar} disabled={enviando || (!texto.trim() && !adjFile)}>
                   <Send size={16} />
                 </button>
               </div>

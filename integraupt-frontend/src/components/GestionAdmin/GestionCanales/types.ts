@@ -46,11 +46,15 @@ export interface Reaccion {
   usuarios: number[];
 }
 
+export type TipoArchivoAdjunto = "image" | "video" | "audio" | "file";
+
 export interface RespuestaResumen {
   id: number;
   usuarioNombre?: string | null;
   contenido?: string | null;
-  imagenUrl?: string | null;
+  archivoUrl?: string | null;
+  archivoTipo?: TipoArchivoAdjunto | null;
+  archivoNombre?: string | null;
 }
 
 export interface Mensaje {
@@ -60,7 +64,9 @@ export interface Mensaje {
   usuarioId: number;
   usuarioNombre?: string | null;
   contenido: string;
-  imagenUrl?: string | null;
+  archivoUrl?: string | null;
+  archivoTipo?: TipoArchivoAdjunto | null;
+  archivoNombre?: string | null;
   idMensajeRespuesta?: number | null;
   respuestaA?: RespuestaResumen | null;
   reacciones: Reaccion[];

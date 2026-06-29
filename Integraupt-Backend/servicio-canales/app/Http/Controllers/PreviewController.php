@@ -19,6 +19,10 @@ class PreviewController extends Controller
             return response()->json(['error' => 'Solo se permiten URLs http/https.'], 422);
         }
 
+        if (! $this->hostEsPublico($parsed['host'] ?? '')) {
+            return response()->json(['error' => 'No se permite acceder a esta URL.'], 422);
+        }
+
         $ctx = stream_context_create([
             'http' => [
                 'timeout' => 5,
@@ -56,10 +60,29 @@ class PreviewController extends Controller
             return trim($m[1]) ?: null;
         }
         // content= first
-        if (preg_match('/<meta[^>]+content=["\'](.*?)["\'[^>]+(?:property|name)=["\']' . preg_quote($property, '/') . '["\'][^>]*>/si', $html, $m)) {
+        if (preg_match('/<meta[^>]+content=["\'](.*?)["\'][^>]+(?:property|name)=["\']' . preg_quote($property, '/') . '["\'][^>]*>/si', $html, $m)) {
             return trim($m[1]) ?: null;
         }
         return null;
+    }
+
+    /**
+     * Bloquea IPs privadas/loopback/link-local para evitar que el endpoint
+     * sea usado para hacer SSRF hacia otros servicios de la red Docker interna.
+     */
+    private function hostEsPublico(string $host): bool
+    {
+        if ($host === '') {
+            return false;
+        }
+
+        $ip = filter_var($host, FILTER_VALIDATE_IP) ? $host : gethostbyname($host);
+
+        if ($ip === $host && ! filter_var($host, FILTER_VALIDATE_IP)) {
+            return false; // no se pudo resolver el dominio
+        }
+
+        return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false;
     }
 
     private function htmlTitle(string $html): ?string

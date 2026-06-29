@@ -46,17 +46,19 @@ class MensajeService
         }
 
         $contenido = trim($datos['Contenido'] ?? '');
-        $imagenUrl = $datos['ImagenUrl'] ?? null;
+        $archivoUrl = $datos['ArchivoUrl'] ?? null;
 
-        if ($contenido === '' && ! $imagenUrl) {
-            throw new InvalidArgumentException('El mensaje debe tener contenido o imagen.');
+        if ($contenido === '' && ! $archivoUrl) {
+            throw new InvalidArgumentException('El mensaje debe tener contenido o un archivo adjunto.');
         }
 
         $payload = [
             'IdCanal' => $idCanal,
             'IdUsuario' => $idUsuario,
             'Contenido' => $contenido,
-            'ImagenUrl' => $imagenUrl ?: null,
+            'ArchivoUrl' => $archivoUrl ?: null,
+            'ArchivoTipo' => $archivoUrl ? ($datos['ArchivoTipo'] ?? 'file') : null,
+            'ArchivoNombre' => $archivoUrl ? ($datos['ArchivoNombre'] ?? null) : null,
             'IdTema' => isset($datos['IdTema']) && $datos['IdTema'] ? (int) $datos['IdTema'] : null,
             'IdMensajeRespuesta' => isset($datos['IdMensajeRespuesta']) && $datos['IdMensajeRespuesta'] ? (int) $datos['IdMensajeRespuesta'] : null,
         ];
