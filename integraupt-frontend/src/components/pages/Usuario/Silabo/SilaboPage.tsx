@@ -486,10 +486,3 @@ export const SilaboPage: React.FC<SilaboPageProps> = ({
   );
 };
 
-// Contenido asignado a cada sesión de la semana
-function getSesionContenido(tema: any, sesion: number, totalSesiones: number): string {
-  if (totalSesiones === 1) return tema.ContenidoConceptual || '';
-  if (sesion === 1) return tema.ContenidoConceptual || '(Contenido teórico)';
-  if (sesion === 2) return tema.ContenidoProcedimental || '(Contenido práctico)';
-  return `Repaso / evaluación: ${(tema.ContenidoConceptual ?? '').slice(0, 100)}`;
-}

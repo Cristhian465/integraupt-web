@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   AlertTriangle,
   MonitorSmartphone,
@@ -98,6 +98,9 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
 
   const [searchTerm, setSearchTerm] = useState('');
 
+  const rol = (user.user_metadata?.role ?? '').toLowerCase();
+  const esDocente = !['estudiante', 'student', 'alumno'].includes(rol);
+
   const normalizeText = (text: string) => {
     return text
       .toLowerCase()
@@ -148,7 +151,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   const showAulaVirtual = matchSearch(`${academicaGroup} Aula Virtual Moodle UPT Conecta tu cuenta`, 'cursos tareas examenes notas virtual');
   const showEspacios = matchSearch(`${academicaGroup} Reserva de espacios Laboratorios Aulas`, 'computadoras separar ambiente sala estudio');
   const showPromedio = matchSearch(`${academicaGroup} Calcula tu Promedio`, 'calculadora notas aprobar pasar ponderado matematica');
-  const showSilabo = matchSearch(`${academicaGroup} Gestión de Sílabo Seguimiento Curricular temas dictado en clase`, 'cursos profesor avance plan estudios');
+  const showSilabo = esDocente && matchSearch(`${academicaGroup} Gestión de Sílabo Seguimiento Curricular temas dictado en clase`, 'cursos profesor avance plan estudios');
   const showAcademica = showAulaVirtual || showEspacios || showPromedio || showSilabo;
 
   const saludGroup = 'Salud y Bienestar';
@@ -173,24 +176,7 @@ export const ServiciosPage: React.FC<ServiciosPageProps> = ({
   const showElecciones = matchSearch(`${comunidadGroup} Elecciones UPT Participación Estudiantil`, 'votar candidatos representantes tercio asamblea politica');
   const showComunidad = showCanales || showElecciones;
 
-  const buildCardHandlers = useCallback(
-    (action: () => void) => ({
-      onClick: action,
-      onKeyDown: (event: KeyboardEvent<HTMLElement>) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          action();
-        }
-      },
-    }),
-    [],
-  );
 
-  // Función placeholder para botones no implementados
-  const handleNotImplemented = () => {
-    console.log('Funcionalidad no implementada');
-  };
-  
   return (
     <div className="servicios-container">
       <Navbar
