@@ -13,6 +13,18 @@ interface GestionSilaboProps {
 type Tab = 'silabos' | 'avances' | 'reporte';
 
 const SEMESTRES = ['2025-I', '2025-II', '2026-I', '2026-II', '2027-I', '2027-II', '2028-I', '2028-II'];
+
+// Paleta pálida para diferenciar cursos en la lista
+const PALETA_ADMIN = [
+  { bg: '#f0f4ff', border: '#c7d2fe', acc: '#4338ca', codeBg: '#e0e7ff' }, // índigo
+  { bg: '#f0fdf9', border: '#a7f3d0', acc: '#047857', codeBg: '#d1fae5' }, // esmeralda
+  { bg: '#fff7ed', border: '#fed7aa', acc: '#c2410c', codeBg: '#ffedd5' }, // naranja
+  { bg: '#fdf4ff', border: '#e9d5ff', acc: '#7e22ce', codeBg: '#f3e8ff' }, // violeta
+  { bg: '#eff6ff', border: '#bfdbfe', acc: '#1d4ed8', codeBg: '#dbeafe' }, // azul
+  { bg: '#fff1f2', border: '#fecdd3', acc: '#be123c', codeBg: '#ffe4e6' }, // rosa
+  { bg: '#f0fdfa', border: '#99f6e4', acc: '#0f766e', codeBg: '#ccfbf1' }, // teal
+  { bg: '#fefce8', border: '#fde68a', acc: '#a16207', codeBg: '#fef9c3' }, // amarillo
+];
 const CICLOS = Array.from({ length: 12 }, (_, i) => i + 1);
 
 type FlujoPaso = 'formulario' | 'parseando' | 'revision' | null;
@@ -37,6 +49,7 @@ interface EstructuraParseada {
   horas: number | null;
   creditos: number | null;
   docente: string;
+  dias_x_semana: number;
   unidades: UnidadEditable[];
 }
 
@@ -50,6 +63,7 @@ function silaboToEstructura(s: any): EstructuraParseada {
     horas: s.Horas ?? null,
     creditos: s.Creditos ?? null,
     docente: s.Docente ?? '',
+    dias_x_semana: s.DiasXSemana ?? 1,
     unidades: (s.unidades ?? []).map((u: any) => ({
       numero: u.Numero,
       nombre: u.Nombre,
@@ -155,7 +169,7 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
       const res  = await fetch(getSilaboApiUrl('/api/silabos/parsear-pdf'), { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) { setParseError(data.message || 'Error al procesar el PDF.'); setFlujo('formulario'); return; }
-      setEstructura(data);
+      setEstructura({ ...data, dias_x_semana: data.dias_x_semana ?? 1 });
       setFlujo('revision');
     } catch (e: any) {
       setParseError('Error de conexión: ' + (e.message || ''));
@@ -179,8 +193,9 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
       fd.append('nombre_curso', estructura.nombre_curso);
       fd.append('horas',        String(estructura.horas ?? ''));
       fd.append('creditos',     String(estructura.creditos ?? ''));
-      fd.append('docente',      estructura.docente);
-      fd.append('unidades',     JSON.stringify(estructura.unidades));
+      fd.append('docente',        estructura.docente);
+      fd.append('dias_x_semana', String(estructura.dias_x_semana ?? 1));
+      fd.append('unidades',      JSON.stringify(estructura.unidades));
       const res  = await fetch(getSilaboApiUrl('/api/silabos'), { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) { setGuardadoMsg(data.message || 'Error al guardar.'); return; }
@@ -353,7 +368,7 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
           <input required value={e.nombre_curso} onChange={ev => setter(p => p ? {...p,nombre_curso:ev.target.value} : p)}
             style={{...IN, borderColor: !e.nombre_curso.trim() ? '#f87171' : '#cbd5e1'}} placeholder="Ej: Matemática Básica" />
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:10}}>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr 1fr',gap:10}}>
           <div>
             <label style={LBL}>Horas</label>
             <input type="number" value={e.horas ?? ''} onChange={ev => setter(p => p ? {...p,horas:Number(ev.target.value)} : p)} style={IN} />
@@ -368,6 +383,14 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
               style={{...IN, borderColor: !e.ciclo_numero ? '#f87171' : '#cbd5e1'}}>
               <option value="">— Seleccionar —</option>
               {CICLOS.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
+          <div>
+            <label style={LBL}>Sesiones/semana *</label>
+            <select value={e.dias_x_semana ?? 1} onChange={ev => setter(p => p ? {...p,dias_x_semana:Number(ev.target.value)} : p)} style={IN}>
+              <option value={1}>1 sesión</option>
+              <option value={2}>2 sesiones</option>
+              <option value={3}>3 sesiones</option>
             </select>
           </div>
         </div>
@@ -643,18 +666,23 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
             </div>
           )}
 
-          {silabos.map((s: any) => {
+          {silabos.map((s: any, idx: number) => {
             const expanded = expandedSilabo === s.IdSilabo;
+            const pal = PALETA_ADMIN[idx % PALETA_ADMIN.length];
             return (
-              <div key={s.IdSilabo} style={{border:'1px solid #e2e8f0',borderRadius:10,marginBottom:10,overflow:'hidden'}}>
-                <div style={{display:'flex',alignItems:'center',background:'#f8fafc'}}>
+              <div key={s.IdSilabo} style={{border:`1px solid ${pal.border}`,borderRadius:10,marginBottom:10,overflow:'hidden'}}>
+                <div style={{display:'flex',alignItems:'center',background:pal.bg}}>
                   {/* Botón expandir */}
                   <button onClick={() => setExpandedSilabo(expanded?null:s.IdSilabo)}
                     style={{flex:1,display:'flex',alignItems:'center',gap:10,padding:'12px 16px',background:'none',border:'none',cursor:'pointer',textAlign:'left'}}>
-                    {expanded ? <ChevronDown size={15} color="#6366f1"/> : <ChevronRight size={15} color="#6366f1"/>}
+                    {expanded ? <ChevronDown size={15} color={pal.acc}/> : <ChevronRight size={15} color={pal.acc}/>}
                     <div>
                       <div style={{fontWeight:700,fontSize:13,color:'#1e293b'}}>
-                        {s.CodigoCurso && <span style={{fontFamily:'monospace',background:'#e0e7ff',color:'#4338ca',borderRadius:4,padding:'1px 6px',marginRight:6,fontSize:12}}>{s.CodigoCurso}</span>}
+                        {s.CodigoCurso && (
+                          <span style={{fontFamily:'monospace',background:pal.codeBg,color:pal.acc,borderRadius:4,padding:'1px 6px',marginRight:6,fontSize:12,fontWeight:700}}>
+                            {s.CodigoCurso}
+                          </span>
+                        )}
                         {s.NombreCurso||`Sílabo #${s.IdSilabo}`}
                       </div>
                       <div style={{fontSize:11,color:'#64748b',marginTop:2}}>
@@ -669,7 +697,7 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
                   <div style={{display:'flex',gap:6,alignItems:'center',paddingRight:12}}>
                     {s.ArchivoPdf && (
                       <a href={getSilaboApiUrl('/'+s.ArchivoPdf)} target="_blank" rel="noreferrer"
-                        style={{fontSize:11,color:'#6366f1',display:'flex',alignItems:'center',gap:3,textDecoration:'none'}}>
+                        style={{fontSize:11,color:pal.acc,display:'flex',alignItems:'center',gap:3,textDecoration:'none'}}>
                         <Eye size={12}/> PDF
                       </a>
                     )}
@@ -677,7 +705,7 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
                       {s.unidades?.length??0}U · {s.unidades?.reduce((t:number,u:any)=>t+(u.temas?.length??0),0)??0}T
                     </span>
                     <button onClick={() => abrirEdicion(s)} title="Editar"
-                      style={{...BTN_ICON,color:'#6366f1',border:'1px solid #e0e7ff',borderRadius:6,padding:'4px 8px'}}>
+                      style={{...BTN_ICON,color:pal.acc,border:`1px solid ${pal.codeBg}`,borderRadius:6,padding:'4px 8px'}}>
                       <Pencil size={13}/>
                     </button>
                     <button onClick={() => setEliminarId(s.IdSilabo)} title="Eliminar"
@@ -688,15 +716,15 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
                 </div>
 
                 {expanded && (
-                  <div style={{padding:'12px 16px'}}>
+                  <div style={{padding:'12px 16px',background:'#fff'}}>
                     {(s.unidades??[]).map((u:any) => (
                       <div key={u.IdUnidad} style={{marginBottom:10}}>
-                        <div style={{fontWeight:600,fontSize:13,color:'#4338ca',marginBottom:4}}>
+                        <div style={{fontWeight:600,fontSize:13,color:pal.acc,marginBottom:4}}>
                           Unidad {u.Numero}: {u.Nombre} ({u.HorasTotal}h)
                         </div>
                         {(u.temas??[]).map((t:any) => (
                           <div key={t.IdTema} style={{display:'flex',gap:8,padding:'4px 0',borderBottom:'1px solid #f8fafc',fontSize:12}}>
-                            <span style={{fontSize:10,background:'#e0e7ff',color:'#4338ca',borderRadius:4,padding:'1px 5px',whiteSpace:'nowrap'}}>S{t.Semana}</span>
+                            <span style={{fontSize:10,background:pal.codeBg,color:pal.acc,borderRadius:4,padding:'1px 5px',whiteSpace:'nowrap',fontWeight:600}}>S{t.Semana}</span>
                             <span style={{color:'#334155',flex:1}}>{t.ContenidoConceptual||'—'}</span>
                           </div>
                         ))}
