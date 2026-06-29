@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { ImageIcon, X } from "lucide-react";
 import { UsuarioPicker } from "./UsuarioPicker";
-import { uploadImagen } from "../canalesService";
+import { uploadArchivo } from "../canalesService";
 import type { UsuarioBusqueda } from "../types";
 
 const COLORS = ["#4f46e5", "#0ea5e9", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899", "#14b8a6", "#f97316", "#64748b"];
@@ -38,7 +38,7 @@ export const CanalModal: React.FC<CanalModalProps> = ({
     if (!file) return;
     setUploadingFoto(true);
     try {
-      const url = await uploadImagen(file);
+      const { url } = await uploadArchivo(file);
       onChange("fotoUrl", url);
     } catch {} finally {
       setUploadingFoto(false);

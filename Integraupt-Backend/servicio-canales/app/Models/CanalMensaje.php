@@ -20,7 +20,9 @@ class CanalMensaje extends Model
         'IdMensajeRespuesta',
         'IdUsuario',
         'Contenido',
-        'ImagenUrl',
+        'ArchivoUrl',
+        'ArchivoTipo',
+        'ArchivoNombre',
     ];
 
     protected $casts = [

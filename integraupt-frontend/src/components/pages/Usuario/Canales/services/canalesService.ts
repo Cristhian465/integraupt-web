@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse } from "axios";
 import { CANALES_API_BASE_URL } from "../../../../../utils/apiConfig";
-import type { Canal, LinkPreview, Mensaje, Reaccion, Tema, UsuarioBusqueda } from "../types";
+import type { Canal, LinkPreview, Mensaje, Reaccion, Tema, TipoArchivoAdjunto, UsuarioBusqueda } from "../types";
 
 const canalesClient: AxiosInstance = axios.create({
   baseURL: CANALES_API_BASE_URL,
@@ -72,7 +72,13 @@ export const enviarMensaje = (
   idCanal: number,
   usuarioId: number,
   contenido: string,
-  options?: { temaId?: number | null; idMensajeRespuesta?: number | null; imagenUrl?: string | null }
+  options?: {
+    temaId?: number | null;
+    idMensajeRespuesta?: number | null;
+    archivoUrl?: string | null;
+    archivoTipo?: TipoArchivoAdjunto | null;
+    archivoNombre?: string | null;
+  }
 ): Promise<Mensaje> =>
   unwrap(
     canalesClient.post<Mensaje>(`/api/canales/${idCanal}/mensajes`, {
@@ -80,7 +86,9 @@ export const enviarMensaje = (
       contenido,
       temaId: options?.temaId ?? null,
       idMensajeRespuesta: options?.idMensajeRespuesta ?? null,
-      imagenUrl: options?.imagenUrl ?? null,
+      archivoUrl: options?.archivoUrl ?? null,
+      archivoTipo: options?.archivoTipo ?? null,
+      archivoNombre: options?.archivoNombre ?? null,
     })
   );
 
@@ -105,14 +113,21 @@ export const toggleReaccion = (
     canalesClient.post(`/api/canales/${idCanal}/mensajes/${idMensaje}/reacciones`, { usuarioId, emoji })
   );
 
-// Subida de imagen
-export const uploadImagen = async (file: File): Promise<string> => {
+// Subida de archivos adjuntos (imagen, video, audio, documentos, comprimidos)
+export interface ArchivoSubido {
+  url: string;
+  tipo: TipoArchivoAdjunto;
+  nombre: string;
+  mime: string;
+}
+
+export const uploadArchivo = async (file: File): Promise<ArchivoSubido> => {
   const formData = new FormData();
   formData.append("file", file);
-  const { data } = await canalesClient.post<{ url: string }>("/api/upload", formData, {
+  const { data } = await canalesClient.post<ArchivoSubido>("/api/upload", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
-  return data.url;
+  return data;
 };
 
 // Link preview

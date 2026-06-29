@@ -34,13 +34,15 @@ class MensajeController extends Controller
         $request->validate([
             'usuarioId' => 'required|integer|exists:usuario,IdUsuario',
             'contenido' => 'nullable|string',
-            'imagenUrl' => 'nullable|string',
+            'archivoUrl' => 'nullable|string',
+            'archivoTipo' => 'nullable|string|in:image,video,audio,file',
+            'archivoNombre' => 'nullable|string',
             'temaId' => 'nullable|integer',
             'idMensajeRespuesta' => 'nullable|integer',
         ]);
 
-        if (empty($request->input('contenido')) && empty($request->input('imagenUrl'))) {
-            return response()->json(['message' => 'El mensaje debe tener contenido o imagen.'], 422);
+        if (empty($request->input('contenido')) && empty($request->input('archivoUrl'))) {
+            return response()->json(['message' => 'El mensaje debe tener contenido o un archivo adjunto.'], 422);
         }
 
         try {
@@ -48,7 +50,9 @@ class MensajeController extends Controller
                 'IdCanal' => $idCanal,
                 'IdUsuario' => $request->input('usuarioId'),
                 'Contenido' => $request->input('contenido', ''),
-                'ImagenUrl' => $request->input('imagenUrl'),
+                'ArchivoUrl' => $request->input('archivoUrl'),
+                'ArchivoTipo' => $request->input('archivoTipo'),
+                'ArchivoNombre' => $request->input('archivoNombre'),
                 'IdTema' => $request->input('temaId'),
                 'IdMensajeRespuesta' => $request->input('idMensajeRespuesta'),
             ]);
@@ -91,7 +95,9 @@ class MensajeController extends Controller
                 'id' => $r->IdMensaje,
                 'usuarioNombre' => $r->usuario?->NombreCompleto,
                 'contenido' => $r->Contenido,
-                'imagenUrl' => $r->ImagenUrl,
+                'archivoUrl' => $r->ArchivoUrl,
+                'archivoTipo' => $r->ArchivoTipo,
+                'archivoNombre' => $r->ArchivoNombre,
             ];
         }
 
@@ -112,7 +118,9 @@ class MensajeController extends Controller
             'usuarioId' => $mensaje->IdUsuario,
             'usuarioNombre' => $mensaje->usuario?->NombreCompleto,
             'contenido' => $mensaje->Contenido,
-            'imagenUrl' => $mensaje->ImagenUrl,
+            'archivoUrl' => $mensaje->ArchivoUrl,
+            'archivoTipo' => $mensaje->ArchivoTipo,
+            'archivoNombre' => $mensaje->ArchivoNombre,
             'idMensajeRespuesta' => $mensaje->IdMensajeRespuesta,
             'respuestaA' => $respuestaA,
             'reacciones' => $reacciones,
