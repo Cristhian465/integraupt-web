@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Download, FileArchive, FileSpreadsheet, FileText, Hash, Paperclip, Reply, Send, Smile, Trash2, X } from "lucide-react";
-import type { Canal, LinkPreview, Mensaje, Reaccion, Tema, TipoArchivoAdjunto } from "../types";
+import { Check, Download, FileArchive, FileSpreadsheet, FileText, Hash, Paperclip, Pencil, Reply, Send, Smile, Trash2, X } from "lucide-react";
+import type { Canal, LinkPreview, Mensaje, Tema, TipoArchivoAdjunto } from "../types";
 import {
   createTema,
   deleteTema,
+  editarMensaje,
   eliminarMensaje,
   enviarMensaje,
+  fetchEscribiendo,
   fetchLinkPreview,
   fetchMensajes,
   fetchTemas,
+  marcarEscribiendo,
   toggleReaccion,
   uploadArchivo,
 } from "../services/canalesService";
@@ -17,6 +20,11 @@ const EMOJIS = ["❤️", "👍", "😂", "😮", "😢", "👏"];
 const URL_RE = /(https?:\/\/[^\s]+)/g;
 const YOUTUBE_RE = /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/;
 const ADJUNTO_ACCEPT = "image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z";
+const USER_COLORS = ["#ef4444", "#f97316", "#eab308", "#65a30d", "#10b981", "#06b6d4", "#3b82f6", "#8b5cf6", "#d946ef", "#ec4899"];
+
+function colorForUser(idUsuario: number): string {
+  return USER_COLORS[Math.abs(idUsuario) % USER_COLORS.length];
+}
 
 function detectUrl(text: string): string | null {
   const m = text.match(URL_RE);
@@ -88,25 +96,10 @@ function getInitials(name?: string | null): string {
   return name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 }
 
-function ReactionBar({
-  reacciones, usuarioId, onToggle,
-}: {
-  reacciones: Reaccion[]; usuarioId: number; onToggle: (emoji: string) => void;
-}) {
-  if (!reacciones.length) return null;
-  return (
-    <div className="chat-reaction-bar">
-      {reacciones.map((r) => (
-        <button
-          key={r.emoji} type="button"
-          className={`chat-reaction ${r.usuarios.includes(usuarioId) ? "active" : ""}`}
-          onClick={() => onToggle(r.emoji)} title={`${r.cantidad} reacción(es)`}
-        >
-          {r.emoji} <span>{r.cantidad}</span>
-        </button>
-      ))}
-    </div>
-  );
+function describeReplyText(r: { eliminado?: boolean; archivoUrl?: string | null; archivoTipo?: TipoArchivoAdjunto | null; contenido?: string | null }): string {
+  if (r.eliminado) return "🚫 Mensaje eliminado";
+  if (r.archivoUrl && !r.contenido) return describeAdjunto(r.archivoTipo);
+  return r.contenido ?? "";
 }
 
 function LinkPreviewCard({ preview, ytThumb, fallbackUrl }: { preview: LinkPreview | null; ytThumb: string | null; fallbackUrl: string }) {
@@ -133,17 +126,22 @@ function LinkPreviewCard({ preview, ytThumb, fallbackUrl }: { preview: LinkPrevi
 }
 
 function MessageBubble({
-  msg, isOwn, usuarioId, onReply, onDelete, onToggleEmoji,
+  msg, isOwn, usuarioId, puedeModerar, onReply, onDelete, onToggleEmoji, onEdit,
 }: {
-  msg: Mensaje; isOwn: boolean; usuarioId: number;
+  msg: Mensaje; isOwn: boolean; usuarioId: number; puedeModerar: boolean;
   onReply: (m: Mensaje) => void;
   onDelete: (m: Mensaje) => void;
   onToggleEmoji: (m: Mensaje, emoji: string) => void;
+  onEdit: (m: Mensaje, nuevoContenido: string) => Promise<void>;
 }) {
   const [showEmojis, setShowEmojis] = useState(false);
-  const url = msg.contenido ? detectUrl(msg.contenido) : null;
+  const [editando, setEditando] = useState(false);
+  const [editTexto, setEditTexto] = useState(msg.contenido ?? "");
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const url = !msg.eliminado && msg.contenido ? detectUrl(msg.contenido) : null;
   const ytThumb = url ? youtubeThumb(url) : null;
   const [preview, setPreview] = useState<LinkPreview | null>(null);
+  const avatarColor = colorForUser(msg.usuarioId);
 
   useEffect(() => {
     setPreview(null);
@@ -153,56 +151,127 @@ function MessageBubble({
     return () => { cancelled = true; };
   }, [url]);
 
+  useEffect(() => {
+    if (!showEmojis) return;
+    const handler = (e: MouseEvent) => {
+      if (actionsRef.current && !actionsRef.current.contains(e.target as Node)) setShowEmojis(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [showEmojis]);
+
+  const iniciarEdicion = () => { setEditTexto(msg.contenido ?? ""); setEditando(true); };
+  const guardarEdicion = async () => {
+    if (!editTexto.trim()) return;
+    await onEdit(msg, editTexto.trim());
+    setEditando(false);
+  };
+
+  if (msg.eliminado) {
+    return (
+      <div className={`chat-bubble-row ${isOwn ? "own" : ""}`}>
+        {!isOwn && <div className="chat-avatar" style={{ background: avatarColor }}>{getInitials(msg.usuarioNombre)}</div>}
+        <div className="chat-bubble-wrap">
+          {!isOwn && <span className="chat-sender" style={{ color: avatarColor }}>{msg.usuarioNombre ?? "Usuario"}</span>}
+          <div className={`chat-bubble chat-bubble-deleted ${isOwn ? "own" : ""}`}>
+            <p className="chat-text-deleted">🚫 Eliminado por el administrador</p>
+            <span className="chat-time">{formatHora(msg.fechaEnvio)}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`chat-bubble-row ${isOwn ? "own" : ""}`}>
       {!isOwn && (
-        <div className="chat-avatar">
+        <div className="chat-avatar" style={{ background: avatarColor }}>
           {getInitials(msg.usuarioNombre)}
         </div>
       )}
       <div className="chat-bubble-wrap">
-        {!isOwn && <span className="chat-sender">{msg.usuarioNombre ?? "Usuario"}</span>}
+        {!isOwn && <span className="chat-sender" style={{ color: avatarColor }}>{msg.usuarioNombre ?? "Usuario"}</span>}
 
         {msg.respuestaA && (
           <div className="chat-reply-ref">
             <Reply size={12} />
             <span className="chat-reply-ref-name">{msg.respuestaA.usuarioNombre}</span>
-            <span className="chat-reply-ref-text">
-              {msg.respuestaA.archivoUrl && !msg.respuestaA.contenido
-                ? describeAdjunto(msg.respuestaA.archivoTipo)
-                : msg.respuestaA.contenido}
-            </span>
+            <span className="chat-reply-ref-text">{describeReplyText(msg.respuestaA)}</span>
           </div>
         )}
 
         <div className={`chat-bubble ${isOwn ? "own" : ""}`}>
-          <Adjunto tipo={msg.archivoTipo} url={msg.archivoUrl} nombre={msg.archivoNombre} />
-          {msg.contenido && <p className="chat-text">{msg.contenido}</p>}
-          {url && <LinkPreviewCard preview={preview} ytThumb={ytThumb} fallbackUrl={url} />}
-          <span className="chat-time">{formatHora(msg.fechaEnvio)}</span>
-        </div>
-
-        <ReactionBar reacciones={msg.reacciones} usuarioId={usuarioId} onToggle={(e) => onToggleEmoji(msg, e)} />
-
-        <div className="chat-actions">
-          <button type="button" className="chat-action-btn" onClick={() => setShowEmojis((v) => !v)} title="Reaccionar">
-            <Smile size={13} />
-          </button>
-          <button type="button" className="chat-action-btn" onClick={() => onReply(msg)} title="Responder">
-            <Reply size={13} />
-          </button>
-          {isOwn && (
-            <button type="button" className="chat-action-btn danger" onClick={() => onDelete(msg)} title="Eliminar">
-              <Trash2 size={13} />
-            </button>
+          {editando ? (
+            <div className="chat-edit-box">
+              <textarea
+                className="chat-edit-textarea"
+                value={editTexto}
+                onChange={(e) => setEditTexto(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void guardarEdicion(); }
+                  if (e.key === "Escape") setEditando(false);
+                }}
+                rows={2}
+                autoFocus
+              />
+              <div className="chat-edit-actions">
+                <button type="button" className="chat-action-btn" onClick={() => setEditando(false)} title="Cancelar"><X size={14} /></button>
+                <button type="button" className="chat-action-btn" onClick={guardarEdicion} title="Guardar"><Check size={14} /></button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Adjunto tipo={msg.archivoTipo} url={msg.archivoUrl} nombre={msg.archivoNombre} />
+              {msg.contenido && <p className="chat-text">{msg.contenido}</p>}
+              {url && <LinkPreviewCard preview={preview} ytThumb={ytThumb} fallbackUrl={url} />}
+              <span className="chat-time">
+                {msg.editado && <em className="chat-edited-tag">Editado</em>}
+                {formatHora(msg.fechaEnvio)}
+              </span>
+            </>
           )}
-          {showEmojis && (
-            <div className="chat-emoji-picker">
-              {EMOJIS.map((e) => (
-                <button key={e} type="button" onClick={() => { onToggleEmoji(msg, e); setShowEmojis(false); }}>
-                  {e}
+
+          {msg.reacciones.length > 0 && (
+            <div className="chat-reaction-bar">
+              {msg.reacciones.map((r) => (
+                <button
+                  key={r.emoji} type="button"
+                  className={`chat-reaction ${r.usuarios.includes(usuarioId) ? "active" : ""}`}
+                  onClick={() => onToggleEmoji(msg, r.emoji)} title={r.usuariosNombres.join(", ")}
+                >
+                  {r.emoji} <span>{r.cantidad}</span>
                 </button>
               ))}
+            </div>
+          )}
+
+          {!editando && (
+            <div className="chat-actions" ref={actionsRef}>
+              <button type="button" className="chat-action-btn" onClick={() => setShowEmojis((v) => !v)} title="Reaccionar">
+                <Smile size={13} />
+              </button>
+              <button type="button" className="chat-action-btn" onClick={() => onReply(msg)} title="Responder">
+                <Reply size={13} />
+              </button>
+              {isOwn && (
+                <button type="button" className="chat-action-btn" onClick={iniciarEdicion} title="Editar">
+                  <Pencil size={13} />
+                </button>
+              )}
+              {(isOwn || puedeModerar) && (
+                <button type="button" className="chat-action-btn danger" onClick={() => onDelete(msg)} title="Eliminar">
+                  <Trash2 size={13} />
+                </button>
+              )}
+              {showEmojis && (
+                <div className="chat-emoji-picker">
+                  {EMOJIS.map((e) => (
+                    <button key={e} type="button" onClick={() => { onToggleEmoji(msg, e); setShowEmojis(false); }}>
+                      {e}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -215,9 +284,10 @@ interface Props {
   canal: Canal | null;
   usuarioId: number;
   esDocente?: boolean;
+  onClose: () => void;
 }
 
-export function ChatWindow({ canal, usuarioId, esDocente }: Props) {
+export function ChatWindow({ canal, usuarioId, esDocente, onClose }: Props) {
   const [temas, setTemas] = useState<Tema[]>([]);
   const [temaActivo, setTemaActivo] = useState<Tema | null>(null);
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
@@ -229,9 +299,11 @@ export function ChatWindow({ canal, usuarioId, esDocente }: Props) {
   const [adjFile, setAdjFile] = useState<File | null>(null);
   const [nuevoTema, setNuevoTema] = useState("");
   const [creandoTema, setCreandoTema] = useState(false);
+  const [escribiendo, setEscribiendo] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lastPingRef = useRef(0);
 
   useEffect(() => {
     if (!canal) { setTemas([]); setTemaActivo(null); return; }
@@ -261,6 +333,25 @@ export function ChatWindow({ canal, usuarioId, esDocente }: Props) {
     ta.style.height = "auto";
     ta.style.height = Math.min(ta.scrollHeight, 120) + "px";
   }, [texto]);
+
+  // Indicador de "escribiendo": ping al escribir, poll para ver quién más escribe.
+  useEffect(() => {
+    if (!canal || !texto.trim()) return;
+    const ahora = Date.now();
+    if (ahora - lastPingRef.current < 2000) return;
+    lastPingRef.current = ahora;
+    void marcarEscribiendo(canal.id, usuarioId, temaActivo?.id ?? null);
+  }, [texto, canal, usuarioId, temaActivo?.id]);
+
+  useEffect(() => {
+    if (!canal) { setEscribiendo([]); return; }
+    const idCanal = canal.id;
+    const temaId = temaActivo?.id ?? null;
+    const poll = () => { fetchEscribiendo(idCanal, usuarioId, temaId).then(setEscribiendo).catch(() => {}); };
+    poll();
+    const interval = setInterval(poll, 2500);
+    return () => { clearInterval(interval); setEscribiendo([]); };
+  }, [canal?.id, usuarioId, temaActivo?.id]);
 
   const adoptarArchivo = (file: File) => {
     setAdjFile(file);
@@ -323,7 +414,17 @@ export function ChatWindow({ canal, usuarioId, esDocente }: Props) {
     if (!canal || !window.confirm("¿Eliminar este mensaje?")) return;
     try {
       await eliminarMensaje(canal.id, msg.id, usuarioId);
-      setMensajes((prev) => prev.filter((m) => m.id !== msg.id));
+      setMensajes((prev) => prev.map((m) => m.id === msg.id
+        ? { ...m, eliminado: true, contenido: null, archivoUrl: null, archivoTipo: null, archivoNombre: null }
+        : m));
+    } catch {}
+  };
+
+  const handleEdit = async (msg: Mensaje, nuevoContenido: string) => {
+    if (!canal) return;
+    try {
+      const actualizado = await editarMensaje(canal.id, msg.id, usuarioId, nuevoContenido);
+      setMensajes((prev) => prev.map((m) => m.id === msg.id ? actualizado : m));
     } catch {}
   };
 
@@ -355,16 +456,10 @@ export function ChatWindow({ canal, usuarioId, esDocente }: Props) {
     } catch {}
   };
 
-  if (!canal) {
-    return (
-      <div className="chat-empty">
-        <Hash size={40} strokeWidth={1.2} />
-        <p>Selecciona un canal para chatear</p>
-      </div>
-    );
-  }
+  if (!canal) return null;
 
   const color = canal.color ?? "#4f46e5";
+  const puedeModerar = canal.creadorId === usuarioId;
 
   const grupos: { fecha: string; items: Mensaje[] }[] = [];
   for (const m of mensajes) {
@@ -375,103 +470,119 @@ export function ChatWindow({ canal, usuarioId, esDocente }: Props) {
   }
 
   return (
-    <div className="chat-window">
-      <div className="chat-header" style={{ borderBottomColor: color }}>
-        <div className="chat-header-avatar" style={{ background: color }}>
-          {canal.fotoUrl
-            ? <img src={canal.fotoUrl} alt={canal.nombre} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
-            : getInitials(canal.nombre)}
-        </div>
-        <div>
-          <h3 className="chat-header-name">{canal.nombre}</h3>
-          {canal.descripcion && <p className="chat-header-desc">{canal.descripcion}</p>}
-        </div>
-      </div>
-
-      <div className="chat-body">
-        <aside className="chat-topics">
-          <p className="chat-topics-title">Temas</p>
-          {temas.map((t) => (
-            <div key={t.id} className={`chat-topic-item ${temaActivo?.id === t.id ? "active" : ""}`}
-              style={temaActivo?.id === t.id ? { borderLeftColor: color } : {}}>
-              <button type="button" className="chat-topic-btn" onClick={() => { setTemaActivo(t); }}>
-                <Hash size={13} /> {t.nombre}
-              </button>
-              {esDocente && (
-                <button type="button" className="chat-topic-del" onClick={() => handleDeleteTema(t)}>
-                  <X size={11} />
-                </button>
-              )}
+    <div className="chat-panel-overlay" onClick={onClose}>
+      <div className="chat-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="chat-window">
+          <div className="chat-header" style={{ borderBottomColor: color }}>
+            <div className="chat-header-avatar" style={{ background: color }}>
+              {canal.fotoUrl
+                ? <img src={canal.fotoUrl} alt={canal.nombre} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+                : getInitials(canal.nombre)}
             </div>
-          ))}
-          {temas.length === 0 && !esDocente && <p className="chat-topics-empty">Sin temas aún</p>}
-          {esDocente && (
-            <div className="chat-topic-new">
-              <input type="text" placeholder="Nuevo tema…" value={nuevoTema}
-                onChange={(e) => setNuevoTema(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter") void handleCrearTema(); }}
-                maxLength={100} />
-              <button type="button" onClick={handleCrearTema} disabled={creandoTema || !nuevoTema.trim()}>
-                <Send size={12} />
-              </button>
+            <div style={{ flex: 1 }}>
+              <h3 className="chat-header-name">{canal.nombre}</h3>
+              {canal.descripcion && <p className="chat-header-desc">{canal.descripcion}</p>}
             </div>
-          )}
-        </aside>
-
-        <div className="chat-messages-area">
-          {cargando && <p className="chat-status">Cargando…</p>}
-          {!cargando && mensajes.length === 0 && (
-            <p className="chat-status">Sin mensajes{temaActivo ? ` en #${temaActivo.nombre}` : ""}. ¡Sé el primero!</p>
-          )}
-          <div className="chat-messages">
-            {grupos.map((g) => (
-              <div key={g.fecha}>
-                <div className="chat-date-sep"><span>{g.fecha}</span></div>
-                {g.items.map((msg) => (
-                  <MessageBubble key={msg.id} msg={msg} isOwn={msg.usuarioId === usuarioId}
-                    usuarioId={usuarioId} onReply={setReplyMsg}
-                    onDelete={handleDelete} onToggleEmoji={handleToggleEmoji} />
-                ))}
-              </div>
-            ))}
-            <div ref={bottomRef} />
+            <button type="button" className="chat-action-btn" onClick={onClose} style={{ marginLeft: "auto" }} title="Cerrar">
+              <X size={18} />
+            </button>
           </div>
 
-          <div className="chat-input-area">
-            {replyMsg && (
-              <div className="chat-reply-indicator">
-                <Reply size={13} />
-                <span>Respondiendo a <strong>{replyMsg.usuarioNombre}</strong>:&nbsp;
-                  {replyMsg.archivoUrl && !replyMsg.contenido ? describeAdjunto(replyMsg.archivoTipo) : replyMsg.contenido?.slice(0, 60)}
-                </span>
-                <button type="button" onClick={() => setReplyMsg(null)}><X size={13} /></button>
+          <div className="chat-body">
+            <aside className="chat-topics">
+              <p className="chat-topics-title">Temas</p>
+              {temas.map((t) => (
+                <div key={t.id} className={`chat-topic-item ${temaActivo?.id === t.id ? "active" : ""}`}
+                  style={temaActivo?.id === t.id ? { borderLeftColor: color } : {}}>
+                  <button type="button" className="chat-topic-btn" onClick={() => { setTemaActivo(t); }}>
+                    <Hash size={13} /> {t.nombre}
+                  </button>
+                  {esDocente && (
+                    <button type="button" className="chat-topic-del" onClick={() => handleDeleteTema(t)}>
+                      <X size={11} />
+                    </button>
+                  )}
+                </div>
+              ))}
+              {temas.length === 0 && !esDocente && <p className="chat-topics-empty">Sin temas aún</p>}
+              {esDocente && (
+                <div className="chat-topic-new">
+                  <input type="text" placeholder="Nuevo tema…" value={nuevoTema}
+                    onChange={(e) => setNuevoTema(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") void handleCrearTema(); }}
+                    maxLength={100} />
+                  <button type="button" onClick={handleCrearTema} disabled={creandoTema || !nuevoTema.trim()}>
+                    <Send size={12} />
+                  </button>
+                </div>
+              )}
+            </aside>
+
+            <div className="chat-messages-area">
+              {cargando && <p className="chat-status">Cargando…</p>}
+              {!cargando && mensajes.length === 0 && (
+                <p className="chat-status">Sin mensajes{temaActivo ? ` en #${temaActivo.nombre}` : ""}. ¡Sé el primero!</p>
+              )}
+              <div className="chat-messages">
+                {grupos.map((g) => (
+                  <div key={g.fecha}>
+                    <div className="chat-date-sep"><span>{g.fecha}</span></div>
+                    {g.items.map((msg) => (
+                      <MessageBubble key={msg.id} msg={msg} isOwn={msg.usuarioId === usuarioId}
+                        usuarioId={usuarioId} puedeModerar={puedeModerar} onReply={setReplyMsg}
+                        onDelete={handleDelete} onToggleEmoji={handleToggleEmoji} onEdit={handleEdit} />
+                    ))}
+                  </div>
+                ))}
+                <div ref={bottomRef} />
               </div>
-            )}
-            {adjFile && (
-              <div className="chat-img-preview">
-                {adjPreview && adjFile.type.startsWith("image/") && <img src={adjPreview} alt="preview" />}
-                {adjPreview && adjFile.type.startsWith("video/") && <video src={adjPreview} className="chat-video-preview" />}
-                {!adjPreview && (
-                  <span className="chat-file-preview-chip">
-                    <FileIcon nombre={adjFile.name} /> {adjFile.name}
-                  </span>
+
+              {escribiendo.length > 0 && (
+                <div className="chat-typing-indicator">
+                  <span className="chat-typing-dots"><span /><span /><span /></span>
+                  {escribiendo.length === 1
+                    ? `${escribiendo[0]} está escribiendo…`
+                    : `${escribiendo.join(", ")} están escribiendo…`}
+                </div>
+              )}
+
+              <div className="chat-input-area">
+                {replyMsg && (
+                  <div className="chat-reply-indicator">
+                    <Reply size={13} />
+                    <span>Respondiendo a <strong>{replyMsg.usuarioNombre}</strong>:&nbsp;
+                      {describeReplyText(replyMsg).slice(0, 60)}
+                    </span>
+                    <button type="button" onClick={() => setReplyMsg(null)}><X size={13} /></button>
+                  </div>
                 )}
-                <button type="button" onClick={clearImg}><X size={13} /></button>
+                {adjFile && (
+                  <div className="chat-img-preview">
+                    {adjPreview && adjFile.type.startsWith("image/") && <img src={adjPreview} alt="preview" />}
+                    {adjPreview && adjFile.type.startsWith("video/") && <video src={adjPreview} className="chat-video-preview" />}
+                    {!adjPreview && (
+                      <span className="chat-file-preview-chip">
+                        <FileIcon nombre={adjFile.name} /> {adjFile.name}
+                      </span>
+                    )}
+                    <button type="button" onClick={clearImg}><X size={13} /></button>
+                  </div>
+                )}
+                <div className="chat-input-row">
+                  <button type="button" className="chat-attach-btn" onClick={() => fileRef.current?.click()} title="Adjuntar archivo">
+                    <Paperclip size={18} />
+                  </button>
+                  <input ref={fileRef} type="file" accept={ADJUNTO_ACCEPT} style={{ display: "none" }} onChange={handleFileChange} />
+                  <textarea ref={textareaRef} className="chat-textarea"
+                    placeholder="Mensaje"
+                    value={texto} onChange={(e) => setTexto(e.target.value)}
+                    onKeyDown={handleKeyDown} onPaste={handlePaste} rows={1} />
+                  <button type="button" className="chat-send-btn" style={{ background: color }}
+                    onClick={handleEnviar} disabled={enviando || (!texto.trim() && !adjFile)}>
+                    <Send size={16} />
+                  </button>
+                </div>
               </div>
-            )}
-            <div className="chat-input-row">
-              <button type="button" className="chat-attach-btn" onClick={() => fileRef.current?.click()} title="Adjuntar archivo">
-                <Paperclip size={18} />
-              </button>
-              <input ref={fileRef} type="file" accept={ADJUNTO_ACCEPT} style={{ display: "none" }} onChange={handleFileChange} />
-              <textarea ref={textareaRef} className="chat-textarea"
-                placeholder={`Mensaje${temaActivo ? ` en #${temaActivo.nombre}` : ""}… (Enter envía, Shift+Enter nueva línea, Ctrl+V pega imágenes)`}
-                value={texto} onChange={(e) => setTexto(e.target.value)}
-                onKeyDown={handleKeyDown} onPaste={handlePaste} rows={1} />
-              <button type="button" className="chat-send-btn" style={{ background: color }}
-                onClick={handleEnviar} disabled={enviando || (!texto.trim() && !adjFile)}>
-                <Send size={16} />
-              </button>
             </div>
           </div>
         </div>

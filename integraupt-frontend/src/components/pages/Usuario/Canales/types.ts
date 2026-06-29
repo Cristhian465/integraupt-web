@@ -35,6 +35,7 @@ export interface Reaccion {
   emoji: string;
   cantidad: number;
   usuarios: number[];
+  usuariosNombres: string[];
 }
 
 export type TipoArchivoAdjunto = "image" | "video" | "audio" | "file";
@@ -46,6 +47,7 @@ export interface RespuestaResumen {
   archivoUrl?: string | null;
   archivoTipo?: TipoArchivoAdjunto | null;
   archivoNombre?: string | null;
+  eliminado?: boolean;
 }
 
 export interface Mensaje {
@@ -54,13 +56,15 @@ export interface Mensaje {
   temaId?: number | null;
   usuarioId: number;
   usuarioNombre?: string | null;
-  contenido: string;
+  contenido: string | null;
   archivoUrl?: string | null;
   archivoTipo?: TipoArchivoAdjunto | null;
   archivoNombre?: string | null;
   idMensajeRespuesta?: number | null;
   respuestaA?: RespuestaResumen | null;
   reacciones: Reaccion[];
+  eliminado: boolean;
+  editado: boolean;
   fechaEnvio?: string | null;
 }
 

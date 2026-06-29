@@ -65,6 +65,28 @@ class MensajeController extends Controller
         }
     }
 
+    public function update(Request $request, $idCanal, $idMensaje)
+    {
+        $request->validate([
+            'usuarioId' => 'required|integer',
+            'contenido' => 'required|string',
+        ]);
+
+        try {
+            $mensaje = $this->mensajeService->editar(
+                (int) $idMensaje,
+                (int) $request->input('usuarioId'),
+                $request->input('contenido')
+            );
+
+            return response()->json($this->mapear($mensaje));
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        } catch (InvalidArgumentException $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
+    }
+
     public function destroy(Request $request, $idCanal, $idMensaje)
     {
         $request->validate([
@@ -88,16 +110,20 @@ class MensajeController extends Controller
 
     private function mapear(CanalMensaje $mensaje): array
     {
+        $eliminado = $mensaje->Estado === 'eliminado';
+
         $respuestaA = null;
         if ($mensaje->IdMensajeRespuesta && $mensaje->respuestaA) {
             $r = $mensaje->respuestaA;
+            $rEliminado = $r->Estado === 'eliminado';
             $respuestaA = [
                 'id' => $r->IdMensaje,
                 'usuarioNombre' => $r->usuario?->NombreCompleto,
-                'contenido' => $r->Contenido,
-                'archivoUrl' => $r->ArchivoUrl,
-                'archivoTipo' => $r->ArchivoTipo,
-                'archivoNombre' => $r->ArchivoNombre,
+                'contenido' => $rEliminado ? null : $r->Contenido,
+                'archivoUrl' => $rEliminado ? null : $r->ArchivoUrl,
+                'archivoTipo' => $rEliminado ? null : $r->ArchivoTipo,
+                'archivoNombre' => $rEliminado ? null : $r->ArchivoNombre,
+                'eliminado' => $rEliminado,
             ];
         }
 
@@ -107,6 +133,7 @@ class MensajeController extends Controller
                 'emoji' => $emoji,
                 'cantidad' => $grupo->count(),
                 'usuarios' => $grupo->pluck('IdUsuario')->all(),
+                'usuariosNombres' => $grupo->map(fn ($r) => $r->usuario?->NombreCompleto ?? 'Usuario')->all(),
             ])
             ->values()
             ->all();
@@ -117,13 +144,15 @@ class MensajeController extends Controller
             'temaId' => $mensaje->IdTema,
             'usuarioId' => $mensaje->IdUsuario,
             'usuarioNombre' => $mensaje->usuario?->NombreCompleto,
-            'contenido' => $mensaje->Contenido,
-            'archivoUrl' => $mensaje->ArchivoUrl,
-            'archivoTipo' => $mensaje->ArchivoTipo,
-            'archivoNombre' => $mensaje->ArchivoNombre,
+            'contenido' => $eliminado ? null : $mensaje->Contenido,
+            'archivoUrl' => $eliminado ? null : $mensaje->ArchivoUrl,
+            'archivoTipo' => $eliminado ? null : $mensaje->ArchivoTipo,
+            'archivoNombre' => $eliminado ? null : $mensaje->ArchivoNombre,
             'idMensajeRespuesta' => $mensaje->IdMensajeRespuesta,
             'respuestaA' => $respuestaA,
             'reacciones' => $reacciones,
+            'eliminado' => $eliminado,
+            'editado' => $mensaje->EditadoEn !== null,
             'fechaEnvio' => optional($mensaje->FechaEnvio)->toIso8601String(),
         ];
     }

@@ -50,7 +50,7 @@ export const CanalesPage: React.FC<CanalesPageProps> = ({
   const [canales, setCanales] = useState<Canal[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCanalId, setSelectedCanalId] = useState<number | null>(null);
+  const [chatCanal, setChatCanal] = useState<Canal | null>(null);
   const [crearModalOpen, setCrearModalOpen] = useState(false);
 
   const userId = useMemo(() => {
@@ -88,21 +88,10 @@ export const CanalesPage: React.FC<CanalesPageProps> = ({
     void loadCanales();
   }, [loadCanales]);
 
-  useEffect(() => {
-    if (selectedCanalId == null && canales.length > 0) {
-      setSelectedCanalId(canales[0].id);
-    }
-  }, [canales, selectedCanalId]);
-
-  const selectedCanal = useMemo(
-    () => canales.find((canal) => canal.id === selectedCanalId) ?? null,
-    [canales, selectedCanalId]
-  );
-
   const handleCanalCreado = (canal: Canal) => {
     setCrearModalOpen(false);
     setCanales((prev) => [canal, ...prev]);
-    setSelectedCanalId(canal.id);
+    setChatCanal(canal);
   };
 
   return (
@@ -164,8 +153,8 @@ export const CanalesPage: React.FC<CanalesPageProps> = ({
                 <button
                   type="button"
                   key={canal.id}
-                  className={`canales-list-item ${canal.id === selectedCanalId ? 'active' : ''}`}
-                  onClick={() => setSelectedCanalId(canal.id)}
+                  className="canales-list-item"
+                  onClick={() => setChatCanal(canal)}
                 >
                   <span className="canales-list-item-name">{canal.nombre}</span>
                   {canal.estado === 'archivado' && <span className="canales-list-item-badge">Archivado</span>}
@@ -173,8 +162,6 @@ export const CanalesPage: React.FC<CanalesPageProps> = ({
               ))}
             </div>
           </aside>
-
-          {userId != null && <ChatWindow canal={selectedCanal} usuarioId={userId} esDocente={isDocente} />}
         </div>
       </main>
 
@@ -185,6 +172,10 @@ export const CanalesPage: React.FC<CanalesPageProps> = ({
           onClose={() => setCrearModalOpen(false)}
           onCreated={handleCanalCreado}
         />
+      )}
+
+      {userId != null && (
+        <ChatWindow canal={chatCanal} usuarioId={userId} esDocente={isDocente} onClose={() => setChatCanal(null)} />
       )}
     </div>
   );

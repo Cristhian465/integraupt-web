@@ -23,10 +23,13 @@ class CanalMensaje extends Model
         'ArchivoUrl',
         'ArchivoTipo',
         'ArchivoNombre',
+        'Estado',
+        'EditadoEn',
     ];
 
     protected $casts = [
         'FechaEnvio' => 'datetime',
+        'EditadoEn' => 'datetime',
     ];
 
     public function usuario(): BelongsTo

@@ -19,7 +19,7 @@ class MensajeService
     {
         Canal::findOrFail($idCanal);
 
-        $query = CanalMensaje::with(['usuario', 'respuestaA.usuario', 'reacciones'])
+        $query = CanalMensaje::with(['usuario', 'respuestaA.usuario', 'reacciones.usuario'])
             ->where('IdCanal', $idCanal);
 
         if ($temaId !== null) {
@@ -65,7 +65,7 @@ class MensajeService
 
         $mensaje = CanalMensaje::create($payload);
 
-        return $mensaje->refresh()->load(['usuario', 'respuestaA.usuario', 'reacciones']);
+        return $mensaje->refresh()->load(['usuario', 'respuestaA.usuario', 'reacciones.usuario']);
     }
 
     public function eliminar(int $idMensaje, int $idUsuarioSolicitante, bool $esAdmin): void
@@ -83,6 +83,42 @@ class MensajeService
             throw new InvalidArgumentException('No tienes permiso para eliminar este mensaje.');
         }
 
-        $mensaje->delete();
+        $mensaje->update([
+            'Estado' => 'eliminado',
+            'Contenido' => '',
+            'ArchivoUrl' => null,
+            'ArchivoTipo' => null,
+            'ArchivoNombre' => null,
+        ]);
+    }
+
+    public function editar(int $idMensaje, int $idUsuarioSolicitante, string $contenido): CanalMensaje
+    {
+        $mensaje = CanalMensaje::find($idMensaje);
+
+        if (! $mensaje) {
+            throw new ModelNotFoundException('El mensaje indicado no existe.');
+        }
+
+        if ((int) $mensaje->IdUsuario !== $idUsuarioSolicitante) {
+            throw new InvalidArgumentException('Solo el autor puede editar este mensaje.');
+        }
+
+        if ($mensaje->Estado === 'eliminado') {
+            throw new InvalidArgumentException('No se puede editar un mensaje eliminado.');
+        }
+
+        $contenido = trim($contenido);
+
+        if ($contenido === '' && ! $mensaje->ArchivoUrl) {
+            throw new InvalidArgumentException('El mensaje debe tener contenido.');
+        }
+
+        $mensaje->update([
+            'Contenido' => $contenido,
+            'EditadoEn' => now(),
+        ]);
+
+        return $mensaje->refresh()->load(['usuario', 'respuestaA.usuario', 'reacciones.usuario']);
     }
 }
