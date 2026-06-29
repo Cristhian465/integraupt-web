@@ -122,6 +122,25 @@ export const eliminarMensaje = async (idCanal: number, idMensaje: number, usuari
   }
 };
 
+export const editarMensaje = (idCanal: number, idMensaje: number, usuarioId: number, contenido: string): Promise<Mensaje> =>
+  unwrap(canalesClient.put<Mensaje>(`/api/canales/${idCanal}/mensajes/${idMensaje}`, { usuarioId, contenido }));
+
+// Indicador de "escribiendo"
+export const marcarEscribiendo = async (idCanal: number, usuarioId: number, temaId?: number | null): Promise<void> => {
+  try {
+    await canalesClient.post(`/api/canales/${idCanal}/escribiendo`, { usuarioId, temaId: temaId ?? null });
+  } catch {
+    // best-effort, no es crítico si falla un ping
+  }
+};
+
+export const fetchEscribiendo = (idCanal: number, usuarioId: number, temaId?: number | null): Promise<string[]> =>
+  unwrap(
+    canalesClient.get<{ usuarios: string[] }>(`/api/canales/${idCanal}/escribiendo`, {
+      params: { usuarioId, temaId: temaId ?? undefined }
+    })
+  ).then((r) => r.usuarios);
+
 // Reacciones
 export const toggleReaccion = (
   idCanal: number,

@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Download, FileArchive, FileSpreadsheet, FileText, Hash, Paperclip, Reply, Send, Smile, Trash2, X } from "lucide-react";
-import type { Canal, LinkPreview, Mensaje, Reaccion, Tema, TipoArchivoAdjunto } from "../types";
+import { Check, Download, FileArchive, FileSpreadsheet, FileText, Hash, Paperclip, Pencil, Reply, Send, Smile, Trash2, X } from "lucide-react";
+import type { Canal, LinkPreview, Mensaje, Tema, TipoArchivoAdjunto } from "../types";
 import {
   createTema,
   deleteTema,
+  editarMensaje,
   eliminarMensaje,
   enviarMensaje,
+  fetchEscribiendo,
   fetchLinkPreview,
   fetchMensajes,
   fetchTemas,
+  marcarEscribiendo,
   toggleReaccion,
   updateTema,
   uploadArchivo,
@@ -18,6 +21,11 @@ const EMOJIS = ["❤️", "👍", "😂", "😮", "😢", "👏"];
 const URL_RE = /(https?:\/\/[^\s]+)/g;
 const YOUTUBE_RE = /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/;
 const ADJUNTO_ACCEPT = "image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z";
+const USER_COLORS = ["#ef4444", "#f97316", "#eab308", "#65a30d", "#10b981", "#06b6d4", "#3b82f6", "#8b5cf6", "#d946ef", "#ec4899"];
+
+function colorForUser(idUsuario: number): string {
+  return USER_COLORS[Math.abs(idUsuario) % USER_COLORS.length];
+}
 
 function detectUrl(t: string) { const m = t.match(URL_RE); return m ? m[0] : null; }
 function youtubeThumb(url: string): string | null {
@@ -45,6 +53,11 @@ function describeAdjunto(tipo?: TipoArchivoAdjunto | null): string {
   if (tipo === "file") return "📎 Archivo";
   return "";
 }
+function describeReplyText(r: { eliminado?: boolean; archivoUrl?: string | null; archivoTipo?: TipoArchivoAdjunto | null; contenido?: string | null }): string {
+  if (r.eliminado) return "🚫 Mensaje eliminado";
+  if (r.archivoUrl && !r.contenido) return describeAdjunto(r.archivoTipo);
+  return r.contenido ?? "";
+}
 function Adjunto({ tipo, url, nombre }: { tipo?: TipoArchivoAdjunto | null; url?: string | null; nombre?: string | null }) {
   if (!url) return null;
   if (tipo === "image") {
@@ -58,20 +71,6 @@ function Adjunto({ tipo, url, nombre }: { tipo?: TipoArchivoAdjunto | null; url?
       <span className="chat-file-name">{nombre ?? "Archivo"}</span>
       <Download size={14} />
     </a>
-  );
-}
-
-function ReactionBar({ reacciones, usuarioId, onToggle }: { reacciones: Reaccion[]; usuarioId: number; onToggle: (e: string) => void }) {
-  if (!reacciones.length) return null;
-  return (
-    <div className="chat-reaction-bar">
-      {reacciones.map((r) => (
-        <button key={r.emoji} type="button"
-          className={`chat-reaction ${r.usuarios.includes(usuarioId) ? "active" : ""}`}
-          onClick={() => onToggle(r.emoji)}>{r.emoji} <span>{r.cantidad}</span>
-        </button>
-      ))}
-    </div>
   );
 }
 
@@ -98,14 +97,20 @@ function LinkPreviewCard({ preview, ytThumb, fallbackUrl }: { preview: LinkPrevi
   );
 }
 
-function MsgBubble({ msg, isOwn, usuarioId, onReply, onDelete, onEmoji }: {
+function MsgBubble({ msg, isOwn, usuarioId, onReply, onDelete, onEmoji, onEdit }: {
   msg: Mensaje; isOwn: boolean; usuarioId: number;
   onReply: (m: Mensaje) => void; onDelete: (m: Mensaje) => void; onEmoji: (m: Mensaje, e: string) => void;
+  onEdit: (m: Mensaje, nuevoContenido: string) => Promise<void>;
 }) {
   const [showEmojis, setShowEmojis] = useState(false);
-  const url = msg.contenido ? detectUrl(msg.contenido) : null;
+  const [editando, setEditando] = useState(false);
+  const [editTexto, setEditTexto] = useState(msg.contenido ?? "");
+  const actionsRef = useRef<HTMLDivElement>(null);
+  const url = !msg.eliminado && msg.contenido ? detectUrl(msg.contenido) : null;
   const ytThumb = url ? youtubeThumb(url) : null;
   const [preview, setPreview] = useState<LinkPreview | null>(null);
+  const avatarColor = colorForUser(msg.usuarioId);
+
   useEffect(() => {
     setPreview(null);
     if (!url) return;
@@ -114,32 +119,103 @@ function MsgBubble({ msg, isOwn, usuarioId, onReply, onDelete, onEmoji }: {
     return () => { c = true; };
   }, [url]);
 
+  useEffect(() => {
+    if (!showEmojis) return;
+    const handler = (e: MouseEvent) => {
+      if (actionsRef.current && !actionsRef.current.contains(e.target as Node)) setShowEmojis(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [showEmojis]);
+
+  const iniciarEdicion = () => { setEditTexto(msg.contenido ?? ""); setEditando(true); };
+  const guardarEdicion = async () => {
+    if (!editTexto.trim()) return;
+    await onEdit(msg, editTexto.trim());
+    setEditando(false);
+  };
+
+  if (msg.eliminado) {
+    return (
+      <div className={`chat-bubble-row ${isOwn ? "own" : ""}`}>
+        {!isOwn && <div className="chat-avatar" style={{ background: avatarColor }}>{getInitials(msg.usuarioNombre)}</div>}
+        <div className="chat-bubble-wrap">
+          {!isOwn && <span className="chat-sender" style={{ color: avatarColor }}>{msg.usuarioNombre ?? "Usuario"}</span>}
+          <div className={`chat-bubble chat-bubble-deleted ${isOwn ? "own" : ""}`}>
+            <p className="chat-text-deleted">🚫 Eliminado por el administrador</p>
+            <span className="chat-time">{formatHora(msg.fechaEnvio)}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`chat-bubble-row ${isOwn ? "own" : ""}`}>
-      {!isOwn && <div className="chat-avatar">{getInitials(msg.usuarioNombre)}</div>}
+      {!isOwn && <div className="chat-avatar" style={{ background: avatarColor }}>{getInitials(msg.usuarioNombre)}</div>}
       <div className="chat-bubble-wrap">
-        {!isOwn && <span className="chat-sender">{msg.usuarioNombre ?? "Usuario"}</span>}
+        {!isOwn && <span className="chat-sender" style={{ color: avatarColor }}>{msg.usuarioNombre ?? "Usuario"}</span>}
         {msg.respuestaA && (
           <div className="chat-reply-ref">
             <Reply size={12} />
             <span className="chat-reply-ref-name">{msg.respuestaA.usuarioNombre}</span>
-            <span className="chat-reply-ref-text">{msg.respuestaA.archivoUrl && !msg.respuestaA.contenido ? describeAdjunto(msg.respuestaA.archivoTipo) : msg.respuestaA.contenido}</span>
+            <span className="chat-reply-ref-text">{describeReplyText(msg.respuestaA)}</span>
           </div>
         )}
         <div className={`chat-bubble ${isOwn ? "own" : ""}`}>
-          <Adjunto tipo={msg.archivoTipo} url={msg.archivoUrl} nombre={msg.archivoNombre} />
-          {msg.contenido && <p className="chat-text">{msg.contenido}</p>}
-          {url && <LinkPreviewCard preview={preview} ytThumb={ytThumb} fallbackUrl={url} />}
-          <span className="chat-time">{formatHora(msg.fechaEnvio)}</span>
-        </div>
-        <ReactionBar reacciones={msg.reacciones} usuarioId={usuarioId} onToggle={(e) => onEmoji(msg, e)} />
-        <div className="chat-actions">
-          <button type="button" className="chat-action-btn" onClick={() => setShowEmojis((v) => !v)}><Smile size={13} /></button>
-          <button type="button" className="chat-action-btn" onClick={() => onReply(msg)}><Reply size={13} /></button>
-          <button type="button" className="chat-action-btn danger" onClick={() => onDelete(msg)}><Trash2 size={13} /></button>
-          {showEmojis && (
-            <div className="chat-emoji-picker">
-              {EMOJIS.map((e) => <button key={e} type="button" onClick={() => { onEmoji(msg, e); setShowEmojis(false); }}>{e}</button>)}
+          {editando ? (
+            <div className="chat-edit-box">
+              <textarea
+                className="chat-edit-textarea"
+                value={editTexto}
+                onChange={(e) => setEditTexto(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void guardarEdicion(); }
+                  if (e.key === "Escape") setEditando(false);
+                }}
+                rows={2}
+                autoFocus
+              />
+              <div className="chat-edit-actions">
+                <button type="button" className="chat-action-btn" onClick={() => setEditando(false)} title="Cancelar"><X size={14} /></button>
+                <button type="button" className="chat-action-btn" onClick={guardarEdicion} title="Guardar"><Check size={14} /></button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Adjunto tipo={msg.archivoTipo} url={msg.archivoUrl} nombre={msg.archivoNombre} />
+              {msg.contenido && <p className="chat-text">{msg.contenido}</p>}
+              {url && <LinkPreviewCard preview={preview} ytThumb={ytThumb} fallbackUrl={url} />}
+              <span className="chat-time">
+                {msg.editado && <em className="chat-edited-tag">Editado</em>}
+                {formatHora(msg.fechaEnvio)}
+              </span>
+            </>
+          )}
+
+          {msg.reacciones.length > 0 && (
+            <div className="chat-reaction-bar">
+              {msg.reacciones.map((r) => (
+                <button key={r.emoji} type="button"
+                  className={`chat-reaction ${r.usuarios.includes(usuarioId) ? "active" : ""}`}
+                  onClick={() => onEmoji(msg, r.emoji)} title={r.usuariosNombres.join(", ")}>
+                  {r.emoji} <span>{r.cantidad}</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {!editando && (
+            <div className="chat-actions" ref={actionsRef}>
+              <button type="button" className="chat-action-btn" onClick={() => setShowEmojis((v) => !v)}><Smile size={13} /></button>
+              <button type="button" className="chat-action-btn" onClick={() => onReply(msg)}><Reply size={13} /></button>
+              {isOwn && <button type="button" className="chat-action-btn" onClick={iniciarEdicion} title="Editar"><Pencil size={13} /></button>}
+              <button type="button" className="chat-action-btn danger" onClick={() => onDelete(msg)}><Trash2 size={13} /></button>
+              {showEmojis && (
+                <div className="chat-emoji-picker">
+                  {EMOJIS.map((e) => <button key={e} type="button" onClick={() => { onEmoji(msg, e); setShowEmojis(false); }}>{e}</button>)}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -163,9 +239,11 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
   const [nuevoTema, setNuevoTema] = useState("");
   const [editandoTema, setEditandoTema] = useState<Tema | null>(null);
   const [editNombre, setEditNombre] = useState("");
+  const [escribiendo, setEscribiendo] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lastPingRef = useRef(0);
 
   useEffect(() => {
     if (!canal) { setTemas([]); setTemaActivo(null); setMensajes([]); return; }
@@ -185,6 +263,24 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
     const ta = textareaRef.current; if (!ta) return;
     ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 120) + "px";
   }, [texto]);
+
+  useEffect(() => {
+    if (!canal || !texto.trim()) return;
+    const ahora = Date.now();
+    if (ahora - lastPingRef.current < 2000) return;
+    lastPingRef.current = ahora;
+    void marcarEscribiendo(canal.id, usuarioId, temaActivo?.id ?? null);
+  }, [texto, canal, usuarioId, temaActivo?.id]);
+
+  useEffect(() => {
+    if (!canal) { setEscribiendo([]); return; }
+    const idCanal = canal.id;
+    const temaId = temaActivo?.id ?? null;
+    const poll = () => { fetchEscribiendo(idCanal, usuarioId, temaId).then(setEscribiendo).catch(() => {}); };
+    poll();
+    const interval = setInterval(poll, 2500);
+    return () => { clearInterval(interval); setEscribiendo([]); };
+  }, [canal?.id, usuarioId, temaActivo?.id]);
 
   if (!canal) return null;
 
@@ -231,7 +327,17 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
     if (!canal || !window.confirm("¿Eliminar?")) return;
     try {
       await eliminarMensaje(canal.id, msg.id, usuarioId, esAdmin);
-      setMensajes((p) => p.filter((m) => m.id !== msg.id));
+      setMensajes((p) => p.map((m) => m.id === msg.id
+        ? { ...m, eliminado: true, contenido: null, archivoUrl: null, archivoTipo: null, archivoNombre: null }
+        : m));
+    } catch {}
+  };
+
+  const handleEdit = async (msg: Mensaje, nuevoContenido: string) => {
+    if (!canal) return;
+    try {
+      const actualizado = await editarMensaje(canal.id, msg.id, usuarioId, nuevoContenido);
+      setMensajes((p) => p.map((m) => m.id === msg.id ? actualizado : m));
     } catch {}
   };
 
@@ -278,8 +384,8 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
   }
 
   return (
-    <div className="chat-panel-overlay">
-      <div className="chat-panel">
+    <div className="chat-panel-overlay" onClick={onClose}>
+      <div className="chat-panel" onClick={(e) => e.stopPropagation()}>
         <div className="chat-header" style={{ borderBottomColor: color }}>
           <div className="chat-header-avatar" style={{ background: color }}>
             {canal.fotoUrl
@@ -334,19 +440,28 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
                   <div className="chat-date-sep"><span>{g.fecha}</span></div>
                   {g.items.map((msg) => (
                     <MsgBubble key={msg.id} msg={msg} isOwn={msg.usuarioId === usuarioId}
-                      usuarioId={usuarioId} onReply={setReplyMsg} onDelete={handleDelete} onEmoji={handleEmoji} />
+                      usuarioId={usuarioId} onReply={setReplyMsg} onDelete={handleDelete} onEmoji={handleEmoji} onEdit={handleEdit} />
                   ))}
                 </div>
               ))}
               <div ref={bottomRef} />
             </div>
 
+            {escribiendo.length > 0 && (
+              <div className="chat-typing-indicator">
+                <span className="chat-typing-dots"><span /><span /><span /></span>
+                {escribiendo.length === 1
+                  ? `${escribiendo[0]} está escribiendo…`
+                  : `${escribiendo.join(", ")} están escribiendo…`}
+              </div>
+            )}
+
             <div className="chat-input-area">
               {replyMsg && (
                 <div className="chat-reply-indicator">
                   <Reply size={13} />
                   <span>Respondiendo a <strong>{replyMsg.usuarioNombre}</strong>:&nbsp;
-                    {replyMsg.archivoUrl && !replyMsg.contenido ? describeAdjunto(replyMsg.archivoTipo) : replyMsg.contenido?.slice(0, 60)}
+                    {describeReplyText(replyMsg).slice(0, 60)}
                   </span>
                   <button type="button" onClick={() => setReplyMsg(null)}><X size={13} /></button>
                 </div>
@@ -368,7 +483,7 @@ export function ChatPanel({ canal, usuarioId, esAdmin, onClose }: Props) {
                 <input ref={fileRef} type="file" accept={ADJUNTO_ACCEPT} style={{ display: "none" }}
                   onChange={(e) => { const f = e.target.files?.[0]; if (f) adoptarArchivo(f); }} />
                 <textarea ref={textareaRef} className="chat-textarea"
-                  placeholder={`Mensaje${temaActivo ? ` en #${temaActivo.nombre}` : ""}… (Enter envía, Ctrl+V pega imágenes)`}
+                  placeholder="Mensaje"
                   value={texto} onChange={(e) => setTexto(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void handleEnviar(); } }}
                   onPaste={handlePaste}

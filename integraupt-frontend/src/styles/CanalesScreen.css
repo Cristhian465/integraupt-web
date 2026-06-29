@@ -9,13 +9,13 @@
 .canales-layout {
   display: flex; gap: 0; background: #fff; border-radius: 1rem;
   box-shadow: 0 25px 50px -12px rgba(15,23,42,.12);
-  overflow: hidden; min-height: 600px; height: calc(100vh - 280px);
+  overflow: hidden; min-height: 320px;
 }
 
-/* ── Lista de canales (sidebar izquierdo) ───────────────────── */
+/* ── Lista de canales (el estudiante elige cuál abrir como ventana) ── */
 .canales-list-panel {
-  width: 240px; border-right: 1px solid #e2e8f0;
-  display: flex; flex-direction: column; flex-shrink: 0;
+  width: 100%;
+  display: flex; flex-direction: column;
 }
 
 .canales-list-header {
@@ -128,7 +128,7 @@
 
 /* ── Burbujas ───────────────────────────────────────────────── */
 .chat-bubble-row {
-  display:flex; gap:0.5rem; align-items:flex-end; max-width:78%; margin-bottom:0.15rem;
+  display:flex; gap:0.5rem; align-items:flex-end; max-width:78%; margin-bottom:0.6rem;
   position:relative;
 }
 .chat-bubble-row.own { align-self:flex-end; flex-direction:row-reverse; }
@@ -162,6 +162,17 @@
 
 .chat-text { margin:0; font-size:0.875rem; color:#1e293b; line-height:1.5; white-space:pre-wrap; }
 .chat-time { display:block; font-size:0.65rem; color:#94a3b8; text-align:right; margin-top:0.25rem; }
+.chat-edited-tag { font-style:italic; margin-right:0.3rem; }
+
+.chat-bubble-deleted { background:#f1f5f9 !important; border-color:#e2e8f0 !important; }
+.chat-text-deleted { margin:0; font-size:0.82rem; color:#94a3b8; font-style:italic; }
+
+.chat-edit-box { display:flex; flex-direction:column; gap:0.35rem; min-width:200px; }
+.chat-edit-textarea {
+  width:100%; resize:none; border:1px solid #c7d2fe; border-radius:0.5rem;
+  padding:0.4rem 0.55rem; font-size:0.85rem; font-family:inherit; color:#1e293b;
+}
+.chat-edit-actions { display:flex; justify-content:flex-end; gap:0.2rem; }
 
 .chat-img { max-width:220px; max-height:200px; border-radius:0.6rem; display:block; cursor:pointer; }
 .chat-video { max-width:260px; max-height:220px; border-radius:0.6rem; display:block; }
@@ -192,26 +203,29 @@
 .chat-link-preview-title { font-size:0.78rem; font-weight:600; color:#0f172a; margin:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .chat-link-preview-desc { font-size:0.7rem; color:#64748b; margin:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
-/* Reacciones */
-.chat-reaction-bar { display:flex; flex-wrap:wrap; gap:0.25rem; margin-top:0.25rem; }
+/* Reacciones: esquina inferior derecha del propio mensaje, igual que WhatsApp */
+.chat-reaction-bar {
+  display:flex; flex-wrap:wrap; gap:0.2rem; position:absolute;
+  bottom:-11px; right:8px; z-index:5;
+}
 .chat-reaction {
   display:inline-flex; align-items:center; gap:0.2rem; font-size:0.78rem;
-  background:#f1f5f9; border:1px solid #e2e8f0; border-radius:999px;
-  padding:0.15rem 0.45rem; cursor:pointer;
+  background:#fff; border:1px solid #e2e8f0; border-radius:999px;
+  padding:0.1rem 0.4rem; cursor:pointer; box-shadow:0 1px 3px rgba(15,23,42,.12);
 }
 .chat-reaction.active { background:#eef2ff; border-color:#c7d2fe; }
 .chat-reaction span { font-size:0.7rem; color:#475569; }
 .chat-reaction:hover { background:#e2e8f0; }
 
-/* Acciones del mensaje (reply, emoji, delete) */
+/* Acciones del mensaje (reply, emoji, editar, delete): justo junto al mensaje */
 .chat-actions {
-  display:none; gap:0.2rem; align-items:center; position:absolute;
-  top:-28px; right:0; background:#fff; border:1px solid #e2e8f0;
-  border-radius:0.5rem; padding:0.2rem; box-shadow:0 2px 8px rgba(0,0,0,.1);
+  display:none; gap:0.15rem; align-items:center; position:absolute;
+  top:-16px; right:6px; background:#fff; border:1px solid #e2e8f0;
+  border-radius:0.5rem; padding:0.15rem; box-shadow:0 2px 8px rgba(0,0,0,.1);
   z-index:10;
 }
 .chat-bubble-row:hover .chat-actions { display:flex; }
-.chat-bubble-row.own .chat-actions { left:0; right:auto; }
+.chat-bubble-row.own .chat-actions { left:6px; right:auto; }
 
 .chat-action-btn {
   border:none; background:transparent; cursor:pointer; color:#64748b;
@@ -219,6 +233,23 @@
 }
 .chat-action-btn:hover { background:#f1f5f9; color:#1e293b; }
 .chat-action-btn.danger:hover { color:#ef4444; background:#fee2e2; }
+
+/* Indicador de "escribiendo" */
+.chat-typing-indicator {
+  display:flex; align-items:center; gap:0.4rem; padding:0.2rem 1rem 0.3rem;
+  font-size:0.78rem; color:#64748b; font-style:italic; flex-shrink:0;
+}
+.chat-typing-dots { display:inline-flex; gap:3px; }
+.chat-typing-dots span {
+  width:5px; height:5px; border-radius:50%; background:#94a3b8;
+  animation:chat-typing-bounce 1.2s infinite ease-in-out;
+}
+.chat-typing-dots span:nth-child(2) { animation-delay:0.15s; }
+.chat-typing-dots span:nth-child(3) { animation-delay:0.3s; }
+@keyframes chat-typing-bounce {
+  0%, 80%, 100% { transform:translateY(0); opacity:.4; }
+  40% { transform:translateY(-4px); opacity:1; }
+}
 
 .chat-emoji-picker {
   position:absolute; top:-50px; right:0; background:#fff; border:1px solid #e2e8f0;

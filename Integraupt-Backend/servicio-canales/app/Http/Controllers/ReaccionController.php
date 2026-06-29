@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\CanalMensaje;
 use App\Models\CanalMensajeReaccion;
-use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class ReaccionController extends Controller
@@ -34,14 +33,18 @@ class ReaccionController extends Controller
 
         $idUsuario = (int) $request->input('usuarioId');
 
+        // Cada usuario solo puede tener una reacción por mensaje: el mismo
+        // emoji la cancela, un emoji distinto la reemplaza.
         $existente = CanalMensajeReaccion::where('IdMensaje', $idMensaje)
             ->where('IdUsuario', $idUsuario)
-            ->where('Emoji', $emoji)
             ->first();
 
-        if ($existente) {
+        if ($existente && $existente->Emoji === $emoji) {
             $existente->delete();
             $accion = 'eliminada';
+        } elseif ($existente) {
+            $existente->update(['Emoji' => $emoji]);
+            $accion = 'reemplazada';
         } else {
             CanalMensajeReaccion::create([
                 'IdMensaje' => (int) $idMensaje,
@@ -58,13 +61,15 @@ class ReaccionController extends Controller
 
     private function agruparReacciones(int $idMensaje): array
     {
-        return CanalMensajeReaccion::where('IdMensaje', $idMensaje)
+        return CanalMensajeReaccion::with('usuario')
+            ->where('IdMensaje', $idMensaje)
             ->get()
             ->groupBy('Emoji')
             ->map(fn ($grupo, $emoji) => [
                 'emoji' => $emoji,
                 'cantidad' => $grupo->count(),
                 'usuarios' => $grupo->pluck('IdUsuario')->all(),
+                'usuariosNombres' => $grupo->map(fn ($r) => $r->usuario?->NombreCompleto ?? 'Usuario')->all(),
             ])
             ->values()
             ->all();

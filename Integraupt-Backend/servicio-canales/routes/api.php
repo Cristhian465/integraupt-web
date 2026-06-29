@@ -8,6 +8,7 @@ use App\Http\Controllers\ReaccionController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PreviewController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\EscribiendoController;
 
 Route::prefix('catalogos')->group(function () {
     Route::get('/usuarios', [UsuarioController::class, 'buscar']);
@@ -33,7 +34,11 @@ Route::prefix('canales')->group(function () {
 
     Route::get('/{idCanal}/mensajes', [MensajeController::class, 'index']);
     Route::post('/{idCanal}/mensajes', [MensajeController::class, 'store']);
+    Route::put('/{idCanal}/mensajes/{idMensaje}', [MensajeController::class, 'update']);
     Route::delete('/{idCanal}/mensajes/{idMensaje}', [MensajeController::class, 'destroy']);
 
     Route::post('/{idCanal}/mensajes/{idMensaje}/reacciones', [ReaccionController::class, 'toggle']);
+
+    Route::post('/{idCanal}/escribiendo', [EscribiendoController::class, 'marcar']);
+    Route::get('/{idCanal}/escribiendo', [EscribiendoController::class, 'listar']);
 });
