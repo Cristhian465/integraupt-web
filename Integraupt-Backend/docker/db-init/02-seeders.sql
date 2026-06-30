@@ -233,7 +233,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `canal_mensaje` WRITE;
 /*!40000 ALTER TABLE `canal_mensaje` DISABLE KEYS */;
-INSERT INTO `canal_mensaje` VALUES
+INSERT INTO `canal_mensaje` (`IdMensaje`,`IdCanal`,`IdTema`,`IdMensajeRespuesta`,`IdUsuario`,`Contenido`,`ImagenUrl`,`FechaEnvio`) VALUES
 -- Canal 1 - Tema Anuncios
 (1,1,1,NULL,1,'Bienvenidos al canal oficial de la Facultad de Ingeniería. Aquí encontrarán los comunicados más importantes del semestre 2026-I.',NULL,'2026-06-20 09:30:00'),
 (2,1,1,NULL,7,'Estimados estudiantes, recuerden que el plazo para la entrega del sílabo vence el 5 de julio.',NULL,'2026-06-21 10:00:00'),
