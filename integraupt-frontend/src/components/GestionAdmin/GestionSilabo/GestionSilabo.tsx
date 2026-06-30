@@ -49,6 +49,7 @@ interface EstructuraParseada {
   horas: number | null;
   creditos: number | null;
   docente: string;
+  correo_docente: string;
   dias_x_semana: number;
   unidades: UnidadEditable[];
 }
@@ -63,6 +64,7 @@ function silaboToEstructura(s: any): EstructuraParseada {
     horas: s.Horas ?? null,
     creditos: s.Creditos ?? null,
     docente: s.Docente ?? '',
+    correo_docente: s.CorreoDocente ?? '',
     dias_x_semana: s.DiasXSemana ?? 1,
     unidades: (s.unidades ?? []).map((u: any) => ({
       numero: u.Numero,
@@ -169,7 +171,7 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
       const res  = await fetch(getSilaboApiUrl('/api/silabos/parsear-pdf'), { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) { setParseError(data.message || 'Error al procesar el PDF.'); setFlujo('formulario'); return; }
-      setEstructura({ ...data, dias_x_semana: data.dias_x_semana ?? 1 });
+      setEstructura({ ...data, correo_docente: data.correo_docente ?? '', dias_x_semana: data.dias_x_semana ?? 1 });
       setFlujo('revision');
     } catch (e: any) {
       setParseError('Error de conexión: ' + (e.message || ''));
@@ -193,7 +195,8 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
       fd.append('nombre_curso', estructura.nombre_curso);
       fd.append('horas',        String(estructura.horas ?? ''));
       fd.append('creditos',     String(estructura.creditos ?? ''));
-      fd.append('docente',        estructura.docente);
+      fd.append('docente',         estructura.docente);
+      fd.append('correo_docente', estructura.correo_docente);
       fd.append('dias_x_semana', String(estructura.dias_x_semana ?? 1));
       fd.append('unidades',      JSON.stringify(estructura.unidades));
       const res  = await fetch(getSilaboApiUrl('/api/silabos'), { method: 'POST', body: fd });
@@ -227,8 +230,9 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
       fd.append('nombre_curso', editEstructura.nombre_curso);
       fd.append('horas',        String(editEstructura.horas ?? ''));
       fd.append('creditos',     String(editEstructura.creditos ?? ''));
-      fd.append('docente',      editEstructura.docente);
-      fd.append('unidades',     JSON.stringify(editEstructura.unidades));
+      fd.append('docente',         editEstructura.docente);
+      fd.append('correo_docente', editEstructura.correo_docente);
+      fd.append('unidades',       JSON.stringify(editEstructura.unidades));
       const res  = await fetch(getSilaboApiUrl(`/api/silabos/${editandoSilabo.IdSilabo}`), { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) { setEditMsg(data.message || 'Error al guardar.'); return; }
@@ -394,10 +398,17 @@ export const GestionSilabo: React.FC<GestionSilaboProps> = ({ onAuditLog }) => {
             </select>
           </div>
         </div>
-        <div style={{marginTop:10}}>
-          <label style={LBL}>Docente *</label>
-          <input required value={e.docente} onChange={ev => setter(p => p ? {...p,docente:ev.target.value} : p)}
-            style={{...IN, borderColor: !e.docente.trim() ? '#f87171' : '#cbd5e1'}} placeholder="Nombre completo del docente" />
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginTop:10}}>
+          <div>
+            <label style={LBL}>Docente *</label>
+            <input required value={e.docente} onChange={ev => setter(p => p ? {...p,docente:ev.target.value} : p)}
+              style={{...IN, borderColor: !e.docente.trim() ? '#f87171' : '#cbd5e1'}} placeholder="Nombre completo del docente" />
+          </div>
+          <div>
+            <label style={LBL}>Correo docente (@upt.pe)</label>
+            <input type="email" value={e.correo_docente} onChange={ev => setter(p => p ? {...p,correo_docente:ev.target.value} : p)}
+              style={IN} placeholder="docente@upt.pe" />
+          </div>
         </div>
       </div>
 

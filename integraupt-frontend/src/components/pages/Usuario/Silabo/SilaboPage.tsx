@@ -37,8 +37,9 @@ const SESION_LABEL = ['Sesión teórica', 'Sesión práctica', 'Laboratorio / Re
 export const SilaboPage: React.FC<SilaboPageProps> = ({
   user, onNavigateToInicio, onNavigateToServicios, onNavigateToPerfil, onLogout, isLoggingOut = false,
 }) => {
-  const displayName = user.user_metadata?.name?.trim() || user.user_metadata?.codigo || 'Usuario';
-  const docenteId   = user.id;
+  const displayName   = user.user_metadata?.name?.trim() || user.user_metadata?.codigo || 'Usuario';
+  const docenteId     = user.id;
+  const correoUsuario = user.email ?? '';
 
   // Estudiantes solo ven; docentes y cualquier otro rol pueden registrar
   const rol = (user.user_metadata?.role ?? '').toLowerCase();
@@ -63,8 +64,11 @@ export const SilaboPage: React.FC<SilaboPageProps> = ({
     setLoading(true);
     setError(null);
     try {
+      const silaboParams = new URLSearchParams();
+      if (esDocente && correoUsuario) silaboParams.set('correo_docente', correoUsuario);
+
       const [sr, ar] = await Promise.all([
-        fetch(getSilaboApiUrl('/api/silabos')),
+        fetch(getSilaboApiUrl(`/api/silabos?${silaboParams}`)),
         esDocente ? fetch(getSilaboApiUrl(`/api/avances/docente/${docenteId}`)) : Promise.resolve(null),
       ]);
       if (!sr.ok) throw new Error('Error al cargar los sílabos.');

@@ -67,6 +67,9 @@ class SilaboController extends Controller
         if ($request->filled('horario_curso_id')) {
             $query->where('HorarioCursoId', $request->horario_curso_id);
         }
+        if ($request->filled('correo_docente')) {
+            $query->where('CorreoDocente', $request->correo_docente);
+        }
 
         return response()->json($query->orderByDesc('created_at')->get());
     }
@@ -119,6 +122,7 @@ class SilaboController extends Controller
             'Horas'          => $request->horas,
             'Creditos'       => $request->creditos,
             'Docente'        => $request->docente,
+            'CorreoDocente'  => $request->correo_docente,
             'HorarioCursoId' => $request->horario_curso_id,
             'DiasXSemana'    => max(1, min(3, (int) ($request->dias_x_semana ?? 1))),
             'ArchivoPdf'     => $pdfPath,
@@ -159,8 +163,15 @@ class SilaboController extends Controller
 
         $data = $request->only([
             'CodigoCurso', 'NombreCurso', 'CicloNumero', 'Semestre',
-            'Horas', 'Creditos', 'Docente', 'HorarioCursoId', 'DiasXSemana', 'Estado',
+            'Horas', 'Creditos', 'Docente', 'CorreoDocente', 'HorarioCursoId', 'DiasXSemana', 'Estado',
         ]);
+
+        // El form envía snake_case desde el frontend
+        if (!isset($data['CorreoDocente']) && $request->filled('correo_docente')) {
+            $data['CorreoDocente'] = $request->correo_docente;
+        } elseif (!isset($data['CorreoDocente']) && $request->has('correo_docente')) {
+            $data['CorreoDocente'] = $request->correo_docente; // puede ser string vacío
+        }
 
         if ($request->hasFile('ArchivoPdf')) {
             $file     = $request->file('ArchivoPdf');
