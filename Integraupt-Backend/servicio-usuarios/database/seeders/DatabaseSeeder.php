@@ -143,5 +143,10 @@ class DatabaseSeeder extends Seeder
             INSERT INTO `docente` (`IdDocente`, `IdUsuario`, `CodigoDocente`, `Escuela`, `TipoContrato`, `Especialidad`, `FechaIncorporacion`) VALUES
                 (1, 16, '202307', 2, 'Tiempo Completo', 'nose', '2025-11-09');
         ");
+
+        $this->call([
+            CafeteriaSeeder::class,
+            EventosSeeder::class,
+        ]);
     }
 }

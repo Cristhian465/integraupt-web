@@ -8,22 +8,24 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('canal_mensaje', function (Blueprint $table) {
+        /* Schema::table('canal_mensaje', function (Blueprint $table) {
             // ImagenUrl pasa a ser un adjunto genérico (imagen, video, audio o archivo).
             $table->renameColumn('ImagenUrl', 'ArchivoUrl');
-        });
+        }); */
 
-        Schema::table('canal_mensaje', function (Blueprint $table) {
+        /* Schema::table('canal_mensaje', function (Blueprint $table) {
             $table->string('ArchivoTipo', 20)->nullable()->after('ArchivoUrl');
             $table->string('ArchivoNombre', 255)->nullable()->after('ArchivoTipo');
             $table->string('Estado', 20)->default('activo')->after('ArchivoNombre');
             $table->dateTime('EditadoEn')->nullable()->after('FechaEnvio');
-        });
+        }); */
 
         // Cada usuario solo puede tener una reacción por mensaje (antes era una por emoji).
         Schema::table('canal_mensaje_reaccion', function (Blueprint $table) {
+            $table->dropForeign(['IdMensaje']);
             $table->dropUnique('canal_reaccion_unique');
             $table->unique(['IdMensaje', 'IdUsuario'], 'canal_reaccion_unique');
+            $table->foreign('IdMensaje')->references('IdMensaje')->on('canal_mensaje')->onDelete('cascade');
         });
 
         Schema::create('canal_escribiendo', function (Blueprint $table) {
