@@ -27,7 +27,7 @@ CREATE TABLE `administrativo` (
   `IdAdministrativo` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `IdUsuario` int(10) unsigned NOT NULL,
   `Escuela` int(10) unsigned DEFAULT NULL,
-  `Turno` enum('Mañana','Tarde','Noche','Completo') NOT NULL DEFAULT 'Completo',
+  `Turno` enum('Ma├▒ana','Tarde','Noche','Completo') NOT NULL DEFAULT 'Completo',
   `Extension` varchar(10) DEFAULT NULL,
   `FechaIncorporacion` date NOT NULL,
   PRIMARY KEY (`IdAdministrativo`),
@@ -47,79 +47,79 @@ LOCK TABLES `administrativo` WRITE;
 INSERT INTO `administrativo` VALUES
 (1,1,NULL,'Completo','931324749','2026-06-24'),
 (2,3,1,'Completo','921126423','2026-06-24'),
-(3,4,1,'Mañana','956805711','2026-06-24'),
+(3,4,1,'Ma├▒ana','956805711','2026-06-24'),
 (4,5,1,'Tarde','937363830','2026-06-24'),
 (5,6,1,'Noche','970408765','2026-06-24'),
 (6,27,2,'Completo','947638720','2026-06-24'),
-(7,28,2,'Mañana','917722780','2026-06-24'),
+(7,28,2,'Ma├▒ana','917722780','2026-06-24'),
 (8,29,2,'Tarde','990424123','2026-06-24'),
 (9,30,2,'Noche','922491908','2026-06-24'),
 (10,51,3,'Completo','970329632','2026-06-24'),
-(11,52,3,'Mañana','957551195','2026-06-24'),
+(11,52,3,'Ma├▒ana','957551195','2026-06-24'),
 (12,53,3,'Tarde','918153489','2026-06-24'),
 (13,54,3,'Noche','936741214','2026-06-24'),
 (14,75,4,'Completo','934724005','2026-06-24'),
-(15,76,4,'Mañana','996816576','2026-06-24'),
+(15,76,4,'Ma├▒ana','996816576','2026-06-24'),
 (16,77,4,'Tarde','981859377','2026-06-24'),
 (17,78,4,'Noche','983000839','2026-06-24'),
 (18,99,5,'Completo','936049560','2026-06-24'),
-(19,100,5,'Mañana','928458713','2026-06-24'),
+(19,100,5,'Ma├▒ana','928458713','2026-06-24'),
 (20,101,5,'Tarde','917640987','2026-06-24'),
 (21,102,5,'Noche','982768350','2026-06-24'),
 (22,123,6,'Completo','963221386','2026-06-24'),
-(23,124,6,'Mañana','936436104','2026-06-24'),
+(23,124,6,'Ma├▒ana','936436104','2026-06-24'),
 (24,125,6,'Tarde','935653430','2026-06-24'),
 (25,126,6,'Noche','985189112','2026-06-24'),
 (26,147,7,'Completo','977242052','2026-06-24'),
-(27,148,7,'Mañana','923372499','2026-06-24'),
+(27,148,7,'Ma├▒ana','923372499','2026-06-24'),
 (28,149,7,'Tarde','921005076','2026-06-24'),
 (29,150,7,'Noche','979261189','2026-06-24'),
 (30,171,8,'Completo','995419558','2026-06-24'),
-(31,172,8,'Mañana','920619490','2026-06-24'),
+(31,172,8,'Ma├▒ana','920619490','2026-06-24'),
 (32,173,8,'Tarde','923317742','2026-06-24'),
 (33,174,8,'Noche','973356396','2026-06-24'),
 (34,195,9,'Completo','989920721','2026-06-24'),
-(35,196,9,'Mañana','976451738','2026-06-24'),
+(35,196,9,'Ma├▒ana','976451738','2026-06-24'),
 (36,197,9,'Tarde','973072547','2026-06-24'),
 (37,198,9,'Noche','986332474','2026-06-24'),
 (38,219,10,'Completo','942292048','2026-06-24'),
-(39,220,10,'Mañana','981509955','2026-06-24'),
+(39,220,10,'Ma├▒ana','981509955','2026-06-24'),
 (40,221,10,'Tarde','999763578','2026-06-24'),
 (41,222,10,'Noche','964892762','2026-06-24'),
 (42,243,11,'Completo','933764392','2026-06-24'),
-(43,244,11,'Mañana','988351896','2026-06-24'),
+(43,244,11,'Ma├▒ana','988351896','2026-06-24'),
 (44,245,11,'Tarde','970517196','2026-06-24'),
 (45,246,11,'Noche','979399031','2026-06-24'),
 (46,267,12,'Completo','980131180','2026-06-24'),
-(47,268,12,'Mañana','931111597','2026-06-24'),
+(47,268,12,'Ma├▒ana','931111597','2026-06-24'),
 (48,269,12,'Tarde','958157056','2026-06-24'),
 (49,270,12,'Noche','980105208','2026-06-24'),
 (50,291,13,'Completo','988367677','2026-06-24'),
-(51,292,13,'Mañana','965582120','2026-06-24'),
+(51,292,13,'Ma├▒ana','965582120','2026-06-24'),
 (52,293,13,'Tarde','983085741','2026-06-24'),
 (53,294,13,'Noche','918681379','2026-06-24'),
 (54,315,14,'Completo','989710869','2026-06-24'),
-(55,316,14,'Mañana','976211645','2026-06-24'),
+(55,316,14,'Ma├▒ana','976211645','2026-06-24'),
 (56,317,14,'Tarde','934497046','2026-06-24'),
 (57,318,14,'Noche','987059162','2026-06-24'),
 (58,339,15,'Completo','921924398','2026-06-24'),
-(59,340,15,'Mañana','915566776','2026-06-24'),
+(59,340,15,'Ma├▒ana','915566776','2026-06-24'),
 (60,341,15,'Tarde','979713424','2026-06-24'),
 (61,342,15,'Noche','961186913','2026-06-24'),
 (62,363,16,'Completo','948740133','2026-06-24'),
-(63,364,16,'Mañana','965499960','2026-06-24'),
+(63,364,16,'Ma├▒ana','965499960','2026-06-24'),
 (64,365,16,'Tarde','990332120','2026-06-24'),
 (65,366,16,'Noche','912986732','2026-06-24'),
 (66,387,17,'Completo','965939864','2026-06-24'),
-(67,388,17,'Mañana','952745372','2026-06-24'),
+(67,388,17,'Ma├▒ana','952745372','2026-06-24'),
 (68,389,17,'Tarde','976595591','2026-06-24'),
 (69,390,17,'Noche','919307370','2026-06-24'),
 (70,411,18,'Completo','953039318','2026-06-24'),
-(71,412,18,'Mañana','955379321','2026-06-24'),
+(71,412,18,'Ma├▒ana','955379321','2026-06-24'),
 (72,413,18,'Tarde','939899635','2026-06-24'),
 (73,414,18,'Noche','958683294','2026-06-24'),
 (74,435,19,'Completo','952038667','2026-06-24'),
-(75,436,19,'Mañana','948769469','2026-06-24'),
+(75,436,19,'Ma├▒ana','948769469','2026-06-24'),
 (76,437,19,'Tarde','945321944','2026-06-24'),
 (77,438,19,'Noche','992640596','2026-06-24');
 /*!40000 ALTER TABLE `administrativo` ENABLE KEYS */;
@@ -386,8 +386,8 @@ CREATE TABLE `cafeteria` (
 LOCK TABLES `cafeteria` WRITE;
 /*!40000 ALTER TABLE `cafeteria` DISABLE KEYS */;
 INSERT INTO `cafeteria` VALUES
-(1,1,'Cafetería FAING',1,14),
-(2,2,'Cafetería FADE',1,15);
+(1,1,'Cafeter├¡a FAING',1,14),
+(2,2,'Cafeter├¡a FADE',1,15);
 /*!40000 ALTER TABLE `cafeteria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -487,8 +487,8 @@ CREATE TABLE `cafeteria_producto` (
 LOCK TABLES `cafeteria_producto` WRITE;
 /*!40000 ALTER TABLE `cafeteria_producto` DISABLE KEYS */;
 INSERT INTO `cafeteria_producto` VALUES
-(1,1,'Café Americano','Café recién pasado',3.50,50,1),
-(2,1,'Sándwich Mixto','Pan con jamón y queso',5.00,30,1),
+(1,1,'Caf├® Americano','Caf├® reci├®n pasado',3.50,50,1),
+(2,1,'S├índwich Mixto','Pan con jam├│n y queso',5.00,30,1),
 (3,2,'Jugo de Naranja','Jugo natural de naranja',4.00,40,1),
 (4,2,'Empanada de Carne','Empanada horneada',4.50,20,1);
 /*!40000 ALTER TABLE `cafeteria_producto` ENABLE KEYS */;
@@ -1543,7 +1543,7 @@ CREATE TABLE `evento` (
 LOCK TABLES `evento` WRITE;
 /*!40000 ALTER TABLE `evento` DISABLE KEYS */;
 INSERT INTO `evento` VALUES
-(1,'Feria Tecnológica 2026','Presentación de proyectos innovadores',NULL,'Feria','Facultad',1,2,1,'2026-08-15 09:00:00','2026-08-15 18:00:00',100,1,'publicado',14,'2026-06-30 00:19:15'),
+(1,'Feria Tecnol├│gica 2026','Presentaci├│n de proyectos innovadores',NULL,'Feria','Facultad',1,2,1,'2026-08-15 09:00:00','2026-08-15 18:00:00',100,1,'publicado',14,'2026-06-30 00:19:15'),
 (2,'Seminario de Inteligencia Artificial','Tendencias actuales y futuro de la IA',NULL,'Seminario','Universidad',1,NULL,2,'2026-09-10 10:00:00','2026-09-10 12:00:00',50,1,'publicado',16,'2026-06-30 00:19:15');
 /*!40000 ALTER TABLE `evento` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1636,10 +1636,10 @@ CREATE TABLE `facultad` (
 LOCK TABLES `facultad` WRITE;
 /*!40000 ALTER TABLE `facultad` DISABLE KEYS */;
 INSERT INTO `facultad` VALUES
-(1,'Facultad de Ingeniería','FAING'),
-(2,'Facultad de Derecho y Ciencias Políticas','FADE'),
+(1,'Facultad de Ingenier├¡a','FAING'),
+(2,'Facultad de Derecho y Ciencias Pol├¡ticas','FADE'),
 (3,'Facultad de Ciencias Empresariales','FACEM'),
-(4,'Facultad de Educación, Ciencias de la Comunicación','FAEDCOH'),
+(4,'Facultad de Educaci├│n, Ciencias de la Comunicaci├│n','FAEDCOH'),
 (5,'Facultad de Ciencias De la Salud','FACSA'),
 (6,'Facultad de Arquitectura y Urbanismo','FAU');
 /*!40000 ALTER TABLE `facultad` ENABLE KEYS */;
@@ -13725,23 +13725,23 @@ CREATE TABLE `olimpiada_disciplina` (
 LOCK TABLES `olimpiada_disciplina` WRITE;
 /*!40000 ALTER TABLE `olimpiada_disciplina` DISABLE KEYS */;
 INSERT INTO `olimpiada_disciplina` VALUES
-(1,'Fútbol','Fútbol damas y varones. Partidos dirigidos por árbitros oficiales, reglas FIFA con modificaciones propias del torneo.','equipo','partido','Mínimo 07 jugadores inscritos para iniciar el partido; máximo 4 cambios por equipo.\nDuración: 35\' x 35\' (40\' x 40\' en semifinal y final), 5\' de descanso entre tiempos.\nTolerancia: 10\' para el primer encuentro, 5\' para los siguientes.\nEmpate en semifinal/final se define por penales (5 por equipo, alternados), sin tiempo suplementario.\nPuntaje: Ganador 3 pts, Empate 1 pt, Perdedor 0 pts, W.O. -1 pt (rival gana 3-0).\nSanciones: suplantación de jugador = W.O.; tarjeta roja no directa = 1 fecha; 2 tarjetas amarillas = 1 fecha de suspensión; agresión física o verbal = expulsión del campeonato.',18,'activa','2026-06-23 20:08:35'),
-(2,'Vóleibol','Vóley femenino y masculino. Se juega con las reglas vigentes de la FIVB, sistema Rally Point.','equipo','partido','Planilla de juego: máximo 12 jugadores, mínimo 6 por partido.\nFase eliminatoria: 2 sets ganados de 20 puntos (tercer set a 15 en caso de empate 1-1).\nSemifinal y final: 2 sets ganados de 25 puntos (tercer set a 15).\nPuntaje: Partido ganado 2 pts, perdido 1 pt, W.O. 0 pts (rival gana 2-0 con parciales 25-0).\nJugador \'Líbero\' opcional, con camiseta y número distintos.',12,'activa','2026-06-23 20:08:35'),
-(3,'Básquetbol','Baloncesto damas y varones. Arbitraje FIBA designado por la Comisión Técnica.','equipo','partido','Puntaje: Partido ganado 2 pts, perdido 1 pt, W.O. 0 pts (rival gana con score 30-0).\nTolerancia: 10\' en el primer encuentro, 5\' entre encuentros.\nFase eliminatoria: 2 tiempos de 15\' (12\' corridos + 3\' finales de tiempo efectivo), 1 tiempo técnico por equipo y periodo.\nSemifinal y final: tiempo efectivo reglamentario.\nExpulsión del campo de juego: sanción automática de 1 fecha (o más según gravedad).',12,'activa','2026-06-23 20:08:35'),
-(4,'Atletismo','Atletismo damas y varones (pistas, postas y campo). Se rige por el Reglamento Internacional de Atletismo (IAAF).','individual','posiciones','Pruebas: 100m, 200m, 400m, 800m, 1500m (damas) / 3000m (varones), postas 4x100m y 4x400m, salto alto, salto largo, triple, lanzamiento de bala/disco/jabalina.\nMáximo 2 participantes por facultad en pruebas individuales; 1 equipo por facultad en cada posta.\nUn atleta puede correr hasta 4 pruebas individuales más una colectiva (posta).\nPuntaje individual (8 mejores marcas): 10, 8, 6, 5, 4, 3, 2, 1. En postas, el doble: 20, 16, 12, 10, 8, 6, 4, 2.\nEl campeón general se determina por la suma de puntos obtenidos en todas las pruebas.',NULL,'activa','2026-06-23 20:08:35'),
-(5,'Ajedrez','Ajedrez por equipos de facultad (4 tableros). Se rige por las normas de la FIDE.','equipo','partido','Cada equipo: 4 jugadores inscritos en orden fijo, ocupando los tableros 1 a 4.\nPuntaje por partida: ganada 1 pt, empatada 0.5 pts, perdida 0 pts. El puntaje del match es la suma de las 4 partidas.\nTolerancia de 10\' para iniciar el match; mínimo 2 jugadores presentes para no perder por W.O.; 2 W.O. = eliminación del equipo.\nDesempate en etapa eliminatoria: Sonnenborn-Berger, resultado entre empatados, partidas ganadas, partidas ganadas con negras, sorteo.\nDesempate en semifinal/final: nuevo match a 15\' por jugador (rápido); si persiste, 10\' (blitz); si persiste, partida única a muerte súbita (blancas 6\' vs negras 5\'; tablas favorece a negras).',4,'activa','2026-06-23 20:08:35'),
-(6,'Tenis de Mesa','Tenis de mesa: dobles mixtos, individual damas e individual varones. Se rige por el Reglamento ITTF.','individual','posiciones','Cada facultad inscribe hasta 3 damas y 3 varones (máximo 6 deportistas).\nDobles mixtos: hasta 2 parejas por facultad, formadas por jugadores ya inscritos en individuales; sistema de eliminación simple.\nIndividuales: sistema de series + llave de eliminación simple.\nTodas las modalidades se juegan al mejor de 3 sets.\nPuntaje por puesto (igual en las 3 modalidades): 1° 20, 2° 15, 3° 12, 4° 10, 5° 9, 6° 8 puntos. El puntaje final de la facultad es la suma de lo obtenido en las 3 modalidades.\nTolerancia máxima de 5\' sobre el horario; vencido el plazo se resuelve por W.O.',6,'activa','2026-06-23 20:08:35'),
-(7,'Futsal','Futsal damas y varones.','equipo','partido','Planilla de juego: hasta 10 jugadores; el equipo titular son 5 (uno arquero); cambios ilimitados por la zona de sustituciones.\nMínimo 5 jugadores para iniciar, de lo contrario W.O.\nTarjeta roja directa: sale del partido. Tarjeta amarilla: sale 3 minutos.\nFase eliminatoria: tiempo corrido 18\' x 18\'. Semifinal y final: tiempo efectivo 25\' x 25\', ambos con 5\' de descanso.\nEmpate en semifinal/final: penales alternados (3 iniciales, luego se continúa alternando hasta desempatar).\nPuntaje: Ganador 3 pts, Empate 1 pt, Perdedor 0 pts, W.O. -1 pt (rival gana 3-0).\nSanciones: suplantación de jugador = eliminación de la disciplina; tarjeta roja directa = 2 fechas; agresión física o verbal = expulsión del campeonato.',10,'activa','2026-06-24 05:33:11'),
-(8,'Drill Gimnástico / Gimnasia Aerobia','Gimnasia aerobia / drill gimnástico, calificada por jurado.','equipo','posiciones','Equipo de 15 a 20 participantes. Rutina musicalizada de 6\' a 8\' (tolerancia +/- 15-20 segundos).\nIngreso al escenario dentro de los 30 segundos de ser llamado (penalidad 0.5 pts si demora más; W.O. si supera 60 segundos).\nCalificación de un jurado de 3 jueces sobre 100 puntos: Presentación 20, Desplazamiento 20, Coordinación y ritmo 20, Pirámides 20, Coreografía 20.\nSe registra la posición y el puntaje obtenido por cada facultad participante.',20,'activa','2026-06-24 05:33:11'),
-(9,'Juegos de Competencia','Circuito de 5 juegos recreativo-competitivos definidos por la comisión organizadora el día del evento.','equipo','posiciones','Cada facultad inscribe 10 estudiantes (5 damas, 5 varones); admite hasta 4 inscritos adicionales como \'inscripción de emergencia\' si faltan titulares.\nSe desarrollan 5 juegos elegidos de una lista (fuerza en la soga, carrera de chasquis, carretilla humana, carrera de caballos, carrera de orientación, el gusano humano, revienta globos, asignación de tareas), anunciados 10 minutos antes de cada competencia.\nPuntaje por puesto: 1° 5 pts, 2° 4 pts, 3° 3 pts, 4° 2 pts, 5° 1 pt, 6° 0 pts. El puntaje final de la facultad es la suma de los 5 juegos.',10,'activa','2026-06-24 05:33:11'),
-(10,'Tenis de Campo','Tenis de campo (singles) damas y varones.','individual','posiciones','Máximo 2 deportistas por facultad en damas y 2 en varones (singles únicamente).\nEliminación simple; si hay menos de 4 participantes, se juega round robin.\nSe juega al mejor de 2 sets; en caso de 1-1 se juega un match break a 10 puntos con diferencia de 2.\nPuntaje: Ganador 2 pts, Perdedor 1 pt, No presentado 0 pts. El cuadro final de facultades se obtiene del puntaje general de sus 2 competidores en cada categoría.\nSe rige por el reglamento de la Federación Deportiva Peruana de Tenis.',4,'activa','2026-06-24 05:33:11'),
-(11,'Natación','Natación damas y varones, series finales por tiempo. Se rige por el reglamento de la FINA.','individual','posiciones','Pruebas: 50m libre, espalda, pecho y mariposa; posta 4x50m libre; posta 4x50m combinado; 200m combinado (damas y varones).\nCada nadador participa en máximo 4 pruebas individuales más una posta. Máximo 2 nadadores por facultad por prueba; 1 posta por facultad en cada posta.\nCada facultad inscribe un delegado titular responsable de la ficha de inscripción y cambios.\nPuntaje (8 mejores tiempos): 10, 8, 6, 5, 4, 3, 2, 1; en postas el doble.\nCampeón general: mayor puntaje acumulado; en caso de empate se decide por mayor cantidad de primeros lugares, luego segundos, y así sucesivamente.',NULL,'activa','2026-06-24 05:33:11'),
-(12,'Triatlón','Triatlón damas y varones: natación + ciclismo + carrera, de forma continua.','individual','posiciones','Máximo 10 deportistas por facultad en damas y 10 en varones.\nRecorrido continuo: natación 50m + ciclismo 9km + carrera 4km. Cada deportista trae su propia bicicleta.\nSanción a quien no cumpla el volumen mínimo de cada tramo por omisión o fraude.\nPuntaje por equipo (15 mejores puestos): 1° 20, 2° 16, 3° 14, 4° 12, 5° 11, 6° 10, 7° 9, 8° 8, 9° 7, 10° 6, 11° 5, 12° 4, 13° 3, 14° 2, 15° 1 punto.\nSe premian los 3 primeros lugares de cada categoría (damas y varones).',20,'activa','2026-06-24 05:33:11'),
-(13,'Billar Federado','Billar federado, modalidad pool/billar americano.','individual','posiciones','Cada facultad inscribe hasta 4 estudiantes (damas y/o varones).\nSistema de eliminación simple, competencia en un solo día hábil.\nPuntaje por puesto (10 mejores): 1° 10, 2° 8, 3° 7, 4° 6, 5° 5, 6° 4, 7° 3, 8° 2, 9° 1, 10° 0.5 puntos.\nEl puntaje final de la facultad es la suma de los puntos de todos sus competidores.',4,'activa','2026-06-24 05:33:11'),
-(14,'Maratón','Maratón damas y varones por equipos de facultad.','individual','posiciones','Cada facultad inscribe hasta 12 participantes en damas y 12 en varones.\nPuntaje por equipo según el orden de llegada de los primeros 15 corredores de cada facultad (puntaje por equipos, no individual): 1° 20, 2° 16, 3° 14, 4° 12, 5° 11, 6° 10, 7° 9, 8° 8, 9° 7, 10° 6, 11° 5, 12° 4, 13° 3, 14° 2, 15° 1 punto.',24,'activa','2026-06-24 05:33:11'),
-(15,'Ciclismo','Ciclismo de ruta y/o circuito, damas y varones.','individual','posiciones','Cada facultad inscribe hasta 8 damas y 8 varones.\nModalidad ruta y/o circuito; sistema todos contra todos. Equipo obligatorio: casco, guantes, lentes, protectores de rodilla y bicicleta propia.\nDescalificación por incumplir la ruta establecida, suplantación de persona o atajar la ruta.\nPuntaje por puesto (10 mejores): 1° 10, 2° 8, 3° 7, 4° 6, 5° 5, 6° 4, 7° 3, 8° 2, 9° 1, 10° 0.5 puntos.',16,'activa','2026-06-24 05:33:11'),
-(16,'Inauguración / Desfile','Calificación del desfile inaugural de cada delegación. Otorga puntos adicionales al cuadro general.','equipo','posiciones','Las delegaciones deben presentarse en el punto de encuentro a la hora indicada para iniciar el desfile; una vez cerrado el ingreso no se admiten más delegaciones.\nCalificación del 1 al 10 según: puntualidad, presentación, orden y originalidad (pancartas, mascotas, disfraces, etc.).\nConteo de delegación: alumnos matriculados de la facultad, acompañados de su madrina y docentes; formación en filas de 3 o 4.\nProhibido el uso de artefactos pirotécnicos, salvo bengalas.\nLos puntos obtenidos se suman como puntaje adicional al cuadro general de la facultad.',NULL,'activa','2026-06-24 05:33:11'),
-(17,'Caminata','Caminata de motivación de cada delegación. Otorga puntos adicionales al cuadro general.','equipo','posiciones','Las delegaciones deben presentarse en el punto de partida a la hora indicada; iniciada la caminata no se modifica el orden de las delegaciones.\nCalificación del 1 al 10 según: puntualidad, presentación, orden y originalidad (pancartas, mascotas, disfraces, etc.).\nFormación en filas de 3 o 4 según el número de integrantes de cada facultad.\nProhibido el uso de artefactos pirotécnicos, salvo bengalas.\nLos puntos obtenidos se suman como puntaje adicional al cuadro general de la facultad.',NULL,'activa','2026-06-24 05:33:11');
+(1,'F├║tbol','F├║tbol damas y varones. Partidos dirigidos por ├írbitros oficiales, reglas FIFA con modificaciones propias del torneo.','equipo','partido','M├¡nimo 07 jugadores inscritos para iniciar el partido; m├íximo 4 cambios por equipo.\nDuraci├│n: 35\' x 35\' (40\' x 40\' en semifinal y final), 5\' de descanso entre tiempos.\nTolerancia: 10\' para el primer encuentro, 5\' para los siguientes.\nEmpate en semifinal/final se define por penales (5 por equipo, alternados), sin tiempo suplementario.\nPuntaje: Ganador 3 pts, Empate 1 pt, Perdedor 0 pts, W.O. -1 pt (rival gana 3-0).\nSanciones: suplantaci├│n de jugador = W.O.; tarjeta roja no directa = 1 fecha; 2 tarjetas amarillas = 1 fecha de suspensi├│n; agresi├│n f├¡sica o verbal = expulsi├│n del campeonato.',18,'activa','2026-06-23 20:08:35'),
+(2,'V├│leibol','V├│ley femenino y masculino. Se juega con las reglas vigentes de la FIVB, sistema Rally Point.','equipo','partido','Planilla de juego: m├íximo 12 jugadores, m├¡nimo 6 por partido.\nFase eliminatoria: 2 sets ganados de 20 puntos (tercer set a 15 en caso de empate 1-1).\nSemifinal y final: 2 sets ganados de 25 puntos (tercer set a 15).\nPuntaje: Partido ganado 2 pts, perdido 1 pt, W.O. 0 pts (rival gana 2-0 con parciales 25-0).\nJugador \'L├¡bero\' opcional, con camiseta y n├║mero distintos.',12,'activa','2026-06-23 20:08:35'),
+(3,'B├ísquetbol','Baloncesto damas y varones. Arbitraje FIBA designado por la Comisi├│n T├®cnica.','equipo','partido','Puntaje: Partido ganado 2 pts, perdido 1 pt, W.O. 0 pts (rival gana con score 30-0).\nTolerancia: 10\' en el primer encuentro, 5\' entre encuentros.\nFase eliminatoria: 2 tiempos de 15\' (12\' corridos + 3\' finales de tiempo efectivo), 1 tiempo t├®cnico por equipo y periodo.\nSemifinal y final: tiempo efectivo reglamentario.\nExpulsi├│n del campo de juego: sanci├│n autom├ítica de 1 fecha (o m├ís seg├║n gravedad).',12,'activa','2026-06-23 20:08:35'),
+(4,'Atletismo','Atletismo damas y varones (pistas, postas y campo). Se rige por el Reglamento Internacional de Atletismo (IAAF).','individual','posiciones','Pruebas: 100m, 200m, 400m, 800m, 1500m (damas) / 3000m (varones), postas 4x100m y 4x400m, salto alto, salto largo, triple, lanzamiento de bala/disco/jabalina.\nM├íximo 2 participantes por facultad en pruebas individuales; 1 equipo por facultad en cada posta.\nUn atleta puede correr hasta 4 pruebas individuales m├ís una colectiva (posta).\nPuntaje individual (8 mejores marcas): 10, 8, 6, 5, 4, 3, 2, 1. En postas, el doble: 20, 16, 12, 10, 8, 6, 4, 2.\nEl campe├│n general se determina por la suma de puntos obtenidos en todas las pruebas.',NULL,'activa','2026-06-23 20:08:35'),
+(5,'Ajedrez','Ajedrez por equipos de facultad (4 tableros). Se rige por las normas de la FIDE.','equipo','partido','Cada equipo: 4 jugadores inscritos en orden fijo, ocupando los tableros 1 a 4.\nPuntaje por partida: ganada 1 pt, empatada 0.5 pts, perdida 0 pts. El puntaje del match es la suma de las 4 partidas.\nTolerancia de 10\' para iniciar el match; m├¡nimo 2 jugadores presentes para no perder por W.O.; 2 W.O. = eliminaci├│n del equipo.\nDesempate en etapa eliminatoria: Sonnenborn-Berger, resultado entre empatados, partidas ganadas, partidas ganadas con negras, sorteo.\nDesempate en semifinal/final: nuevo match a 15\' por jugador (r├ípido); si persiste, 10\' (blitz); si persiste, partida ├║nica a muerte s├║bita (blancas 6\' vs negras 5\'; tablas favorece a negras).',4,'activa','2026-06-23 20:08:35'),
+(6,'Tenis de Mesa','Tenis de mesa: dobles mixtos, individual damas e individual varones. Se rige por el Reglamento ITTF.','individual','posiciones','Cada facultad inscribe hasta 3 damas y 3 varones (m├íximo 6 deportistas).\nDobles mixtos: hasta 2 parejas por facultad, formadas por jugadores ya inscritos en individuales; sistema de eliminaci├│n simple.\nIndividuales: sistema de series + llave de eliminaci├│n simple.\nTodas las modalidades se juegan al mejor de 3 sets.\nPuntaje por puesto (igual en las 3 modalidades): 1┬░ 20, 2┬░ 15, 3┬░ 12, 4┬░ 10, 5┬░ 9, 6┬░ 8 puntos. El puntaje final de la facultad es la suma de lo obtenido en las 3 modalidades.\nTolerancia m├íxima de 5\' sobre el horario; vencido el plazo se resuelve por W.O.',6,'activa','2026-06-23 20:08:35'),
+(7,'Futsal','Futsal damas y varones.','equipo','partido','Planilla de juego: hasta 10 jugadores; el equipo titular son 5 (uno arquero); cambios ilimitados por la zona de sustituciones.\nM├¡nimo 5 jugadores para iniciar, de lo contrario W.O.\nTarjeta roja directa: sale del partido. Tarjeta amarilla: sale 3 minutos.\nFase eliminatoria: tiempo corrido 18\' x 18\'. Semifinal y final: tiempo efectivo 25\' x 25\', ambos con 5\' de descanso.\nEmpate en semifinal/final: penales alternados (3 iniciales, luego se contin├║a alternando hasta desempatar).\nPuntaje: Ganador 3 pts, Empate 1 pt, Perdedor 0 pts, W.O. -1 pt (rival gana 3-0).\nSanciones: suplantaci├│n de jugador = eliminaci├│n de la disciplina; tarjeta roja directa = 2 fechas; agresi├│n f├¡sica o verbal = expulsi├│n del campeonato.',10,'activa','2026-06-24 05:33:11'),
+(8,'Drill Gimn├ístico / Gimnasia Aerobia','Gimnasia aerobia / drill gimn├ístico, calificada por jurado.','equipo','posiciones','Equipo de 15 a 20 participantes. Rutina musicalizada de 6\' a 8\' (tolerancia +/- 15-20 segundos).\nIngreso al escenario dentro de los 30 segundos de ser llamado (penalidad 0.5 pts si demora m├ís; W.O. si supera 60 segundos).\nCalificaci├│n de un jurado de 3 jueces sobre 100 puntos: Presentaci├│n 20, Desplazamiento 20, Coordinaci├│n y ritmo 20, Pir├ímides 20, Coreograf├¡a 20.\nSe registra la posici├│n y el puntaje obtenido por cada facultad participante.',20,'activa','2026-06-24 05:33:11'),
+(9,'Juegos de Competencia','Circuito de 5 juegos recreativo-competitivos definidos por la comisi├│n organizadora el d├¡a del evento.','equipo','posiciones','Cada facultad inscribe 10 estudiantes (5 damas, 5 varones); admite hasta 4 inscritos adicionales como \'inscripci├│n de emergencia\' si faltan titulares.\nSe desarrollan 5 juegos elegidos de una lista (fuerza en la soga, carrera de chasquis, carretilla humana, carrera de caballos, carrera de orientaci├│n, el gusano humano, revienta globos, asignaci├│n de tareas), anunciados 10 minutos antes de cada competencia.\nPuntaje por puesto: 1┬░ 5 pts, 2┬░ 4 pts, 3┬░ 3 pts, 4┬░ 2 pts, 5┬░ 1 pt, 6┬░ 0 pts. El puntaje final de la facultad es la suma de los 5 juegos.',10,'activa','2026-06-24 05:33:11'),
+(10,'Tenis de Campo','Tenis de campo (singles) damas y varones.','individual','posiciones','M├íximo 2 deportistas por facultad en damas y 2 en varones (singles ├║nicamente).\nEliminaci├│n simple; si hay menos de 4 participantes, se juega round robin.\nSe juega al mejor de 2 sets; en caso de 1-1 se juega un match break a 10 puntos con diferencia de 2.\nPuntaje: Ganador 2 pts, Perdedor 1 pt, No presentado 0 pts. El cuadro final de facultades se obtiene del puntaje general de sus 2 competidores en cada categor├¡a.\nSe rige por el reglamento de la Federaci├│n Deportiva Peruana de Tenis.',4,'activa','2026-06-24 05:33:11'),
+(11,'Nataci├│n','Nataci├│n damas y varones, series finales por tiempo. Se rige por el reglamento de la FINA.','individual','posiciones','Pruebas: 50m libre, espalda, pecho y mariposa; posta 4x50m libre; posta 4x50m combinado; 200m combinado (damas y varones).\nCada nadador participa en m├íximo 4 pruebas individuales m├ís una posta. M├íximo 2 nadadores por facultad por prueba; 1 posta por facultad en cada posta.\nCada facultad inscribe un delegado titular responsable de la ficha de inscripci├│n y cambios.\nPuntaje (8 mejores tiempos): 10, 8, 6, 5, 4, 3, 2, 1; en postas el doble.\nCampe├│n general: mayor puntaje acumulado; en caso de empate se decide por mayor cantidad de primeros lugares, luego segundos, y as├¡ sucesivamente.',NULL,'activa','2026-06-24 05:33:11'),
+(12,'Triatl├│n','Triatl├│n damas y varones: nataci├│n + ciclismo + carrera, de forma continua.','individual','posiciones','M├íximo 10 deportistas por facultad en damas y 10 en varones.\nRecorrido continuo: nataci├│n 50m + ciclismo 9km + carrera 4km. Cada deportista trae su propia bicicleta.\nSanci├│n a quien no cumpla el volumen m├¡nimo de cada tramo por omisi├│n o fraude.\nPuntaje por equipo (15 mejores puestos): 1┬░ 20, 2┬░ 16, 3┬░ 14, 4┬░ 12, 5┬░ 11, 6┬░ 10, 7┬░ 9, 8┬░ 8, 9┬░ 7, 10┬░ 6, 11┬░ 5, 12┬░ 4, 13┬░ 3, 14┬░ 2, 15┬░ 1 punto.\nSe premian los 3 primeros lugares de cada categor├¡a (damas y varones).',20,'activa','2026-06-24 05:33:11'),
+(13,'Billar Federado','Billar federado, modalidad pool/billar americano.','individual','posiciones','Cada facultad inscribe hasta 4 estudiantes (damas y/o varones).\nSistema de eliminaci├│n simple, competencia en un solo d├¡a h├íbil.\nPuntaje por puesto (10 mejores): 1┬░ 10, 2┬░ 8, 3┬░ 7, 4┬░ 6, 5┬░ 5, 6┬░ 4, 7┬░ 3, 8┬░ 2, 9┬░ 1, 10┬░ 0.5 puntos.\nEl puntaje final de la facultad es la suma de los puntos de todos sus competidores.',4,'activa','2026-06-24 05:33:11'),
+(14,'Marat├│n','Marat├│n damas y varones por equipos de facultad.','individual','posiciones','Cada facultad inscribe hasta 12 participantes en damas y 12 en varones.\nPuntaje por equipo seg├║n el orden de llegada de los primeros 15 corredores de cada facultad (puntaje por equipos, no individual): 1┬░ 20, 2┬░ 16, 3┬░ 14, 4┬░ 12, 5┬░ 11, 6┬░ 10, 7┬░ 9, 8┬░ 8, 9┬░ 7, 10┬░ 6, 11┬░ 5, 12┬░ 4, 13┬░ 3, 14┬░ 2, 15┬░ 1 punto.',24,'activa','2026-06-24 05:33:11'),
+(15,'Ciclismo','Ciclismo de ruta y/o circuito, damas y varones.','individual','posiciones','Cada facultad inscribe hasta 8 damas y 8 varones.\nModalidad ruta y/o circuito; sistema todos contra todos. Equipo obligatorio: casco, guantes, lentes, protectores de rodilla y bicicleta propia.\nDescalificaci├│n por incumplir la ruta establecida, suplantaci├│n de persona o atajar la ruta.\nPuntaje por puesto (10 mejores): 1┬░ 10, 2┬░ 8, 3┬░ 7, 4┬░ 6, 5┬░ 5, 6┬░ 4, 7┬░ 3, 8┬░ 2, 9┬░ 1, 10┬░ 0.5 puntos.',16,'activa','2026-06-24 05:33:11'),
+(16,'Inauguraci├│n / Desfile','Calificaci├│n del desfile inaugural de cada delegaci├│n. Otorga puntos adicionales al cuadro general.','equipo','posiciones','Las delegaciones deben presentarse en el punto de encuentro a la hora indicada para iniciar el desfile; una vez cerrado el ingreso no se admiten m├ís delegaciones.\nCalificaci├│n del 1 al 10 seg├║n: puntualidad, presentaci├│n, orden y originalidad (pancartas, mascotas, disfraces, etc.).\nConteo de delegaci├│n: alumnos matriculados de la facultad, acompa├▒ados de su madrina y docentes; formaci├│n en filas de 3 o 4.\nProhibido el uso de artefactos pirot├®cnicos, salvo bengalas.\nLos puntos obtenidos se suman como puntaje adicional al cuadro general de la facultad.',NULL,'activa','2026-06-24 05:33:11'),
+(17,'Caminata','Caminata de motivaci├│n de cada delegaci├│n. Otorga puntos adicionales al cuadro general.','equipo','posiciones','Las delegaciones deben presentarse en el punto de partida a la hora indicada; iniciada la caminata no se modifica el orden de las delegaciones.\nCalificaci├│n del 1 al 10 seg├║n: puntualidad, presentaci├│n, orden y originalidad (pancartas, mascotas, disfraces, etc.).\nFormaci├│n en filas de 3 o 4 seg├║n el n├║mero de integrantes de cada facultad.\nProhibido el uso de artefactos pirot├®cnicos, salvo bengalas.\nLos puntos obtenidos se suman como puntaje adicional al cuadro general de la facultad.',NULL,'activa','2026-06-24 05:33:11');
 /*!40000 ALTER TABLE `olimpiada_disciplina` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14537,9 +14537,9 @@ CREATE TABLE `olimpiada_post` (
 LOCK TABLES `olimpiada_post` WRITE;
 /*!40000 ALTER TABLE `olimpiada_post` DISABLE KEYS */;
 INSERT INTO `olimpiada_post` VALUES
-(4,1,'¡Arrancan las Olimpiadas Interfacultades 2025!','Con un emotivo desfile de inauguración en el Estadio Jorge Basadre, dio inicio la edición 2026 de las Olimpiadas Interfacultades UPT. Más de 140 estudiantes representarán a sus 6 facultades en 17 disciplinas durante las próximas semanas. ¡Que gane el mejor equipo!','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRstJR39GC8Xdncgm48MUf8DmDcJ8PTYT6g4Q5oX6QH_HhWiFQ05NnQ6dBc&s=10','Comité Olímpico UPT','2026-06-24 17:39:04'),
-(5,1,'Fútbol varones: la Facultad de Ingeniería arranca firme','En un partidazo en el Estadio Paillardelli, FAING venció 3-1 a FADE en la jornada inaugural del fútbol varones. Carlos Mamani fue la figura del partido con un doblete.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEhkEc4dRKS2VFnMwNMd6wZCzV6Ub9rMlTH-6pOxNDZPys0OETJSqYGgVL&s=10','Prensa Deportiva UPT','2026-06-24 17:39:04'),
-(6,1,'Atletismo: FAING lidera la clasificación general','Tras la primera jornada de pistas en el Coliseo UPT, la Facultad de Ingeniería se queda con el primer lugar en los 100m varones. La competencia por el medallero general está más reñida que nunca.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv3xLVtRpASQ1ypY1iHSoIOyhhT3T6BzQBXzKzSpb8MCssgG8NcxKd_YRu&s=10','Comité Olímpico UPT','2026-06-24 17:39:05');
+(4,1,'┬íArrancan las Olimpiadas Interfacultades 2025!','Con un emotivo desfile de inauguraci├│n en el Estadio Jorge Basadre, dio inicio la edici├│n 2026 de las Olimpiadas Interfacultades UPT. M├ís de 140 estudiantes representar├ín a sus 6 facultades en 17 disciplinas durante las pr├│ximas semanas. ┬íQue gane el mejor equipo!','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRstJR39GC8Xdncgm48MUf8DmDcJ8PTYT6g4Q5oX6QH_HhWiFQ05NnQ6dBc&s=10','Comit├® Ol├¡mpico UPT','2026-06-24 17:39:04'),
+(5,1,'F├║tbol varones: la Facultad de Ingenier├¡a arranca firme','En un partidazo en el Estadio Paillardelli, FAING venci├│ 3-1 a FADE en la jornada inaugural del f├║tbol varones. Carlos Mamani fue la figura del partido con un doblete.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEhkEc4dRKS2VFnMwNMd6wZCzV6Ub9rMlTH-6pOxNDZPys0OETJSqYGgVL&s=10','Prensa Deportiva UPT','2026-06-24 17:39:04'),
+(6,1,'Atletismo: FAING lidera la clasificaci├│n general','Tras la primera jornada de pistas en el Coliseo UPT, la Facultad de Ingenier├¡a se queda con el primer lugar en los 100m varones. La competencia por el medallero general est├í m├ís re├▒ida que nunca.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv3xLVtRpASQ1ypY1iHSoIOyhhT3T6BzQBXzKzSpb8MCssgG8NcxKd_YRu&s=10','Comit├® Ol├¡mpico UPT','2026-06-24 17:39:05');
 /*!40000 ALTER TABLE `olimpiada_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14745,9 +14745,9 @@ CREATE TABLE `parties` (
 LOCK TABLES `parties` WRITE;
 /*!40000 ALTER TABLE `parties` DISABLE KEYS */;
 INSERT INTO `parties` VALUES
-(1,1,'Fuerza UPT','#22c55e','https://ui-avatars.com/api/?name=Fuerza+UPT&background=22c55e&color=fff&size=200','Somos una organización juvenil de la Universidad Privada de Tacna. Nuestro propósito: ser la voz, la acción y el impulso de la juventud universitaria. Lema: \"LA EVOLUCIÓN\".','2026-06-30 04:53:03','2026-06-30 04:53:03'),
-(2,1,'REU UPT','#3b82f6','https://ui-avatars.com/api/?name=REU+UPT&background=3b82f6&color=eab308&size=200','RENOVACIÓN UNIVERSITARIA – La mejor organización estudiantil de la UPT te está esperando. Haz nuevos amigos, aprende en grande, vive experiencias únicas, desarrolla tu liderazgo, crece personal y profesionalmente.','2026-06-30 04:53:03','2026-06-30 04:53:03'),
-(3,1,'FEUT UPT','#a855f7','https://ui-avatars.com/api/?name=FEUT+UPT&background=a855f7&color=fff&size=200','Nueva lista candidata para el periodo 2026-2027. Promoviendo la participación estudiantil activa en la Universidad Privada de Tacna.','2026-06-30 04:53:03','2026-06-30 04:53:03');
+(1,1,'Fuerza UPT','#22c55e','https://ui-avatars.com/api/?name=Fuerza+UPT&background=22c55e&color=fff&size=200','Somos una organizaci├│n juvenil de la Universidad Privada de Tacna. Nuestro prop├│sito: ser la voz, la acci├│n y el impulso de la juventud universitaria. Lema: \"LA EVOLUCI├ôN\".','2026-06-30 04:53:03','2026-06-30 04:53:03'),
+(2,1,'REU UPT','#3b82f6','https://ui-avatars.com/api/?name=REU+UPT&background=3b82f6&color=eab308&size=200','RENOVACI├ôN UNIVERSITARIA ÔÇô La mejor organizaci├│n estudiantil de la UPT te est├í esperando. Haz nuevos amigos, aprende en grande, vive experiencias ├║nicas, desarrolla tu liderazgo, crece personal y profesionalmente.','2026-06-30 04:53:03','2026-06-30 04:53:03'),
+(3,1,'FEUT UPT','#a855f7','https://ui-avatars.com/api/?name=FEUT+UPT&background=a855f7&color=fff&size=200','Nueva lista candidata para el periodo 2026-2027. Promoviendo la participaci├│n estudiantil activa en la Universidad Privada de Tacna.','2026-06-30 04:53:03','2026-06-30 04:53:03');
 /*!40000 ALTER TABLE `parties` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14798,8 +14798,8 @@ CREATE TABLE `psicologo` (
 LOCK TABLES `psicologo` WRITE;
 /*!40000 ALTER TABLE `psicologo` DISABLE KEYS */;
 INSERT INTO `psicologo` VALUES
-(1,'Mariela Quispe Flores','Psicología clínica',1),
-(2,'Jorge Salas Vargas','Psicología educativa',1);
+(1,'Mariela Quispe Flores','Psicolog├¡a cl├¡nica',1),
+(2,'Jorge Salas Vargas','Psicolog├¡a educativa',1);
 /*!40000 ALTER TABLE `psicologo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -14864,7 +14864,7 @@ DELIMITER ;;
                 
                 IF sancion_activa > 0 THEN
                     SIGNAL SQLSTATE '45000' 
-                    SET MESSAGE_TEXT = 'El usuario tiene una sanción activa y no puede realizar reservas';
+                    SET MESSAGE_TEXT = 'El usuario tiene una sanci├│n activa y no puede realizar reservas';
                 END IF;
             END */;;
 DELIMITER ;
@@ -14959,7 +14959,7 @@ CREATE TABLE `reserva_gestion` (
   `UsuarioGestion` int(10) unsigned NOT NULL COMMENT 'Admin que gestiona',
   `FechaGestion` datetime NOT NULL DEFAULT current_timestamp(),
   `Accion` enum('Aprobar','Rechazar') NOT NULL,
-  `Motivo` text NOT NULL COMMENT 'Motivo de la acción',
+  `Motivo` text NOT NULL COMMENT 'Motivo de la acci├│n',
   `Comentarios` text DEFAULT NULL COMMENT 'Comentarios adicionales',
   PRIMARY KEY (`IdGestion`),
   KEY `reserva_gestion_idreserva_foreign` (`IdReserva`),
@@ -15188,7 +15188,7 @@ CREATE TABLE `silabo` (
 LOCK TABLES `silabo` WRITE;
 /*!40000 ALTER TABLE `silabo` DISABLE KEYS */;
 INSERT INTO `silabo` VALUES
-(1,'SI-101','Ingeniería de Software I',7,'2026-I',4,4,'JUAN ALBERTO RODRIGUEZ PAZ',1,2,NULL,NULL,1,'2026-06-30 04:53:04','2026-06-30 04:53:04');
+(1,'SI-101','Ingenier├¡a de Software I',7,'2026-I',4,4,'JUAN ALBERTO RODRIGUEZ PAZ',1,2,NULL,NULL,1,'2026-06-30 04:53:04','2026-06-30 04:53:04');
 /*!40000 ALTER TABLE `silabo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15221,8 +15221,8 @@ CREATE TABLE `silabo_tema` (
 LOCK TABLES `silabo_tema` WRITE;
 /*!40000 ALTER TABLE `silabo_tema` DISABLE KEYS */;
 INSERT INTO `silabo_tema` VALUES
-(1,1,1,'Conceptos básicos de la Ingeniería de Software.','Identificación de problemas y levantamiento de requerimientos.',0,'2026-06-30 04:53:04','2026-06-30 04:53:04'),
-(2,1,2,'Modelos de ciclo de vida del software.','Comparación entre modelos tradicionales y ágiles.',0,'2026-06-30 04:53:04','2026-06-30 04:53:04');
+(1,1,1,'Conceptos b├ísicos de la Ingenier├¡a de Software.','Identificaci├│n de problemas y levantamiento de requerimientos.',0,'2026-06-30 04:53:04','2026-06-30 04:53:04'),
+(2,1,2,'Modelos de ciclo de vida del software.','Comparaci├│n entre modelos tradicionales y ├ígiles.',0,'2026-06-30 04:53:04','2026-06-30 04:53:04');
 /*!40000 ALTER TABLE `silabo_tema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15254,7 +15254,7 @@ CREATE TABLE `silabo_unidad` (
 LOCK TABLES `silabo_unidad` WRITE;
 /*!40000 ALTER TABLE `silabo_unidad` DISABLE KEYS */;
 INSERT INTO `silabo_unidad` VALUES
-(1,1,1,'Introducción a la Ingeniería de Software',16,'2026-06-30 04:53:04','2026-06-30 04:53:04');
+(1,1,1,'Introducci├│n a la Ingenier├¡a de Software',16,'2026-06-30 04:53:04','2026-06-30 04:53:04');
 /*!40000 ALTER TABLE `silabo_unidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15281,8 +15281,8 @@ LOCK TABLES `tipo_atencion` WRITE;
 /*!40000 ALTER TABLE `tipo_atencion` DISABLE KEYS */;
 INSERT INTO `tipo_atencion` VALUES
 (1,'Medicina General',1),
-(2,'Enfermería',1),
-(3,'Tópico de Emergencia',1);
+(2,'Enfermer├¡a',1),
+(3,'T├│pico de Emergencia',1);
 /*!40000 ALTER TABLE `tipo_atencion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -15311,11 +15311,11 @@ LOCK TABLES `tipodocumento` WRITE;
 /*!40000 ALTER TABLE `tipodocumento` DISABLE KEYS */;
 INSERT INTO `tipodocumento` VALUES
 (1,'Documento Nacional de Identidad','DNI'),
-(2,'Carnet de Extranjería','CE'),
+(2,'Carnet de Extranjer├¡a','CE'),
 (3,'Pasaporte','PAS'),
 (4,'Permiso Temporal de Permanencia','PTP'),
-(5,'Cédula de Identidad','CI'),
-(6,'Registro Único de Contribuyente','RUC'),
+(5,'C├®dula de Identidad','CI'),
+(6,'Registro ├Ünico de Contribuyente','RUC'),
 (7,'Partida de Nacimiento','PN'),
 (8,'Carnet de Refugiado','CR'),
 (9,'Documento de Identidad Extranjero','DIE'),
@@ -15435,7 +15435,7 @@ INSERT INTO `usuario` VALUES
 (44,'ARIANA LUCERO','NECIOSUP VARGAS',1,'29453001',2,'952590446',0,1,'2026-06-24 11:50:50'),
 (45,'ARACELLY ANTHUANE','ALE PAREDES',1,'68894556',2,'957741736',1,1,'2026-06-24 11:50:50'),
 (46,'ROSA MARIA','GOMEZ TITO',1,'93468004',2,'965495888',1,1,'2026-06-24 11:50:50'),
-(47,'BRUNO ENRIQUE','ANCCO SUAÑA',1,'46644352',2,'943020140',0,1,'2026-06-24 11:50:50'),
+(47,'BRUNO ENRIQUE','ANCCO SUA├æA',1,'46644352',2,'943020140',0,1,'2026-06-24 11:50:50'),
 (48,'DAVID MANUEL','ALVAREZ SOTO',1,'65888652',2,'933870931',0,1,'2026-06-24 11:50:50'),
 (49,'JUAN ALBERTO','RODRIGUEZ PAZ',1,'79906811',2,'995920382',1,1,'2026-06-24 11:50:50'),
 (50,'BRANDON ABDIEL','APAZA ESCOBAR',1,'87059425',2,'941456441',0,1,'2026-06-24 11:50:50'),
@@ -15519,7 +15519,7 @@ INSERT INTO `usuario` VALUES
 (128,'JAVIER EDUARDO','JIMENEZ LARA',1,'45617134',1,'955720096',0,1,'2026-06-24 11:50:50'),
 (129,'YORDAN ANTONIO','COHAILA MAMANI',1,'86673622',1,'978785424',0,1,'2026-06-24 11:50:50'),
 (130,'JOSE MARIA','GONZALEZ RUIZ',1,'84607959',1,'974419950',1,1,'2026-06-24 11:50:50'),
-(131,'NESTOR JUICE YOMAR','SERRANO IBAÑEZ',1,'56675211',1,'996670577',0,1,'2026-06-24 11:50:50'),
+(131,'NESTOR JUICE YOMAR','SERRANO IBA├æEZ',1,'56675211',1,'996670577',0,1,'2026-06-24 11:50:50'),
 (132,'MARY LUZ','CHURA TICONA',1,'19409425',2,'970342105',0,1,'2026-06-24 11:50:50'),
 (133,'JAEL','TICONA LIMACHI',1,'59504611',2,'936291331',0,1,'2026-06-24 11:50:50'),
 (134,'FRANCISCO JAVIER','FLORES QUISPE',1,'46458356',2,'978367725',1,1,'2026-06-24 11:50:50'),
@@ -15529,7 +15529,7 @@ INSERT INTO `usuario` VALUES
 (138,'ANA LUCIA','LOPEZ VEGA',1,'41558483',2,'929180813',1,1,'2026-06-24 11:50:50'),
 (139,'PEDRO ANTONIO','SANCHEZ LIMA',1,'25766073',2,'946705221',0,1,'2026-06-24 11:50:50'),
 (140,'CARMEN ROSA','RUIZ DIAZ',1,'74161756',2,'913564355',0,1,'2026-06-24 11:50:50'),
-(141,'SOLEDAD NOEMI','MALTRAIN YAÑEZ',1,'27395522',2,'992249938',0,1,'2026-06-24 11:50:50'),
+(141,'SOLEDAD NOEMI','MALTRAIN YA├æEZ',1,'27395522',2,'992249938',0,1,'2026-06-24 11:50:50'),
 (142,'LUIS ENRIQUE','MARTINEZ CRUZ',1,'19029537',2,'910881521',1,1,'2026-06-24 11:50:50'),
 (143,'ABEL FERNANDO','PACOMPIA ORTIZ',1,'28904671',2,'927228497',0,1,'2026-06-24 11:50:50'),
 (144,'JUAN ALBERTO','RODRIGUEZ PAZ',1,'69174575',2,'952249266',0,1,'2026-06-24 11:50:50'),
@@ -15640,7 +15640,7 @@ INSERT INTO `usuario` VALUES
 (249,'FRANCISCO JAVIER','FLORES QUISPE',1,'86734305',1,'920296802',0,1,'2026-06-24 11:50:50'),
 (250,'ROSA MARIA','GOMEZ TITO',1,'81062779',1,'934620788',1,1,'2026-06-24 11:50:50'),
 (251,'PEDRO ANTONIO','SANCHEZ LIMA',1,'61333249',1,'954810145',0,1,'2026-06-24 11:50:50'),
-(252,'HASHIRA BELÉN','VARGAS CANDIA',1,'26676805',2,'921292156',1,1,'2026-06-24 11:50:50'),
+(252,'HASHIRA BEL├ëN','VARGAS CANDIA',1,'26676805',2,'921292156',1,1,'2026-06-24 11:50:50'),
 (253,'CARLOS PATRICIO','PEREZ LOZANO',1,'42960332',2,'938366218',1,1,'2026-06-24 11:50:50'),
 (254,'JOSE MARIA','GONZALEZ RUIZ',1,'88404684',2,'993902873',1,1,'2026-06-24 11:50:50'),
 (255,'CARMEN ROSA','RUIZ DIAZ',1,'17722102',2,'918765853',1,1,'2026-06-24 11:50:50'),
@@ -15676,7 +15676,7 @@ INSERT INTO `usuario` VALUES
 (285,'ISABEL CRISTINA','ROMERO PAZ',1,'83953492',2,'934046998',0,1,'2026-06-24 11:50:50'),
 (286,'CARMEN ROSA','RUIZ DIAZ',1,'75528316',2,'950213732',0,1,'2026-06-24 11:50:50'),
 (287,'EDUARDO ANDRE','MAMANI LAURA',1,'96238785',2,'952638599',1,1,'2026-06-24 11:50:50'),
-(288,'JOE SEBASTIAN','BRICEÑO MEDINA',1,'67474125',2,'933734053',0,1,'2026-06-24 11:50:50'),
+(288,'JOE SEBASTIAN','BRICE├æO MEDINA',1,'67474125',2,'933734053',0,1,'2026-06-24 11:50:50'),
 (289,'ELVIS','MAMANI VALDIVIA',1,'75677245',2,'953135198',0,1,'2026-06-24 11:50:50'),
 (290,'DENISTHON LEONEL','MAMANI MAMANI',1,'72842964',2,'991786904',1,1,'2026-06-24 11:50:50'),
 (291,'LUIS ENRIQUE','MARTINEZ CRUZ',1,'61480146',3,'988367677',0,1,'2026-06-24 11:50:50'),
@@ -15689,7 +15689,7 @@ INSERT INTO `usuario` VALUES
 (298,'CARMEN ROSA','RUIZ DIAZ',1,'28020144',1,'974524254',0,1,'2026-06-24 11:50:50'),
 (299,'ANTONELLA DE LOURDES','RIVAROLA DELGADO',1,'50882921',1,'926894138',0,1,'2026-06-24 11:50:50'),
 (300,'SERGIO ALBERTO','COLQUE PONCE',1,'62594323',2,'992657349',1,1,'2026-06-24 11:50:50'),
-(301,'MAURICIO ARIAN','CHOQUEÑA CHOQUE',1,'41682383',2,'991683864',0,1,'2026-06-24 11:50:50'),
+(301,'MAURICIO ARIAN','CHOQUE├æA CHOQUE',1,'41682383',2,'991683864',0,1,'2026-06-24 11:50:50'),
 (302,'DEIVISANGEL EYERSON','QUENAYA MAMANI',1,'64117887',2,'947630968',1,1,'2026-06-24 11:50:50'),
 (303,'MARIA FERNANDA','GARCIA SOLIS',1,'69042585',2,'932111110',1,1,'2026-06-24 11:50:50'),
 (304,'DIEGO ANTHONY','CONCORI CALIZAYA',1,'58865926',2,'962526853',1,1,'2026-06-24 11:50:50'),
@@ -15730,7 +15730,7 @@ INSERT INTO `usuario` VALUES
 (339,'LAURA BEATRIZ','DIAZ SALAS',1,'85242693',3,'921924398',0,1,'2026-06-24 11:50:50'),
 (340,'ISABEL CRISTINA','ROMERO PAZ',1,'55352027',4,'915566776',0,1,'2026-06-24 11:50:50'),
 (341,'GIAN FRANCO','AROCUTIPA AROCUTIPA',1,'22683773',4,'979713424',0,1,'2026-06-24 11:50:50'),
-(342,'MILAGROS SHADU','LUDEÑA BEDOYA',1,'66184702',4,'961186913',0,1,'2026-06-24 11:50:50'),
+(342,'MILAGROS SHADU','LUDE├æA BEDOYA',1,'66184702',4,'961186913',0,1,'2026-06-24 11:50:50'),
 (343,'LAURA BEATRIZ','DIAZ SALAS',1,'46224685',1,'993483698',0,1,'2026-06-24 11:50:50'),
 (344,'ISABEL CRISTINA','ROMERO PAZ',1,'60507143',1,'918248757',0,1,'2026-06-24 11:50:50'),
 (345,'FRANCISCO JAVIER','FLORES QUISPE',1,'82287612',1,'975161055',1,1,'2026-06-24 11:50:50'),
