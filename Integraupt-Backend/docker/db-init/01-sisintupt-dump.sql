@@ -15173,6 +15173,7 @@ CREATE TABLE `silabo` (
   `Horas` tinyint(4) DEFAULT NULL,
   `Creditos` tinyint(4) DEFAULT NULL,
   `Docente` varchar(200) DEFAULT NULL,
+  `CorreoDocente` varchar(150) DEFAULT NULL,
   `HorarioCursoId` bigint(20) unsigned DEFAULT NULL,
   `DiasXSemana` tinyint(4) NOT NULL DEFAULT 1,
   `ArchivoPdf` varchar(255) DEFAULT NULL,
@@ -15191,7 +15192,7 @@ CREATE TABLE `silabo` (
 LOCK TABLES `silabo` WRITE;
 /*!40000 ALTER TABLE `silabo` DISABLE KEYS */;
 INSERT INTO `silabo` VALUES
-(1,'SI-101','Ingeniería de Software I',7,'2026-I',4,4,'JUAN ALBERTO RODRIGUEZ PAZ',1,2,NULL,NULL,1,'2026-06-30 04:53:04','2026-06-30 04:53:04');
+(1,'SI-101','Ingeniería de Software I',7,'2026-I',4,4,'JUAN ALBERTO RODRIGUEZ PAZ','juarodr@upt.pe',1,2,NULL,NULL,1,'2026-06-30 04:53:04','2026-06-30 04:53:04');
 /*!40000 ALTER TABLE `silabo` ENABLE KEYS */;
 UNLOCK TABLES;
 
